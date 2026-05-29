@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Unidades - TUCSA Admin</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" href="https://cdn-icons-png.freepik.com/512/10867/10867366.png">
+    <link rel="stylesheet" href="css/unidades.css">
+    <link rel="stylesheet" href="css/Administrativo.css">
+    <script src="js/config_global.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+        <div class="container-fluid">
+            
+            <!-- Logo TUCSA -->
+            <a class="navbar-brand me-0">
+                <i class="fa-solid fa-bus-simple"></i>
+                TUCSA (Admin)
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="Administrativo.html"><i class="fa-solid fa-chart-bar"></i></i>Principal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Usuarios.html"><i class="bi bi-people-fill me-1"></i> Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Asignacion de rutas.html"><i class="bi bi-signpost-2-fill me-1"></i> Asignación Rutas</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="unidades.html"><i class="fa-solid fa-bus-simple me-2"></i>Unidades</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Reportes.html"><i class="bi bi-bar-chart-fill me-1"></i>Reportes</a></li>
+                </ul>
+            </div>
+
+            <!-- Iconos de la derecha -->
+            <div class="d-flex align-items-center">
+                <!-- Notificaciones -->
+                <div class="dropdown me-3 position-relative">
+                    <i class="fa-solid fa-bell notification-icon-solid" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <span id="low-balance-dot" class="position-absolute translate-middle rounded-circle"></span>
+
+                    <ul class="dropdown-menu dropdown-menu-end notification-menu">
+                        <h6 class="dropdown-header">Notificaciones (3)</h6>
+                        
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-center text-muted" href="#">Ver todas</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Perfil -->
+                <i class="fa-solid fa-user profile-icon-small" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" role="button"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid main-content p-4">
+        <h2 class="mb-4 text-dark-emphasis fw-bold">
+            <i class="fa-solid fa-bus me-2"></i>Gestión de Unidades
+        </h2>
+
+        <div class="toolbar-container">
+            <div class="search-input-group">
+                <i class="bi bi-search"></i>
+                <input type="text" class="form-control" placeholder="Buscar por placas, modelo o ID..." id="buscarUnidad">
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary">
+                    <i class="bi bi-filter me-1"></i> Filtros
+                </button>
+                <button class="btn btn-admin-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarUnidad">
+                    <i class="fa-solid fa-bus-simple me-2"></i>Agregar Unidad
+                </button>
+            </div>
+        </div>
+
+        <div class="card users-table-card">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Unidad</th>
+                            <th>Placas</th>
+                            <th>Capacidad</th>
+                            <th>Modelo</th>
+                            <th>Estado</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaUnidades">
+                        <!-- Las unidades se cargarán dinámicamente -->
+                        <tr>
+                            <td>
+                                <div class="user-avatar-cell">
+                                    <div class="unidad-avatar-img bg-bus-primary">BHE</div>
+                                    <div class="user-info-text">
+                                        <h6>BHE821</h6>
+                                        <small>ID: UNI-001</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><strong>BHE-1234</strong></td>
+                            <td><span class="capacidad-badge">32 pasajeros</span></td>
+                            <td>Mercedez</td>
+                            <td><span class="badge badge-estado estado-activo">Activa</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-light border btn-editar-unidad" data-id="BHE821">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="btn btn-sm btn-light border text-danger">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="user-avatar-cell">
+                                    <div class="unidad-avatar-img bg-bus-success">ABC</div>
+                                    <div class="user-info-text">
+                                        <h6>ABC456</h6>
+                                        <small>ID: UNI-002</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><strong>ABC-7890</strong></td>
+                            <td><span class="capacidad-badge">40 pasajeros</span></td>
+                            <td>Volvo</td>
+                            <td><span class="badge badge-estado estado-activo">Activa</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-light border btn-editar-unidad" data-id="ABC456">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="btn btn-sm btn-light border text-danger">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="user-avatar-cell">
+                                    <div class="unidad-avatar-img bg-bus-warning">XYZ</div>
+                                    <div class="user-info-text">
+                                        <h6>XYZ123</h6>
+                                        <small>ID: UNI-003</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><strong>XYZ-4567</strong></td>
+                            <td><span class="capacidad-badge">28 pasajeros</span></td>
+                            <td>Scania</td>
+                            <td><span class="badge badge-estado estado-mantenimiento">Mantenimiento</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-light border btn-editar-unidad" data-id="XYZ123">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="btn btn-sm btn-light border text-danger">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Agregar Unidad -->
+    <div class="modal fade" id="modalAgregarUnidad" tabindex="-1" aria-labelledby="modalAgregarUnidadLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalAgregarUnidadLabel">
+                        <i class="fa-solid fa-bus-simple me-2"></i>
+                        Agregar Nueva Unidad
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAgregarUnidad">
+                        <!-- Campo de Placas -->
+                        <div class="mb-4">
+                            <label for="placasUnidad" class="form-label requerido">
+                                <i class="fa-solid fa-id-card me-1"></i>Placas de la Unidad
+                            </label>
+                            <input type="text" class="form-control" id="placasUnidad" required 
+                                placeholder="Ej: ABC-123" maxlength="10"
+                                pattern="[A-Z0-9-]+"
+                                title="Formato: Letras mayúsculas, números y guiones">
+                            <div class="form-text">
+                                Ingresa las placas en formato: AAA-123 o ABC123
+                            </div>
+                        </div>
+
+                        <!-- Campo de Capacidad -->
+                        <div class="mb-4">
+                            <label for="capacidadUnidad" class="form-label requerido">
+                                <i class="fa-solid fa-users me-1"></i>Capacidad de Pasajeros
+                            </label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="capacidadUnidad" required 
+                                    placeholder="Ej: 40" min="10" max="100"
+                                    step="1">
+                                <span class="input-group-text">pasajeros</span>
+                            </div>
+                        </div>
+
+                        <!-- Información adicional -->
+                        <div class="mb-3">
+                            <label for="modeloUnidad" class="form-label">
+                                <i class="fa-solid fa-gear me-1"></i>Modelo (Opcional)
+                            </label>
+                            <input type="text" class="form-control" id="modeloUnidad" 
+                                placeholder="Ej: Mercedes-Benz O500">
+                        </div>
+
+                        <!-- Estado de la unidad -->
+                        <div class="mb-3">
+                            <label class="form-label">Estado de la Unidad</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="estadoUnidad" id="estadoActivo" value="activo" checked>
+                                <label class="form-check-label text-success" for="estadoActivo">
+                                    <i class="fa-solid fa-circle-check me-1"></i>Activa
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="estadoUnidad" id="estadoMantenimiento" value="mantenimiento">
+                                <label class="form-check-label text-warning" for="estadoMantenimiento">
+                                    <i class="fa-solid fa-screwdriver-wrench me-1"></i>En Mantenimiento
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Resumen de la unidad -->
+                        <div class="alert alert-info mt-4">
+                            <h6><i class="fa-solid fa-circle-info me-2"></i>Resumen de la Unidad</h6>
+                            <div id="resumenUnidad" class="small">
+                                <div><strong>Placas:</strong> <span id="resumenPlacas" class="text-muted">-</span></div>
+                                <div><strong>Capacidad:</strong> <span id="resumenCapacidad" class="text-muted">-</span> pasajeros</div>
+                                <div><strong>Estado:</strong> <span id="resumenEstado" class="text-muted">-</span></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-admin-primary" id="btnGuardarUnidad">
+                        <i class="fa-solid fa-floppy-disk me-2"></i>Guardar Unidad
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Unidad -->
+    <div class="modal fade" id="modalEditarUnidad" tabindex="-1" aria-labelledby="modalEditarUnidadLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="modalEditarUnidadLabel">
+                        <i class="fa-solid fa-pen-to-square me-2"></i>
+                        Editar Unidad
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarUnidad">
+                        <input type="hidden" id="editIdUnidad">
+                        
+                        <!-- Información de la unidad -->
+                        <div class="alert alert-info mb-3">
+                            <h6><i class="fa-solid fa-circle-info me-2"></i>Información Actual</h6>
+                            <div class="small">
+                                <div><strong>ID Unidad:</strong> <span id="editInfoId">-</span></div>
+                                <div><strong>Modelo:</strong> <span id="editInfoModelo">-</span></div>
+                                <div><strong>Estado Actual:</strong> <span id="editInfoEstado">-</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Campo de Placas -->
+                        <div class="mb-4">
+                            <label for="editPlacasUnidad" class="form-label requerido">
+                                <i class="fa-solid fa-id-card me-1"></i>Placas de la Unidad
+                            </label>
+                            <input type="text" class="form-control" id="editPlacasUnidad" required 
+                                placeholder="Ej: ABC-123" maxlength="10"
+                                pattern="[A-Z0-9-]+"
+                                title="Formato: Letras mayúsculas, números y guiones">
+                        </div>
+
+                        <!-- Campo de Capacidad -->
+                        <div class="mb-4">
+                            <label for="editCapacidadUnidad" class="form-label requerido">
+                                <i class="fa-solid fa-users me-1"></i>Capacidad de Pasajeros
+                            </label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="editCapacidadUnidad" required 
+                                    placeholder="Ej: 40" min="10" max="100"
+                                    step="1">
+                                <span class="input-group-text">pasajeros</span>
+                            </div>
+                        </div>
+
+                        <!-- Estado de la unidad -->
+                        <div class="mb-3">
+                            <label class="form-label">Estado de la Unidad</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="editEstadoUnidad" id="editEstadoActivo" value="activo">
+                                <label class="form-check-label text-success" for="editEstadoActivo">
+                                    <i class="fa-solid fa-circle-check me-1"></i>Activa
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="editEstadoUnidad" id="editEstadoMantenimiento" value="mantenimiento">
+                                <label class="form-check-label text-warning" for="editEstadoMantenimiento">
+                                    <i class="fa-solid fa-screwdriver-wrench me-1"></i>En Mantenimiento
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="editEstadoUnidad" id="editEstadoInactivo" value="inactivo">
+                                <label class="form-check-label text-danger" for="editEstadoInactivo">
+                                    <i class="fa-solid fa-circle-xmark me-1"></i>Inactiva
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-warning text-white" id="btnActualizarUnidad">
+                        <i class="fa-solid fa-rotate me-2"></i>Actualizar Unidad
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast para notificaciones -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="toastNotificacion" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fa-solid fa-circle-check text-success me-2"></i>
+                <strong class="me-auto">Éxito</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMensaje">
+                Operación completada correctamente
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menú de Opciones</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="offcanvas-profile-header">
+                <i class="fa-solid fa-circle-user profile-icon"></i>
+                <h4 id="user-name">Cargando...</h4>
+                <p id="user-email">Cargando...</p>
+                <p class="user-type-badge" id="user-type">Usuario Normal</p>
+            </div>
+            <div class="nav flex-column">
+                <a class="nav-link" href="Administrativo.html"><i class="fa-solid fa-chart-bar"></i></i> Principal</a>
+                <a class="nav-link" href="Usuarios.html"><i class="bi bi-people-fill me-1"></i> Usuarios</a>
+                <a class="nav-link" href="Asignacion de rutas.html"><i class="bi bi-signpost-2-fill me-1"></i> Asignación Rutas</a>
+                <a class="nav-link active" href="unidades.html"><i class="fa-solid fa-bus-simple me-2"></i> Unidades</a>
+                <a class="nav-link" href="Reportes.html"><i class="bi bi-bar-chart-fill me-1"></i> Reportes</a>
+                <hr>
+                <a class="nav-link logout-btn" href="inicio_sesion_personal_TUCSA.html" onclick="logout()"><i class="fa-solid fa-right-from-bracket me-3"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/userAuthPersonal.js"></script>
+    <script src="js/notificationManager.js"></script>
+    <script src="js/unidades.js"></script>
+</body>
+</html>

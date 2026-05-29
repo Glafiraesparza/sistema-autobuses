@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tucsa - Quejas y Reportes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+    <link rel="icon" href="https://cdn-icons-png.freepik.com/512/10867/10867366.png">
+    <link rel="stylesheet" href="css/quejas_usuario.css">
+    <link rel="stylesheet" href="css/historial_viaje.css">
+    <script src="js/config_global.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+        <div class="container-fluid">
+            
+            <a class="navbar-brand me-0" href="#">
+                <i class="fa-solid fa-bus-simple"></i>
+                TUCSA
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pasajero_inicio.html">Inicio</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="pasajero_qr.html">QR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="historial_viaje.html">Historial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="solicitud_tarifa_preferencial.html">Tarifa Preferencial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quejas_usuario.html">Quejas y Reportes</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <div class="dropdown me-3 position-relative">
+                    <i class="fa-solid fa-bell notification-icon-solid" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <span id="low-balance-dot" class="position-absolute translate-middle rounded-circle"></span>
+
+                    <ul class="dropdown-menu dropdown-menu-end notification-menu">
+                        <h6 class="dropdown-header">Notificaciones (2)</h6>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-route me-2"></i>
+                                Ruta 18 con retraso de 5 min.
+                            </a>
+                        </li>
+                        <li id="low-balance-alert-item">
+                            <a class="dropdown-item fw-bold" href="#">
+                                <i class="fa-solid fa-circle-exclamation me-2"></i>
+                                ¡Tu saldo es bajo! Recarga.
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-center text-muted" href="#">Ver todas</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <i class="fa-solid fa-user profile-icon-small" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" role="button"></i>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menú de Opciones</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="offcanvas-profile-header">
+                <i class="fa-solid fa-circle-user profile-icon"></i>
+                <h4>Usuario Ejemplo</h4>
+                <p>usuario@tucsa.com</p>
+            </div>
+            <div class="nav flex-column">
+                <a class="nav-link" href="pasajero_inicio.html"><i class="fa-solid fa-house me-3"></i> Inicio</a>
+                <a class="nav-link" href="pasajero_qr.html"><i class="fa-solid fa-qrcode qr-icon me-3"></i> Generar QR</a>
+                <a class="nav-link" href="historial_viaje.html"><i class="fa-solid fa-clock-rotate-left me-3"></i> Historial de Viajes</a>
+                <a class="nav-link" href="solicitud_tarifa_preferencial.html"><i class="fa-solid fa-heart me-3"></i> Tarifa Preferencial</a>
+                <a class="nav-link " href="configuracion_cuenta.html"><i class="fa-solid fa-gear me-3"></i> Configuración de cuenta</a>
+                <a class="nav-link active" href="quejas_usuario.html"><i class="fa-solid fa-bullhorn me-3"></i> Quejas y Reportes</a>
+                <hr>
+                <a class="nav-link logout-btn" href="inicio_sesion.html"><i class="fa-solid fa-right-from-bracket me-3"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+    <main class="main-content">
+        
+        <div class="container p-4 p-md-5">
+        <!-- Tarjeta de Bienvenida -->
+        <div class="row g-4 mb-4">
+            <div class="col-12">
+                <div class="info-card info-card-primary">
+                    <p class="mb-0">Quejas y Reportes</p>
+                    <h1>Tu opinión cuenta para nosotros</h1>
+                    <p class="mt-3" style="font-size: 1rem; color: rgba(255, 255, 255, 0.9);">
+                        Ayúdanos a mejorar tu experiencia reportando cualquier incidente.
+                    </p>
+                </div>
+            </div>
+        </div>
+            <div class="report-card">
+                <form id="formQueja">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ruta" class="form-label fw-semibold">Ruta:</label>
+                            <select class="form-select" id="ruta" required>
+                                <option value="" selected disabled>Selecciona la ruta</option>
+                                <option value="40 Norte">Ruta 40 Norte</option>
+                                <option value="40 Sur">Ruta 40 Sur</option>
+                                
+                                </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="unidad" class="form-label fw-semibold">Número de Unidad:</label>
+                            <input type="text" class="form-control" id="unidad" placeholder="" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fechaHora" class="form-label fw-semibold">Fecha y Hora del Incidente:</label>
+                        <input type="datetime-local" class="form-control" id="fechaHora" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="descripcion" class="form-label fw-semibold">Descripción del problema:</label>
+                        <textarea class="form-control" id="descripcion" rows="4" placeholder="Describe detalladamente tu reporte (daño en la unidad, acerca del chofer, se paso la parada, etc.)" required></textarea>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" id="btnEnviar" class="btn btn-primary-custom">Enviar Reporte</button>
+                        <button type="button" id="btnCancelar" class="btn btn-secondary-custom">Cancelar</button>
+                    </div>
+                </form>
+
+                <div id="mensajeAlerta" class="alert mt-3 d-none" role="alert"></div>
+            </div>
+        </div> 
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/PassengerNotificationManager.js"></script>
+    <script src="js/quejas_usuario.js"></script>
+</body>
+</html>

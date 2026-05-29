@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tucsa - Historial de Viajes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+    <link rel="icon" href="https://cdn-icons-png.freepik.com/512/10867/10867366.png">
+    <link rel="stylesheet" href="css/historial_viaje.css">
+    <script src="js/config_global.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+        <div class="container-fluid">
+            
+            <a class="navbar-brand me-0" href="#">
+                <i class="fa-solid fa-bus-simple"></i>
+                TUCSA
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pasajero_inicio.html">Inicio</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="pasajero_qr.html">QR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="historial_viaje.html">Historial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="solicitud_tarifa_preferencial.html">Tarifa Preferencial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quejas_usuario.html">Quejas y Reportes</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <div class="dropdown me-3 position-relative">
+                    <i class="fa-solid fa-bell notification-icon-solid" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <span id="low-balance-dot" class="position-absolute translate-middle rounded-circle"></span>
+
+                    <ul class="dropdown-menu dropdown-menu-end notification-menu">
+                        <h6 class="dropdown-header">Notificaciones (2)</h6>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-route me-2"></i>
+                                Ruta 18 con retraso de 5 min.
+                            </a>
+                        </li>
+                        <li id="low-balance-alert-item">
+                            <a class="dropdown-item fw-bold" href="#">
+                                <i class="fa-solid fa-circle-exclamation me-2"></i>
+                                ¡Tu saldo es bajo! Recarga.
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-center text-muted" href="#">Ver todas</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <i class="fa-solid fa-user profile-icon-small" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" role="button"></i>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menú de Opciones</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="offcanvas-profile-header">
+                <i class="fa-solid fa-circle-user profile-icon"></i>
+                <h4>Usuario Ejemplo</h4>
+                <p>usuario@tucsa.com</p>
+            </div>
+            <div class="nav flex-column">
+                <a class="nav-link" href="pasajero_inicio.html"><i class="fa-solid fa-house me-3"></i> Inicio</a>
+                <a class="nav-link" href="pasajero_qr.html"><i class="fa-solid fa-qrcode qr-icon me-3"></i> Generar QR</a>
+                <a class="nav-link active" href="pasajero_historial.html"><i class="fa-solid fa-clock-rotate-left me-3"></i> Historial de Viajes</a>
+                <a class="nav-link" href="solicitud_tarifa_preferencial.html"><i class="fa-solid fa-heart me-3"></i> Tarifa Preferencial</a>
+                <a class="nav-link" href="configuracion_cuenta.html"><i class="fa-solid fa-gear me-3"></i> Configuración de cuenta</a>
+                <a class="nav-link" href="quejas_usuario.html"><i class="fa-solid fa-bullhorn me-3"></i> Quejas y Reportes</a>
+                <hr>
+                <a class="nav-link logout-btn" href="inicio_sesion.html"><i class="fa-solid fa-right-from-bracket me-3"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container p-4 p-md-5">
+
+            <!-- Tarjeta de Bienvenida -->
+            <div class="row g-4 mb-4">
+                <div class="col-12">
+                    <div class="info-card info-card-primary">
+                        <p class="mb-0">Historial de Viajes</p>
+                        <h1>Tus Viajes Realizados</h1>
+                        <p class="mt-3" style="font-size: 1rem; color: rgba(255, 255, 255, 0.9);">
+                            Revisa todos tus viajes, costos y rutas utilizadas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas Rápidas -->
+            <div class="estadisticas-container">
+                <div class="estadistica-card">
+                    <div class="estadistica-valor" id="total-viajes">12</div>
+                    <div class="estadistica-label">Total de Viajes</div>
+                </div>
+                <div class="estadistica-card">
+                    <div class="estadistica-valor" id="total-gastado">$132.00</div>
+                    <div class="estadistica-label">Total Gastado</div>
+                </div>
+                <div class="estadistica-card">
+                    <div class="estadistica-valor" id="viajes-mes">5</div>
+                    <div class="estadistica-label">Viajes este Mes</div>
+                </div>
+                <div class="estadistica-card">
+                    <div class="estadistica-valor" id="ruta-frecuente">Ruta 18</div>
+                    <div class="estadistica-label">Ruta Más Usada</div>
+                </div>
+            </div>
+
+            <!-- Filtros -->
+                <div class="filtros-container">
+                    <h4 class="mb-3"><i class="fa-solid fa-filter me-2"></i>Filtrar Viajes</h4>
+                    <div class="row">
+                        <div class="col-md-3 filtro-group">
+                            <label class="form-label small text-muted">Ruta</label>
+                            <select class="form-select" id="filtro-ruta">
+                                <option value="">Todas las rutas</option>
+                                <!-- Las opciones se cargarán dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="col-md-3 filtro-group">
+                            <label class="form-label small text-muted">Mes</label>
+                            <select class="form-select" id="filtro-mes">
+                                <option value="">Todos los meses</option>
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 filtro-group">
+                            <label class="form-label small text-muted">Ordenar por</label>
+                            <select class="form-select" id="filtro-orden">
+                                <option value="fecha-desc">Más reciente primero</option>
+                                <option value="fecha-asc">Más antiguo primero</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 filtro-group d-flex align-items-end">
+                            <button class="btn btn-outline-secondary w-100" onclick="limpiarFiltros()">
+                                <i class="fa-solid fa-rotate-left me-2"></i>Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Lista de Viajes -->
+            <div id="lista-viajes">
+                <!-- Los viajes se cargarán dinámicamente aquí -->
+                <div class="historial-card">
+                    <div class="viaje-header">
+                        <span class="ruta-badge">Ruta 18 </span>
+                        <span class="fecha-hora">15 Mar 2024 - 08:30 AM</span>
+                    </div>
+                    
+                    <div class="saldo-info">
+                        <div class="saldo-item">
+                            <div class="saldo-label">Saldo Anterior</div>
+                            <div class="saldo-valor saldo-anterior">$45.50</div>
+                        </div>
+                        
+                        <div class="saldo-item">
+                            <div class="saldo-label">Tarifa</div>
+                            <div class="saldo-valor tarifa">-$11.00</div>
+                        </div>
+                        
+                        <div class="saldo-item">
+                            <div class="saldo-label">Saldo Posterior</div>
+                            <div class="saldo-valor saldo-posterior">$34.50</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="historial-card">
+                    <div class="viaje-header">
+                        <span class="ruta-badge">Ruta 25</span>
+                        <span class="fecha-hora">14 Mar 2024 - 17:15 PM</span>
+                    </div>
+                    
+                    <div class="saldo-info">
+                        <div class="saldo-item">
+                            <div class="saldo-label">Saldo Anterior</div>
+                            <div class="saldo-valor saldo-anterior">$56.50</div>
+                        </div>
+                        
+                        <div class="saldo-item">
+                            <div class="saldo-label">Tarifa</div>
+                            <div class="saldo-valor tarifa">-$11.00</div>
+                        </div>
+                        
+                        <div class="saldo-item">
+                            <div class="saldo-label">Saldo Posterior</div>
+                            <div class="saldo-valor saldo-posterior">$45.50</div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <!-- Más viajes... -->
+            </div>
+
+            <!-- Mensaje cuando no hay viajes -->
+            <div id="sin-viajes" class="sin-viajes" style="display: none;">
+                <i class="fa-solid fa-bus-simple"></i>
+                <h4>No hay viajes para mostrar</h4>
+                <p>No se encontraron viajes con los filtros aplicados.</p>
+                <button class="btn btn-primary mt-2" onclick="limpiarFiltros()">
+                    Mostrar todos los viajes
+                </button>
+            </div>
+
+            <!-- Paginación -->
+            <nav aria-label="Paginación de viajes" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <!-- La paginación se generará dinámicamente aquí -->
+                </ul>
+            </nav>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/PassengerNotificationManager.js"></script>
+    <script src="js/historial_viaje.js"></script>
+</body>
+</html>

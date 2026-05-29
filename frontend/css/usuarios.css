@@ -1,0 +1,289 @@
+/* css/usuarios.css */
+
+/* Variables para los colores (mantener consistencia) */
+:root {
+    --primary-dark: #3D365C;
+    --secondary-purple: #7C4585;
+    --accent-pink: #C95792;
+    --highlight-orange: #F8B55F;
+    --body-background: #EBEAEF;
+    --card-background: #FFFFFF;
+    --text-light: #e0e0e0;
+    --text-dark: #2c2c2c;
+    --neutral-gray: #ccc;
+    --soft-text-gray: #6c757d;
+}
+
+/* Contenido principal específico para usuarios */
+.main-content {
+    background-color: var(--body-background);
+    min-height: calc(100vh - 76px);
+    padding: 2rem 0;
+}
+
+/* Barra de búsqueda y filtros */
+.search-container {
+    position: relative;
+    margin-bottom: 1.5rem;
+    max-width: 500px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px 12px 45px;
+    border: 2px solid var(--neutral-gray);
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--secondary-purple);
+    box-shadow: 0 0 0 3px rgba(124, 69, 133, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--soft-text-gray);
+    font-size: 18px;
+}
+
+.filter-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 0 8px 8px 0;
+    background-color: var(--card-background);
+    border: 2px solid var(--neutral-gray);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--soft-text-gray);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-badge:hover {
+    border-color: var(--secondary-purple);
+    color: var(--secondary-purple);
+}
+
+.filter-badge.active {
+    background-color: var(--secondary-purple);
+    border-color: var(--secondary-purple);
+    color: white;
+}
+
+/* Sección de gestión */
+.management-section {
+    background: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+/* Tabla de usuarios */
+.table th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid var(--neutral-gray);
+    font-weight: 600;
+    color: var(--text-dark);
+    padding: 15px 12px;
+}
+
+.table td {
+    padding: 15px 12px;
+    vertical-align: middle;
+    border-color: var(--neutral-gray);
+}
+
+/* Badges para roles */
+.badge-rol-administrador {
+    background-color: rgba(124, 69, 133, 0.1);
+    color: var(--secondary-purple);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid rgba(124, 69, 133, 0.2);
+}
+
+.badge-rol-chofer {
+    background-color: rgba(248, 181, 95, 0.15);
+    color: var(--highlight-orange);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid rgba(248, 181, 95, 0.3);
+}
+
+/* Botones de acción */
+.btn-admin-primary {
+    background: linear-gradient(135deg, var(--secondary-purple), var(--primary-dark));
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-admin-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-purple));
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-editar {
+    background-color: rgba(124, 69, 133, 0.1);
+    color: var(--secondary-purple);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-editar:hover {
+    background-color: var(--secondary-purple);
+    color: white;
+}
+
+.btn-estado {
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: all 0.3s ease;
+}
+
+/* Modal personalizado */
+.modal-perfil .modal-header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-purple));
+    color: white;
+    border-bottom: none;
+}
+
+.modal-perfil .modal-header .btn-close {
+    filter: invert(1);
+}
+
+.modal-perfil .btn-guardar-cambios {
+    background: linear-gradient(135deg, var(--secondary-purple), var(--primary-dark));
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.modal-perfil .btn-guardar-cambios:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-purple));
+    color: white;
+}
+
+/* Títulos y encabezados específicos para usuarios */
+.users-header {
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+}
+
+.users-header h1 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-container {
+        max-width: 100%;
+    }
+    
+    .filter-badge {
+        margin: 0 4px 8px 0;
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    .table-responsive {
+        font-size: 14px;
+    }
+    
+    .main-content {
+        padding: 1rem 0;
+    }
+}
+
+/* Botón de eliminar */
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+}
+
+/* Grupo de botones */
+.btn-group {
+    display: flex;
+    gap: 4px;
+}
+
+.btn-group .btn {
+    flex: 0 0 auto;
+}
+
+/* Responsive para botones */
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+        gap: 2px;
+    }
+    
+    .btn-group .btn {
+        width: 100%;
+    }
+}
+
+/* Estilos para las gráficas */
+.chart-canvas-area {
+    position: relative;
+    height: 300px;
+    min-height: 300px;
+}
+
+.chart-canvas-area canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.chart-placeholder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #6c757d;
+}
+
+.chart-placeholder-content i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Asegurar que las tarjetas de estadísticas tengan buen espaciado */
+.stat-card {
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}

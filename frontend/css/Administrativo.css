@@ -1,0 +1,361 @@
+/* static/css/administrativo.css */
+/* Variables para los colores */
+:root {
+    --primary-dark: #3D365C;
+    --secondary-purple: #7C4585;
+    --accent-pink: #C95792;
+    --highlight-orange: #F8B55F;
+    --body-background: #EBEAEF;
+    --card-background: #FFFFFF;
+    --text-light: #e0e0e0;
+    --text-dark: #2c2c2c;
+    --neutral-gray: #ccc;
+    --soft-text-gray: #6c757d;
+    --danger-red: #dc3545;
+}
+
+/* Estilos Generales */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--body-background);
+    color: var(--text-dark);
+}
+
+h1, h2, h3 {
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+/* ------------------- NAV BAR ------------------- */
+.app-navbar {
+    background-color: var(--primary-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.navbar-brand i {
+    color: var(--highlight-orange);
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.app-navbar .nav-link {
+    color: var(--text-light) !important;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 0.5rem 1rem !important;
+}
+
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link.active {
+    color: white !important;
+}
+
+.app-navbar .nav-link i {
+    margin-right: 0.5rem;
+}
+
+/* Iconos de Perfil en Navbar */
+.profile-icon-small {
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.profile-icon-small:hover {
+    color: var(--highlight-orange);
+}
+
+/* Icono de Campana */
+.notification-icon-solid {
+    color: var(--highlight-orange);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.notification-icon-solid:hover {
+    color: var(--accent-pink);
+}
+
+/* Punto de Notificación */
+#low-balance-dot {
+    top: 5px;
+    right: 1px;
+    height: 10px;
+    width: 10px;
+    background-color: var(--accent-pink);
+    border: 2px solid var(--primary-dark);
+    z-index: 1000;
+}
+
+/* Dropdown de Notificaciones */
+.notification-menu {
+    min-width: 250px;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notification-menu a.dropdown-item i {
+    color: var(--secondary-purple);
+}
+
+#low-balance-alert-item a {
+    color: var(--accent-pink);
+}
+
+#low-balance-alert-item a i {
+    color: var(--accent-pink);
+}
+
+/* ------------------- OFFCANVAS ------------------- */
+.offcanvas {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.offcanvas-profile-header {
+    text-align: center;
+    padding: 1rem 0;
+    border-bottom: .5px solid #dee2e6;
+    margin-bottom: .3rem;
+}
+
+.profile-icon {
+    font-size: 4rem;
+    color: var(--secondary-purple);
+    margin-bottom: .5rem;
+}
+
+.offcanvas-body .nav-link {
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+    margin-bottom: 0.25rem;
+}
+
+.offcanvas-body .nav-link:hover,
+.offcanvas-body .nav-link.active {
+    background-color: var(--secondary-purple) !important;
+    color: white;
+}
+
+.offcanvas-body .nav-link.logout-btn {
+    background-color: var(--card-background);
+    color: var(--danger-red);
+    font-weight: 700;
+    margin-top: 1rem;
+    border: 2px solid var(--danger-red);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.offcanvas-body .nav-link.logout-btn i {
+    color: var(--danger-red);
+}
+
+.offcanvas-body .nav-link.logout-btn:hover {
+    background-color: var(--danger-red);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5);
+}
+
+.offcanvas-body .nav-link.logout-btn:hover i {
+    color: white;
+}
+
+/* ------------------- TARJETAS ADMINISTRATIVAS ------------------- */
+.admin-card {
+    border-radius: 1.5rem;
+    background-color: var(--card-background);
+    border: 1px solid var(--neutral-gray);
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.admin-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.admin-card i {
+    color: var(--secondary-purple);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.admin-card .card-title {
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-card .card-text {
+    color: var(--highlight-orange);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+/* Contenido principal */
+.main-content {
+    background-color: var(--body-background);
+    min-height: calc(100vh - 76px);
+}
+
+/* ------------------- BOTONES ADMINISTRATIVOS ------------------- */
+.btn-admin-primary {
+    background-color: var(--secondary-purple);
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-admin-primary:hover {
+    background-color: var(--primary-dark);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Botones de acción */
+.btn-ver {
+    background-color: var(--secondary-purple);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    transition: all 0.3s;
+}
+
+.btn-ver:hover {
+    background-color: var(--primary-dark);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-aprobar {
+    background-color: var(--highlight-orange);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    transition: all 0.3s;
+}
+
+.btn-aprobar:hover {
+    background-color: #e6a347;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-resolver {
+    background-color: var(--accent-pink);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    transition: all 0.3s;
+}
+
+.btn-resolver:hover {
+    background-color: #b84c83;
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* ------------------- SECCIONES DE GESTIÓN ------------------- */
+.management-section {
+    background-color: var(--card-background);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.management-section h2 {
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+/* ------------------- BADGES ------------------- */
+/* Badges para estados */
+.badge-pendiente {
+    background-color: var(--highlight-orange);
+    color: white;
+}
+
+.badge-proceso {
+    background-color: var(--secondary-purple);
+    color: white;
+}
+
+.badge-resuelto {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge-inconveniente {
+    background-color: var(--accent-pink);
+    color: white;
+}
+
+/* Badges para tipos de usuario */
+.user-type-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-admin {
+    background-color: #dc3545;
+    color: white;
+}
+
+.badge-chofer {
+    background-color: #198754;
+    color: white;
+}
+
+.badge-usuario {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* ------------------- RESPONSIVE ------------------- */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        margin-top: 1rem;
+    }
+    
+    .navbar-nav {
+        text-align: center;
+    }
+}
+
+@media (min-width: 992px) {
+    .admin-card {
+        min-height: 180px;
+    }
+}

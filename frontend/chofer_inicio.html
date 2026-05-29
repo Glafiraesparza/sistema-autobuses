@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Chofer - Rutas Urbanas</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn-icons-png.freepik.com/512/10867/10867366.png">
+    <link rel="stylesheet" href="css/choferes_inicio.css">
+    <script src="js/config_global.js"></script>
+</head>
+<body>
+
+    <header class="main-header shadow-sm">
+        <div class="container-fluid d-flex justify-content-between align-items-center py-2">
+            <div class="app-title">
+                <i class="bi bi-bus-front-fill me-2"></i>
+                <span class="company-name">Tucsa</span>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <span class="user-info me-3">
+                    <span class="d-none d-sm-inline">Bienvenido, </span>
+                    <strong id="chofer-nombre">Juan Pérez</strong>
+                </span>
+                
+                <button class="btn btn-status me-3" id="status-button">
+                    <i class="bi bi-geo-alt-fill me-1"></i>
+                    Activo
+                </button>
+
+                <div class="dropdown">
+                    <button class="btn btn-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Ajustes</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="inicio_sesion_personal_TUCSA.html" style="color: var(--secondary-purple);"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container-fluid pt-4">
+
+            <div class="row mb-4 gx-3">
+                <div class="col-6">
+                    <button class="btn btn-panic w-100 py-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#panicModal">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> ASISTENCIA
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-report w-100 py-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#reportModal">
+                        <i class="bi bi-headset me-2"></i> INFORMAR USUARIOS
+                    </button>
+                </div>
+            </div>
+
+            <div class="card current-task-card shadow-lg mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-pin-map-fill me-2"></i>Progreso de la Ruta 40 Sur</h5>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="row text-center mb-4 route-progress-container">
+                        <div class="col-12">
+                            <h4 class="text-muted">Parada Anterior</h4>
+                            <h2 class="route-stop-name prev-stop" id="prev-stop-name">Av. Principal y Calle 15</h2>
+                        </div>
+                        
+                        <div class="col-12 py-3">
+                            <i class="bi bi-arrow-down-circle-fill arrow-icon"></i>
+                        </div>
+
+                        <div class="col-12">
+                            <h4 class="text-secondary fw-bold">Próxima Parada</h4>
+                            <h1 class="route-stop-name next-stop" id="next-stop-name">Estación Central Norte</h1>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+                    <button class="btn btn-finish-task mt-4 w-100 btn-lg" id="confirm-arrival-button">
+                        Confirmar LLEGADA a Estación Central Norte
+                    </button>
+
+                    <div id="route-end-message" class="alert text-center mt-3 d-none" role="alert">
+                        ¡Ruta completada!
+                    </div>
+
+                    <button class="btn btn-secondary mt-2 w-100" id="reset-route-button">
+                        <i class="bi bi-arrow-clockwise me-2"></i> Reiniciar Ruta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Emergencia -->
+    <div class="modal fade" id="panicModal" tabindex="-1" aria-labelledby="panicModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-panic text-white">
+                    <h5 class="modal-title" id="panicModalLabel"><i class="bi bi-exclamation-octagon-fill me-2"></i> ASISTENCIA DE EMERGENCIA</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-panic fw-bold">Unidad: Bus 72A | Ruta: 40 Sur</p>
+                    <p>Por favor, seleccione el tipo de asistencia que requiere para la unidad.</p>
+                    <form id="panicForm">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tipo de Incidente:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="incidentType" id="incidentAccident" value="Accidente" required>
+                                <label class="form-check-label" for="incidentAccident">
+                                    Accidente / Colisión
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="incidentType" id="incidentFalla" value="Falla Mecánica">
+                                <label class="form-check-label" for="incidentFalla">
+                                    Falla Mecánica
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Servicio Requerido:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="serviceType" id="serviceLawyer" value="Abogado" required>
+                                <label class="form-check-label" for="serviceLawyer">
+                                    <i class="bi bi-person-badge me-1"></i> Asistencia Legal (Abogado)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="serviceType" id="serviceMechanic" value="Mecánico/Grúa">
+                                <label class="form-check-label" for="serviceMechanic">
+                                    <i class="bi bi-tools me-1"></i> Asistencia Mecánica (Mecánico/Grúa)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info-custom small" role="alert">
+                            Al enviar, la ubicación GPS será compartida automáticamente con el equipo de soporte.
+                        </div>
+
+                        <button type="submit" class="btn btn-modal-panic w-100 py-2">
+                            <i class="bi bi-send-fill me-1"></i> SOLICITAR ASISTENCIA A CENTRAL
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Reporte de Retraso -->
+    <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-report text-dark">
+                    <h5 class="modal-title" id="reportModalLabel"><i class="bi bi-info-circle-fill me-2"></i> INFORMAR RETRASO A PASAJEROS</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Seleccione un mensaje predefinido para notificar a los usuarios en las paradas que la unidad está demorada.</p>
+                    <form id="reportForm">
+                        <div class="mb-3">
+                            <label for="delayReason" class="form-label fw-bold">Razón del Retraso:</label>
+                            <select class="form-select" id="delayReason" required>
+                                <option value="" disabled selected>Seleccione un motivo...</option>
+                                <option value="Trafico">Tráfico Pesado inesperado.</option>
+                                <option value="Desviacion">Desviación de ruta temporal por obras.</option>
+                                <option value="Carga">Demora en la carga de pasajeros.</option>
+                                <option value="FallaMenor">Falla menor en la unidad (pronto se reanuda).</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="delayEstimate" class="form-label fw-bold">Estimación de Demora:</label>
+                            <select class="form-select" id="delayEstimate" required>
+                                <option value="5">Menos de 5 minutos</option>
+                                <option value="10">5 - 10 minutos</option>
+                                <option value="15">Más de 10 minutos</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-modal-report w-100 py-2 fw-bold">
+                            <i class="bi bi-broadcast-pin me-1"></i> ENVIAR ALERTA A USUARIOS
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación CORREGIDO -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="confirmationModalLabel">
+                        <i class="bi bi-check-circle-fill me-2"></i> Reporte Enviado
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-check-circle-fill text-success confirmation-icon" style="font-size: 3rem;"></i>
+                    </div>
+                    <h4 id="confirmation-title" class="text-success">¡Reporte Enviado Exitosamente!</h4>
+                    <p id="confirmation-message" class="mb-0">La notificación ha sido enviada a todos los pasajeros.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                        <i class="bi bi-check-lg me-2"></i> Entendido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/notificaciones.js"></script>
+    <script src="js/chofer_inicio.js"></script>
+    <script src="js/chofer_progreso.js"></script>
+</body>
+</html>

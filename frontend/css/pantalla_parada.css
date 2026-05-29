@@ -1,0 +1,376 @@
+:root {
+    --primary-dark: #3D365C;
+    --secondary-purple: #7C4585;
+    --accent-pink: #C95792;
+    --highlight-orange: #F8B55F;
+    --success-green: #28a745;
+    --warning-orange: #fd7e14;
+    --danger-red: #dc3545;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 15px;
+}
+
+.pantalla-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    min-height: 95vh;
+}
+
+.pantalla-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-header {
+    border-bottom: none;
+    padding: 12px 20px;
+}
+
+.card-body {
+    padding: 0;
+}
+
+/* Mapa */
+.mapa-parada {
+    height: 500px;
+    width: 100%;
+    border-radius: 0 0 12px 12px;
+}
+
+/* Estilos para los marcadores de camiones */
+.camion-marker {
+    background: transparent;
+    border: none;
+    text-align: center;
+}
+
+.camion-icon {
+    font-size: 20px;
+    color: #e74c3c;
+    filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.3));
+}
+
+.camion-numero {
+    background: white;
+    border: 2px solid #333;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    font-weight: bold;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+
+/* Marcador de parada */
+.parada-marker {
+    background: transparent;
+    border: none;
+    text-align: center;
+}
+
+.parada-icon {
+    font-size: 24px;
+    color: #3498db;
+    filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.3));
+}
+
+/* Tiempos estimados */
+.ruta-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.3s ease;
+}
+
+.ruta-item:last-child {
+    border-bottom: none;
+}
+
+.ruta-item:hover {
+    background-color: #f8f9fa;
+}
+
+.ruta-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ruta-icon {
+    font-size: 1.5rem;
+    color: var(--secondary-purple);
+}
+
+.ruta-details h4 {
+    margin: 0;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.ruta-details .ruta-numero {
+    font-size: 0.8rem;
+    color: var(--secondary-purple);
+    font-weight: 500;
+}
+
+.tiempo-estimado {
+    text-align: right;
+}
+
+.tiempo-principal {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+}
+
+.tiempo-unidad {
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.tiempo-detalles {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 4px;
+}
+
+/* Estados de tiempo */
+.tiempo-inmediato {
+    color: var(--success-green);
+}
+
+.tiempo-cercano {
+    color: var(--warning-orange);
+}
+
+.tiempo-lejano {
+    color: var(--danger-red);
+}
+
+.tiempo-retraso {
+    background: linear-gradient(45deg, var(--danger-red), #e74c3c);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    margin-left: 6px;
+}
+
+/* Rutas próximas */
+.ruta-proxima {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(255, 255, 255, 0.9));
+    border-left: 4px solid var(--success-green);
+    animation: pulseProximo 2s infinite;
+}
+
+@keyframes pulseProximo {
+    0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(40, 167, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+/* Animaciones */
+.fa-beat-fade {
+    animation: fa-beat-fade 2s infinite linear;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.7; }
+}
+
+.actualizando {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.last-update {
+    margin-top: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .pantalla-container {
+        padding: 10px;
+        margin: 5px;
+    }
+    
+    .ruta-item {
+        padding: 12px 15px;
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .tiempo-estimado {
+        text-align: center;
+    }
+    
+    .tiempo-principal {
+        font-size: 1.5rem;
+    }
+    
+    .mapa-parada {
+        height: 300px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+    .mapa-parada {
+        height: 400px;
+    }
+}
+/* Agregar al final del archivo pantalla_parada.css */
+
+/* Mejoras visuales para los tiempos */
+.tiempo-inmediato {
+    color: var(--success-green);
+    font-weight: 800;
+    text-shadow: 1px 1px 2px rgba(40, 167, 69, 0.3);
+}
+
+.tiempo-cercano {
+    color: var(--warning-orange);
+    font-weight: 700;
+}
+
+.tiempo-lejano {
+    color: var(--danger-red);
+    font-weight: 600;
+}
+
+/* Animación para camiones próximos */
+@keyframes highlightProximo {
+    0% { background-color: rgba(40, 167, 69, 0.1); }
+    50% { background-color: rgba(40, 167, 69, 0.2); }
+    100% { background-color: rgba(40, 167, 69, 0.1); }
+}
+
+.ruta-proxima {
+    animation: highlightProximo 2s infinite;
+    border-left: 4px solid var(--success-green);
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(255, 255, 255, 0.9));
+}
+
+/* Mejorar el badge de estado */
+.badge {
+    font-size: 0.8rem;
+    padding: 0.4em 0.6em;
+}
+
+/* Mejorar la legibilidad del selector */
+.form-select {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+}
+
+.form-select:focus {
+    border-color: var(--secondary-purple);
+    box-shadow: 0 0 0 0.2rem rgba(124, 69, 133, 0.25);
+}
+/* Estados de carga mejorados */
+.badge.bg-warning {
+    animation: pulse 1.5s infinite;
+}
+
+.badge.bg-success {
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+}
+
+/* Mejorar la experiencia de carga */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 12px;
+}
+
+/* Mejorar el selector */
+.form-select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Logs de consola estilizados */
+.console-log {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    background: #f8f9fa;
+    border-left: 3px solid #007bff;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+/* Ocultar el mapa del GPS pero mantener la funcionalidad */
+.mapa-parada {
+    display: none !important;
+}
+
+/* Ajustar el layout para que ocupe todo el espacio disponible */
+.col-12.col-lg-8 {
+    display: none;
+}
+
+.col-12.col-lg-4 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+}
+
+/* Opcional: Hacer la tarjeta de tiempos más grande */
+.pantalla-card {
+    min-height: 80vh;
+}
+
+/* Mejorar la visualización de los tiempos sin el mapa */
+.ruta-item {
+    padding: 20px 25px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.tiempo-principal {
+    font-size: 2.2rem;
+}
+
+.ruta-details h4 {
+    font-size: 1.3rem;
+}
+
+.ruta-numero {
+    font-size: 1rem;
+}

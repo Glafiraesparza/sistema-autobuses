@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: autobuses-mongodb-network
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data_network:/data/db
+      - ./scripts/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    command: mongod --bind_ip_all
+
+  app:
+    build: .
+    container_name: autobuses-app-network
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./certificates:/app/certificates:ro
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
+    environment:
+      - DOCKER_ENV=network
+      - SERVER_IP=${YOUR_LOCAL_IP}
+      - MONGODB_URL=mongodb://mongodb:27017
+    command: >
+      sh -c "uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+             --ssl-keyfile certificates/localhost+3-key.pem
+             --ssl-certfile certificates/localhost+3.pem"
+
+volumes:
+  mongodb_data_network:

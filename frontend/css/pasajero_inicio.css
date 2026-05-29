@@ -1,0 +1,1015 @@
+/* Variables para los colores */
+:root {
+    --primary-dark: #3D365C;
+    --secondary-purple: #7C4585;
+    --accent-pink: #C95792;
+    --highlight-orange: #F8B55F;
+    --body-background: #EBEAEF;
+    --card-background: #FFFFFF;
+    --text-light: #e0e0e0;
+    --text-dark: #2c2c2c;
+    --neutral-gray: #ccc;
+    --soft-text-gray: #6c757d;
+    --danger-red: #dc3545;
+}
+
+/* Estilos Generales */
+body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: var(--body-background);
+    color: var(--text-dark);
+}
+
+h1, h2, h3 {
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+/* ------------------- NAV BAR ------------------- */
+.app-navbar {
+    background-color: var(--primary-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.navbar-brand {
+    color: white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+.navbar-brand i {
+    color: var(--highlight-orange);
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+}
+.app-navbar .nav-link {
+    color: var(--text-light);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link.active {
+    color: white;
+}
+
+/* Iconos de Perfil en Navbar */
+.profile-icon-small {
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.profile-icon-small:hover {
+    color: var(--highlight-orange);
+}
+
+/* Icono de Campana Sólida y Naranja */
+.notification-icon-solid {
+    color: var(--highlight-orange);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.notification-icon-solid:hover {
+    color: var(--accent-pink);
+}
+
+/* Punto de Notificación (Saldo Bajo) */
+#low-balance-dot {
+    top: 5px;
+    right: 1px;
+    height: 10px;
+    width: 10px;
+    background-color: var(--accent-pink);
+    border: 2px solid var(--primary-dark);
+    z-index: 1000;
+}
+
+/* Dropdown de Notificaciones - Responsivo */
+.notification-menu {
+    min-width: 250px;
+    max-width: calc(100vw - 30px); /* Limita el ancho al viewport menos márgenes */
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    
+    /* Para móviles */
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin: 0;
+    width: 90vw; /* Ocupa 90% del ancho en móviles */
+}
+
+/* Ajustes para tablets y pantallas medianas */
+@media (min-width: 768px) {
+    .notification-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: auto !important;
+        right: 0 !important;
+        transform: none !important;
+        max-height: 60vh;
+        width: auto;
+        max-width: 350px; /* Ancho máximo para tablets */
+    }
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 992px) {
+    .notification-menu {
+        min-width: 300px;
+        max-width: 400px;
+    }
+}
+
+/* Mejoras para items en móviles */
+.notification-menu .dropdown-item {
+    padding: 12px 15px;
+    white-space: normal; /* Permite que el texto se ajuste */
+    word-wrap: break-word;
+}
+
+/* Tamaño de fuente responsivo */
+.notification-menu .dropdown-item,
+.notification-menu .dropdown-header {
+    font-size: 0.95rem;
+}
+
+@media (max-width: 576px) {
+    .notification-menu .dropdown-item,
+    .notification-menu .dropdown-header {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+}
+
+/* Íconos responsivos */
+.notification-menu a.dropdown-item i {
+    color: var(--secondary-purple);
+    font-size: 1.1rem;
+    margin-right: 8px;
+    min-width: 20px; /* Espacio consistente para íconos */
+}
+
+@media (max-width: 576px) {
+    .notification-menu a.dropdown-item i {
+        font-size: 1rem;
+        margin-right: 6px;
+    }
+}
+
+/* Alerta específica */
+#low-balance-alert-item a {
+    color: var(--accent-pink);
+}
+#low-balance-alert-item a i {
+    color: var(--accent-pink);
+}
+
+/* Mejor scroll en móviles */
+.notification-menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.notification-menu::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Asegurar que no se salga de la pantalla en móviles */
+@media (max-width: 767px) {
+    body.dropdown-open {
+        overflow: hidden; /* Previene scroll del body cuando dropdown está abierto */
+    }
+    
+    .notification-menu {
+        z-index: 1060; /* Asegura que esté sobre otros elementos */
+    }
+}
+
+/* Backdrop para móviles (opcional, si usas JavaScript) */
+.notification-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+}
+
+@media (max-width: 767px) {
+    .notification-backdrop.active {
+        display: block;
+    }
+}
+
+/* ------------------- MAPA ------------------- */
+#map { 
+    height: 100vh; 
+    width: 100%; 
+}
+
+/* Sidebar Responsive */
+.sidebar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+    width: 300px; /* Default para escritorio */
+    max-width: calc(100vw - 40px); /* Para móviles */
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: calc(100vw - 40px); /* Ocupa casi todo el ancho */
+        left: 10px;
+        right: 10px;
+        max-width: none;
+    }
+    
+    /* Ajustes adicionales para contenido del sidebar en móviles */
+    .sidebar .titulo {
+        font-size: 1.2rem;
+    }
+    
+    .ruta-btn {
+        padding: 12px 10px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Botones de ruta */
+.ruta-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+}
+.ruta-btn:hover {
+    background: #e9ecef;
+}
+.ruta-btn.activa {
+    background: #007bff;
+    color: white;
+    border-color: #0056b3;
+}
+.ruta-info {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+}
+.titulo {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Marcadores del mapa */
+.camion-marker {
+    background: transparent;
+    border: none;
+    text-align: center;
+    font-size: 20px;
+}
+
+.camion-numero {
+    background: white;
+    border: 2px solid #333;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    font-weight: bold;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+
+.info-simulacion {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #666;
+}
+
+.info-simulacion p {
+    margin: 5px 0;
+}
+
+/* Estilos para paradas de autobús */
+.parada-marker {
+    transition: all 0.3s ease;
+}
+
+.leaflet-popup-content p {
+    margin: 5px 0;
+}
+
+/* Indicador de zoom en el sidebar */
+.info-zoom {
+    margin-top: 10px;
+    padding: 8px;
+    background: #e3f2fd;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #1565c0;
+    border-left: 3px solid #2196f3;
+}
+
+.info-zoom p {
+    margin: 3px 0;
+}
+
+/* ------------------- OFFCANVAS (Menú Lateral Derecho) ------------------- */
+.offcanvas {
+    background-color: var(--primary-dark);
+    color: white;
+}
+.offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.offcanvas-profile-header {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.profile-icon {
+    font-size: 4rem;
+    color: var(--secondary-purple);
+    margin-bottom: 0.5rem;
+}
+.offcanvas-body h4 {
+    font-weight: 600;
+    margin-bottom: 0;
+}
+.offcanvas-body p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* Estilo para los elementos normales del menú */
+.offcanvas-body .nav-link {
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+.offcanvas-body .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+.offcanvas-body .nav-link i {
+    color: white;
+    font-size: 1.1rem;
+}
+
+.offcanvas-body .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Estilo para el botón de Cerrar Sesión */
+.offcanvas-body .nav-link.logout-btn {
+    background-color: var(--card-background);
+    color: var(--danger-red);
+    font-weight: 700;
+    margin-top: 1rem;
+    border: 2px solid var(--danger-red);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.offcanvas-body .nav-link.logout-btn i {
+    color: var(--danger-red);
+}
+
+.offcanvas-body .nav-link.logout-btn:hover {
+    background-color: var(--danger-red);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5);
+}
+
+.offcanvas-body .nav-link.logout-btn:hover i {
+    color: white;
+}
+
+/* ------------------- TARJETAS (CARDS) ------------------- */
+
+/* Base de las tarjetas */
+.info-card {
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    height: auto;
+}
+
+/* Tarjeta Principal (Saludo - Rosa/Púrpura) */
+.info-card-primary {
+    background: linear-gradient(135deg, var(--accent-pink), var(--secondary-purple));
+    color: white;
+    position: relative;
+    overflow: hidden;
+    padding: 1.5rem;
+}
+.info-card-primary h1, .info-card-primary p {
+    color: white;
+}
+.info-card-primary h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+.info-card-primary p {
+    font-weight: 500;
+}
+
+/* Tarjetas Secundarias (Saldo, Costo, QR - Blanco) */
+.info-card-secondary {
+    background-color: var(--card-background);
+    border: 1px solid var(--neutral-gray);
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 1.5rem;
+}
+.info-card-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-card-secondary .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.info-card-secondary .card-content-horizontal {
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Íconos dentro de tarjetas secundarias */
+.info-card-secondary i {
+    color: var(--secondary-purple);
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+.info-card-secondary .card-content-horizontal i {
+    font-size: 2.5rem;
+    margin-right: 1.5rem;
+    margin-bottom: 0;
+}
+
+/* Texto de saldo/costo */
+.info-card-secondary h3 {
+    color: var(--highlight-orange);
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.info-card-secondary h3 span {
+    color: var(--soft-text-gray);
+    font-size: 0.7em;
+    font-weight: 500;
+    margin-left: 0.25rem;
+}
+.info-card-secondary h4 {
+    color: var(--highlight-orange);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.info-card-secondary h4 span {
+    color: var(--soft-text-gray);
+    font-size: 0.7em;
+    font-weight: 500;
+    margin-left: 0.25rem;
+}
+
+.info-card-secondary p {
+    color: var(--soft-text-gray);
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 0.1rem;
+}
+
+/* Tarjeta de Ruta Favorita */
+.info-card-lg {
+    padding: 1.5rem;
+}
+
+/* Botón de Ruta Favorita */
+.info-card-secondary .dropdown .btn.dropdown-toggle {
+    background-color: var(--secondary-purple);
+    color: white;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border: none;
+    text-align: left;
+}
+
+/* Menú Desplegable (Opciones de ruta) */
+.info-card-secondary .dropdown .dropdown-menu {
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ------------------- MAPA ------------------- */
+.map-frame {
+    border-radius: 1.5rem;
+    border: 3px solid var(--neutral-gray);
+    min-height: 450px;
+    background-color: var(--card-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: var(--soft-text-gray);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.map-frame i {
+    color: var(--secondary-purple);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* ------------------- MEDIA QUERIES (RESPONSIVE) ------------------- */
+
+/* Ajustes para móviles */
+@media (max-width: 991.98px) {
+    /* Ocultar el menú de navegación central en móvil */
+    .app-navbar .collapse {
+        display: none !important;
+    }
+    
+    /* Centrar la marca/logo cuando el menú central está oculto */
+    .navbar-brand {
+        flex-grow: 1;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    /* Asegurar el orden de los elementos en móvil (Logo, luego iconos) */
+    .d-flex.align-items-center {
+        order: 3;
+    }
+    
+    /* Ajustes para tarjetas en móviles */
+    .info-card-secondary {
+        min-height: 160px;
+    }
+    
+    .info-card-secondary .dropdown .btn.dropdown-toggle {
+        min-height: 45px;
+        font-size: 0.9rem;
+    }
+    
+    /* Ajustar tamaño de fuente en móviles */
+    .info-card-primary h1 {
+        font-size: 1.8rem;
+    }
+    
+    .info-card-secondary h3 {
+        font-size: 2.2rem;
+    }
+    
+    .info-card-secondary h4 {
+        font-size: 1.5rem;
+    }
+    
+    .map-frame {
+        min-height: 350px;
+    }
+}
+
+/* Ajustes para tabletas y escritorio (lg) */
+@media (min-width: 992px) {
+    .info-card-primary {
+        padding: 2rem !important;
+    }
+    
+    .info-card-primary h1 {
+        font-size: 2.8rem !important;
+    }
+    
+    .info-card-secondary {
+        min-height: 200px;
+    }
+}
+
+/* ------------------- AJUSTES PARA TARJETAS DEL MISMO TAMAÑO ------------------- */
+
+.row.g-4.mb-5 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-6.col-lg-4,
+.col-12.col-lg-4 {
+    display: flex;
+}
+
+.info-card-secondary {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 180px;
+}
+
+.info-card-secondary .card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.info-card-secondary .card-content-horizontal {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* ------------------- BARRA DE SELECCIÓN MÁS LARGA ------------------- */
+
+.info-card-secondary .dropdown {
+    width: 100%;
+}
+
+.info-card-secondary .dropdown .btn.dropdown-toggle {
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-card-secondary .dropdown .btn.dropdown-toggle::after {
+    margin-left: auto;
+}
+
+/* Menú desplegable más ancho */
+.info-card-secondary .dropdown .dropdown-menu {
+    width: 100%;
+    min-width: 100%;
+    overflow-x: hidden !important;
+}
+
+/* ------------------- AJUSTES ESPECÍFICOS PARA CADA TARJETA ------------------- */
+
+.col-6.col-lg-4:nth-child(3) .info-card-secondary {
+    min-height: 180px;
+}
+
+.col-6.col-lg-4:nth-child(4) .info-card-secondary {
+    min-height: 180px;
+    font-size: 1.8rem;
+}
+
+.col-12.col-lg-4:nth-child(5) .info-card-secondary {
+    min-height: 180px;
+}
+
+.col-12.col-lg-4:nth-child(5) .card-content-horizontal {
+    align-items: flex-start;
+}
+
+.col-12.col-lg-4:nth-child(5) .card-content-horizontal > div {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Estilos para las estrellas en el dropdown */
+.star-icon {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.1rem;
+    transform: scale(1);
+    transform-origin: center;
+    display: inline-block;
+}
+
+.star-icon:hover {
+    transform: scale(1.2);
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.dropdown-item:hover .star-icon {
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.star-icon.fa-solid.text-warning {
+    animation: pulse 0.3s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Estilos para toasts personalizados */
+.alert.position-fixed {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: none;
+    border-radius: 8px;
+}
+
+/* Mejoras para los items del dropdown */
+.dropdown-item {
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item .star-icon {
+    opacity: 0.7;
+}
+
+.dropdown-item:hover .star-icon {
+    opacity: 1;
+}
+
+/* Estilos para el dropdown de rutas */
+.dropdown-header {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+}
+
+.dropdown-header.text-warning {
+    color: #ffc107 !important;
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.dropdown-divider {
+    margin: 0.25rem 0;
+}
+
+.dropdown-item {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(2px);
+}
+
+.dropdown-item:has(.fa-solid.fa-star) {
+    border-left: 3px solid #ffc107;
+    padding-left: 13px;
+}
+
+#lista-rutas .btn {
+    border: 1px solid #dee2e6;
+    text-align: left;
+    padding: 0.75rem 1rem;
+}
+
+#lista-rutas .btn:hover {
+    border-color: #adb5bd;
+    background: #F8B55F;
+}
+
+/* Responsive para dropdown */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        overflow-x: hidden !important;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    .dropdown-item {
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Solución para el dropdown sobre el mapa */
+#lista-rutas {
+    position: relative;
+    z-index: 9999 !important;
+}
+
+#lista-rutas .dropdown-menu {
+    z-index: 1050 !important;
+    position: absolute;
+    transform: none !important;
+    max-height: 400px;
+    overflow-y: auto;
+    color: #FFFFFF;
+}
+
+#map {
+    position: relative;
+    z-index: 1;
+}
+
+.rutas-container {
+    position: relative;
+    z-index: 1000;
+}
+
+.dropdown {
+    z-index: 1000;
+}
+
+.navbar {
+    z-index: 1030;
+}
+
+.offcanvas {
+    z-index: 1045;
+}
+
+.tooltip {
+    z-index: 1080;
+}
+
+.popover {
+    z-index: 1070;
+}
+
+.modal-backdrop {
+    z-index: 1040;
+}
+
+.modal {
+    z-index: 1055;
+}
+
+.tiempo{
+    color: #F8B55F !important;
+    text-shadow: 1px 1px #000,-1px -1px #000,-1px 1px #000,1px -1px #000;
+    font-size: 1.2rem;
+    margin-left: 2%;
+}
+.ruta{
+    text-shadow: 1px 1px #000,-1px -1px #000,-1px 1px #000,1px -1px #000;
+    font-size: 1.2rem;
+}
+
+/* Estilos para el marcador del usuario */
+.usuario-marker {
+    text-align: center;
+    font-size: 20px;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
+}
+
+.usuario-texto {
+    font-size: 10px;
+    font-weight: bold;
+    color: #3366FF;
+    margin-top: -2px;
+    text-shadow: 1px 1px 2px white;
+}
+
+/* Estilos para el tiempo estimado en tiempo real */
+.tiempo-estimado {
+    font-weight: 600;
+    animation: pulseTime 2s infinite;
+}
+
+@keyframes pulseTime {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.dropdown-item .text-warning {
+    animation: highlightTime 1s ease;
+}
+
+@keyframes highlightTime {
+    0% { background-color: rgba(255, 193, 7, 0.1); }
+    100% { background-color: transparent; }
+}
+
+/* Estilos para los marcadores de camiones */
+.camion-marker {
+    text-align: center;
+    font-size: 18px;
+    filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.3));
+}
+
+.camion-numero {
+    font-size: 8px;
+    font-weight: bold;
+    color: white;
+    background: rgba(0,0,0,0.7);
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    position: absolute;
+    top: -2px;
+    right: -2px;
+}
+
+h5{
+    font-size: 1.8rem;
+}
+
+.fs-6{
+    font-size: 1.4rem!important;
+}
+/* Estilos específicos para la tarjeta de CLABE */
+.clabe-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.clabe-text {
+    font-family: 'Courier New', monospace; /* Mejor legibilidad para números */
+    font-weight: 600;
+    letter-spacing: 1px; /* Espaciado entre números */
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 2px solid var(--neutral-gray);
+    background-color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    word-break: break-all; /* Permite que los números se dividan en líneas */
+    line-height: 1.3;
+}
+
+/* Versión móvil para la CLABE */
+@media (max-width: 768px) {
+    .clabe-container {
+        padding: 0 5px;
+    }
+    
+    .clabe-text {
+        font-size: 1rem !important; /* Tamaño reducido para móviles */
+        letter-spacing: 0.5px;
+        padding: 10px 8px;
+        line-height: 1.4;
+        word-break: break-word;
+        hyphens: auto; /* Permite separación silábica */
+    }
+    
+    /* Ajuste específico para pantallas muy pequeñas */
+    @media (max-width: 375px) {
+        .clabe-text {
+            font-size: 0.9rem !important;
+            padding: 8px 6px;
+        }
+    }
+}
+
+/* Ajustes adicionales para la tarjeta de CLABE en móviles */
+@media (max-width: 768px) {
+    .col-6.col-lg-4:nth-child(4) .info-card-secondary {
+        min-height: 180px;
+        padding: 1.2rem; /* Reducir padding en móviles */
+    }
+    
+    .col-6.col-lg-4:nth-child(4) .card-content.text-center {
+        padding: 0 5px;
+    }
+    
+    .copy-btn {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+}

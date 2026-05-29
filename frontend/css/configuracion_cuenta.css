@@ -1,0 +1,702 @@
+/* ------------------- VARIABLES GLOBALES ------------------- */
+:root {
+    --primary-dark: #3D365C;
+    --secondary-purple: #7C4585;
+    --accent-pink: #C95792;
+    --highlight-orange: #F8B55F;
+    --body-background: #EBEAEF;
+    --card-background: #FFFFFF;
+    --text-dark: #2c2c2c;
+    --neutral-gray: #ccc;
+    --soft-text-gray: #6c757d;
+    --danger-red: #dc3545;
+    --success-green: #198754;
+}
+
+/* ------------------- ESTILOS BASE ------------------- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--body-background);
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+}
+
+/* ------------------- NAVBAR RESPONSIVE ------------------- */
+.app-navbar {
+    background-color: var(--primary-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0.75rem 1rem;
+}
+
+.navbar-brand {
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand i {
+    color: var(--highlight-orange);
+    margin-right: 0.5rem;
+}
+
+/* Botón toggler personalizado */
+.navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+    margin-left: 1rem;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.app-navbar .nav-link {
+    color: #e0e0e0;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link.active {
+    color: white;
+}
+
+/* Iconos de notificación y perfil */
+.notification-icon-solid {
+    color: var(--highlight-orange);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.notification-icon-solid:hover {
+    color: var(--accent-pink);
+}
+
+.profile-icon-small {
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: color 0.2s ease;
+}
+
+.profile-icon-small:hover {
+    color: var(--highlight-orange);
+}
+
+/* Punto de notificación */
+#low-balance-dot {
+    position: absolute;
+    top: 5px;
+    right: 1px;
+    height: 10px;
+    width: 10px;
+    background-color: var(--accent-pink);
+    border: 2px solid var(--primary-dark);
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+/* Dropdown de Notificaciones - Responsivo */
+.notification-menu {
+    min-width: 250px;
+    max-width: calc(100vw - 30px); /* Limita el ancho al viewport menos márgenes */
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    
+    /* Para móviles */
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin: 0;
+    width: 90vw; /* Ocupa 90% del ancho en móviles */
+}
+
+/* Ajustes para tablets y pantallas medianas */
+@media (min-width: 768px) {
+    .notification-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: auto !important;
+        right: 0 !important;
+        transform: none !important;
+        max-height: 60vh;
+        width: auto;
+        max-width: 350px; /* Ancho máximo para tablets */
+    }
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 992px) {
+    .notification-menu {
+        min-width: 300px;
+        max-width: 400px;
+    }
+}
+
+/* Mejoras para items en móviles */
+.notification-menu .dropdown-item {
+    padding: 12px 15px;
+    white-space: normal; /* Permite que el texto se ajuste */
+    word-wrap: break-word;
+}
+
+/* Tamaño de fuente responsivo */
+.notification-menu .dropdown-item,
+.notification-menu .dropdown-header {
+    font-size: 0.95rem;
+}
+
+@media (max-width: 576px) {
+    .notification-menu .dropdown-item,
+    .notification-menu .dropdown-header {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+}
+
+/* Íconos responsivos */
+.notification-menu a.dropdown-item i {
+    color: var(--secondary-purple);
+    font-size: 1.1rem;
+    margin-right: 8px;
+    min-width: 20px; /* Espacio consistente para íconos */
+}
+
+@media (max-width: 576px) {
+    .notification-menu a.dropdown-item i {
+        font-size: 1rem;
+        margin-right: 6px;
+    }
+}
+
+/* Alerta específica */
+#low-balance-alert-item a {
+    color: var(--accent-pink);
+}
+#low-balance-alert-item a i {
+    color: var(--accent-pink);
+}
+
+/* Mejor scroll en móviles */
+.notification-menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.notification-menu::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Asegurar que no se salga de la pantalla en móviles */
+@media (max-width: 767px) {
+    body.dropdown-open {
+        overflow: hidden; /* Previene scroll del body cuando dropdown está abierto */
+    }
+    
+    .notification-menu {
+        z-index: 1060; /* Asegura que esté sobre otros elementos */
+    }
+}
+
+/* Backdrop para móviles (opcional, si usas JavaScript) */
+.notification-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+}
+
+@media (max-width: 767px) {
+    .notification-backdrop.active {
+        display: block;
+    }
+}
+
+/* ------------------- OFFCANVAS (Copiado de historial_viaje.css) ------------------- */
+/* Iconos de Perfil en Navbar */
+.profile-icon-small {
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* Estilo para el botón de Cerrar Sesión (con fondo blanco para resaltar) */
+.offcanvas-body .nav-link.logout-btn {
+    background-color: var(--card-background); /* Fondo blanco */
+    color: var(--danger-red); /* Texto y borde rojo */
+    font-weight: 700;
+    margin-top: 1rem; /* Espacio superior para separarlo del resto */
+    border: 2px solid var(--danger-red);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.offcanvas-body .nav-link.logout-btn i {
+    color: var(--danger-red); /* Icono rojo */
+}
+
+.offcanvas-body .nav-link.logout-btn:hover {
+    background-color: var(--danger-red); /* Invertir colores al pasar el ratón */
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5); /* Sombra roja al hacer hover */
+}
+
+.offcanvas-body .nav-link.logout-btn:hover i {
+    color: white;
+}
+
+/* Offcanvas (reutilizar estilos existentes) */
+.offcanvas {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.offcanvas-profile-header {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-icon {
+    font-size: 4rem;
+    color: var(--secondary-purple);
+    margin-bottom: 0.5rem;
+}
+
+.offcanvas-body .nav-link {
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.offcanvas-body .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.offcanvas-body .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ------------------- CONTENIDO PRINCIPAL ------------------- */
+.main-content {
+    padding-top: 1rem;
+}
+
+.container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* ------------------- TARJETA DE BIENVENIDA ------------------- */
+.info-card {
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    height: auto;
+    border: none;
+    margin-bottom: 1.5rem;
+}
+
+.info-card-primary {
+    background: linear-gradient(135deg, var(--accent-pink), var(--secondary-purple));
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-card-primary h1 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.info-card-primary p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+/* ------------------- TARJETA DE FORMULARIO ------------------- */
+.report-card {
+    background-color: var(--card-background);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.report-header {
+    margin-bottom: 1.5rem;
+}
+
+.report-header h5 {
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.report-header h5 i {
+    margin-right: 0.5rem;
+    color: var(--secondary-purple);
+}
+
+/* ------------------- FORMULARIOS ------------------- */
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.form-control,
+.form-select {
+    padding: 0.8rem 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--neutral-gray);
+    background-color: #fff;
+    color: var(--text-dark);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--secondary-purple);
+    box-shadow: 0 0 0 0.25rem rgba(124, 69, 133, 0.15);
+    outline: none;
+}
+
+/* Inputs de solo lectura */
+.form-control[readonly] {
+    background-color: #f8f9fa;
+    color: var(--soft-text-gray);
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+/* Texto de ayuda */
+.form-text {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.form-text i {
+    color: var(--soft-text-gray);
+    margin-right: 0.25rem;
+}
+
+/* ------------------- BOTONES ------------------- */
+.btn-primary-custom {
+    background-color: var(--highlight-orange);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.btn-primary-custom:hover {
+    background-color: #e0a352;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(248, 181, 95, 0.3);
+}
+
+.btn-secondary-custom {
+    background-color: transparent;
+    color: var(--soft-text-gray);
+    font-weight: 600;
+    border: 2px solid #dee2e6;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.btn-secondary-custom:hover {
+    background-color: #f8f9fa;
+    color: var(--text-dark);
+    border-color: var(--neutral-gray);
+}
+
+.btn-outline-secondary {
+    border: 2px solid var(--neutral-gray);
+    color: var(--soft-text-gray);
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--neutral-gray);
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+/* ------------------- SECCIÓN DE CONTRASEÑA ------------------- */
+.border-top {
+    border-top: 1px solid #dee2e6 !important;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Alerta informativa */
+.alert {
+    border-radius: 0.75rem;
+    padding: 1rem;
+    border: none;
+    font-size: 0.9rem;
+}
+
+.alert-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left: 4px solid #ffc107;
+    color: #856404;
+}
+
+.alert-warning i {
+    color: #ffc107;
+}
+
+/* Mensaje de éxito/error */
+#mensaje {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+}
+
+#mensaje.d-none {
+    display: none !important;
+}
+
+/* ------------------- MEDIA QUERIES PARA RESPONSIVE ------------------- */
+
+/* Tablet (768px y superior) */
+@media (min-width: 768px) {
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    
+    .info-card {
+        padding: 2rem;
+    }
+    
+    .info-card-primary h1 {
+        font-size: 2.2rem;
+    }
+    
+    .report-card {
+        padding: 2rem;
+    }
+    
+    .btn-primary-custom,
+    .btn-secondary-custom,
+    .btn-outline-secondary {
+        width: auto;
+    }
+    
+    .btn-secondary-custom {
+        margin-bottom: 0;
+        margin-right: 1rem;
+    }
+    
+    .d-md-flex .btn-outline-secondary {
+        width: auto;
+    }
+}
+
+/* Desktop (992px y superior) */
+@media (min-width: 992px) {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .p-md-5 {
+        padding: 3rem !important;
+    }
+    
+    .info-card {
+        padding: 2rem 2.5rem;
+    }
+    
+    .report-card {
+        padding: 2.5rem;
+    }
+    
+    /* Ajustes de grid para formularios */
+    .row .col-md-6 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}
+
+/* Móviles pequeños (menos de 576px) */
+@media (max-width: 575.98px) {
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+    
+    .info-card {
+        padding: 1.25rem;
+        border-radius: 1rem;
+    }
+    
+    .info-card-primary h1 {
+        font-size: 1.5rem;
+    }
+    
+    .report-card {
+        padding: 1.25rem;
+        border-radius: 1rem;
+    }
+    
+    .report-header h5 {
+        font-size: 1.1rem;
+    }
+    
+    .form-control,
+    .form-select {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+    }
+    
+    .btn-primary-custom,
+    .btn-secondary-custom,
+    .btn-outline-secondary {
+        padding: 0.7rem 1rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Ajustes específicos para pantallas muy pequeñas */
+@media (max-width: 375px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    .notification-icon-solid,
+    .profile-icon-small {
+        font-size: 1.2rem;
+    }
+    
+    .info-card-primary h1 {
+        font-size: 1.3rem;
+    }
+    
+    .report-header h5 {
+        font-size: 1rem;
+    }
+}
+
+/* Ajustes para el navbar en móviles */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: var(--primary-dark);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .navbar-nav .nav-item {
+        margin-bottom: 0.25rem;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+    }
+    
+    .navbar-nav .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Asegurar que los botones sean tappables en móviles */
+@media (hover: none) and (pointer: coarse) {
+    .btn-primary-custom,
+    .btn-secondary-custom,
+    .btn-outline-secondary,
+    .nav-link {
+        min-height: 44px; /* Tamaño mínimo para toques en móviles */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .form-control,
+    .form-select {
+        min-height: 44px;
+        font-size: 16px; /* Previene el zoom automático en iOS */
+    }
+}
+
+/* Mejoras para accesibilidad y UX */
+.form-control:focus,
+.btn:focus {
+    outline: 2px solid var(--secondary-purple);
+    outline-offset: 2px;
+}
+
+/* Suavizar animaciones */
+* {
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Mejorar la legibilidad en móviles */
+@media (max-width: 768px) {
+    body {
+        font-size: 0.95rem;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        line-height: 1.3;
+    }
+    
+    .mb-4 {
+        margin-bottom: 1rem !important;
+    }
+    
+    .mt-5 {
+        margin-top: 1.5rem !important;
+    }
+    
+    .pt-4 {
+        padding-top: 1rem !important;
+    }
+}

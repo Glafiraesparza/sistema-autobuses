@@ -1,0 +1,459 @@
+/* Mantener las variables y estilos base existentes */
+:root {
+    --primary-dark: #3D365C;
+    --secondary-purple: #7C4585;
+    --accent-pink: #C95792;
+    --highlight-orange: #F8B55F;
+    --body-background: #EBEAEF;
+    --card-background: #FFFFFF;
+    --text-light: #e0e0e0;
+    --text-dark: #2c2c2c;
+    --neutral-gray: #ccc;
+    --soft-text-gray: #6c757d;
+    --danger-red: #dc3545;
+    --success-green: #198754;
+    --warning-orange: #ffc107;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--body-background);
+    color: var(--text-dark);
+}
+
+/* Reutilizar estilos del navbar existente */
+.app-navbar {
+    background-color: var(--primary-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    color: white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.navbar-brand i {
+    color: var(--highlight-orange);
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.app-navbar .nav-link {
+    color: var(--text-light);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link.active {
+    color: white;
+}
+
+/* Tarjetas */
+.info-card {
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    height: auto;
+}
+
+.info-card-primary {
+    background: linear-gradient(135deg, var(--accent-pink), var(--secondary-purple));
+    color: white;
+    position: relative;
+    overflow: hidden;
+    padding: 1.5rem;
+}
+
+.info-card-primary h1, .info-card-primary p {
+    color: white;
+}
+
+.info-card-primary h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.info-card-secondary {
+    background-color: var(--card-background);
+    border: 1px solid var(--neutral-gray);
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 1.5rem;
+}
+
+.info-card-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-card-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+}
+
+.info-card-warning .text-small {
+    font-size: 0.85rem;
+}
+
+/* Icono de Campana Sólida y Naranja */
+.notification-icon-solid {
+    color: var(--highlight-orange);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+/* Iconos de Perfil en Navbar */
+.profile-icon-small {
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* Estilo para el botón de Cerrar Sesión (con fondo blanco para resaltar) */
+.offcanvas-body .nav-link.logout-btn {
+    background-color: var(--card-background); /* Fondo blanco */
+    color: var(--danger-red); /* Texto y borde rojo */
+    font-weight: 700;
+    margin-top: 1rem; /* Espacio superior para separarlo del resto */
+    border: 2px solid var(--danger-red);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.offcanvas-body .nav-link.logout-btn i {
+    color: var(--danger-red); /* Icono rojo */
+}
+
+.offcanvas-body .nav-link.logout-btn:hover {
+    background-color: var(--danger-red); /* Invertir colores al pasar el ratón */
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5); /* Sombra roja al hacer hover */
+}
+
+.offcanvas-body .nav-link.logout-btn:hover i {
+    color: white;
+}
+
+/* Offcanvas (reutilizar estilos existentes) */
+.offcanvas {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.offcanvas-profile-header {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-icon {
+    font-size: 4rem;
+    color: var(--secondary-purple);
+    margin-bottom: 0.5rem;
+}
+
+.offcanvas-body .nav-link {
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.offcanvas-body .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.offcanvas-body .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+
+ /* Estilos específicos para el historial */
+.historial-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--secondary-purple);
+    transition: transform 0.2s ease;
+}
+
+.historial-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.viaje-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.ruta-badge {
+    background: var(--secondary-purple);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.fecha-hora {
+    color: var(--soft-text-gray);
+    font-size: 0.9rem;
+    margin-left: 6px;
+}
+
+.saldo-info {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: rgba(61, 54, 92, 0.05);
+    border-radius: 0.75rem;
+}
+
+.saldo-item {
+    text-align: center;
+}
+
+.saldo-label {
+    font-size: 0.8rem;
+    color: var(--soft-text-gray);
+    margin-bottom: 0.25rem;
+}
+
+.saldo-valor {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.saldo-anterior { color: var(--soft-text-gray); }
+.saldo-posterior { color: var(--highlight-orange); }
+.tarifa { color: var(--accent-pink); }
+
+.filtros-container {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.filtro-group {
+    margin-bottom: 1rem;
+}
+
+.estadisticas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.estadistica-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.estadistica-valor {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary-purple);
+    margin-bottom: 0.5rem;
+}
+
+.estadistica-label {
+    color: var(--soft-text-gray);
+    font-size: 0.9rem;
+}
+
+.sin-viajes {
+    text-align: center;
+    padding: 3rem;
+    color: var(--soft-text-gray);
+}
+
+.sin-viajes i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: var(--neutral-gray);
+}
+
+@media (max-width: 768px) {
+    .saldo-info {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .viaje-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .estadisticas-container {
+        grid-template-columns: 1fr;
+    }
+}
+/* Punto de Notificación (Saldo Bajo) */
+#low-balance-dot {
+    top: 5px;
+    right: 1px;
+    height: 10px;
+    width: 10px;
+    background-color: var(--accent-pink); /* Usamos el rosa para la alerta */
+    border: 2px solid var(--primary-dark);
+    z-index: 1000;
+}
+
+#low-balance-alert-item a {
+    color: var(--accent-pink);
+}
+#low-balance-alert-item a i {
+    color: var(--accent-pink);
+}
+.fa-route{
+color: #7C4585;
+}
+
+/* Dropdown de Notificaciones - Responsivo */
+.notification-menu {
+    min-width: 250px;
+    max-width: calc(100vw - 30px); /* Limita el ancho al viewport menos márgenes */
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    
+    /* Para móviles */
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin: 0;
+    width: 90vw; /* Ocupa 90% del ancho en móviles */
+}
+
+/* Ajustes para tablets y pantallas medianas */
+@media (min-width: 768px) {
+    .notification-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: auto !important;
+        right: 0 !important;
+        transform: none !important;
+        max-height: 60vh;
+        width: auto;
+        max-width: 350px; /* Ancho máximo para tablets */
+    }
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 992px) {
+    .notification-menu {
+        min-width: 300px;
+        max-width: 400px;
+    }
+}
+
+/* Mejoras para items en móviles */
+.notification-menu .dropdown-item {
+    padding: 12px 15px;
+    white-space: normal; /* Permite que el texto se ajuste */
+    word-wrap: break-word;
+}
+
+/* Tamaño de fuente responsivo */
+.notification-menu .dropdown-item,
+.notification-menu .dropdown-header {
+    font-size: 0.95rem;
+}
+
+@media (max-width: 576px) {
+    .notification-menu .dropdown-item,
+    .notification-menu .dropdown-header {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+}
+
+/* Íconos responsivos */
+.notification-menu a.dropdown-item i {
+    color: var(--secondary-purple);
+    font-size: 1.1rem;
+    margin-right: 8px;
+    min-width: 20px; /* Espacio consistente para íconos */
+}
+
+@media (max-width: 576px) {
+    .notification-menu a.dropdown-item i {
+        font-size: 1rem;
+        margin-right: 6px;
+    }
+}
+
+/* Alerta específica */
+#low-balance-alert-item a {
+    color: var(--accent-pink);
+}
+#low-balance-alert-item a i {
+    color: var(--accent-pink);
+}
+
+/* Mejor scroll en móviles */
+.notification-menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.notification-menu::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Asegurar que no se salga de la pantalla en móviles */
+@media (max-width: 767px) {
+    body.dropdown-open {
+        overflow: hidden; /* Previene scroll del body cuando dropdown está abierto */
+    }
+    
+    .notification-menu {
+        z-index: 1060; /* Asegura que esté sobre otros elementos */
+    }
+}
+
+/* Backdrop para móviles (opcional, si usas JavaScript) */
+.notification-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+}
+
+@media (max-width: 767px) {
+    .notification-backdrop.active {
+        display: block;
+    }
+}

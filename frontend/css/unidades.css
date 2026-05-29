@@ -1,0 +1,270 @@
+/* css/usuarios.css */
+
+/* Barra de Herramientas */
+.toolbar-container {
+    background-color: var(--card-background);
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    margin-bottom: 2rem;
+    border: 1px solid var(--neutral-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.search-input-group {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--secondary-purple);
+}
+
+.search-input-group .form-control {
+    padding-left: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--neutral-gray);
+    height: 45px;
+}
+
+.search-input-group .form-control:focus {
+    border-color: var(--secondary-purple);
+    box-shadow: 0 0 0 0.2rem rgba(124, 69, 133, 0.15);
+}
+
+.btn-add-user {
+    background-color: var(--highlight-orange);
+    color: var(--primary-dark);
+    font-weight: 600;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s;
+}
+
+.btn-add-user:hover {
+    background-color: #e09a3c;
+    transform: translateY(-2px);
+}
+
+/* Tabla */
+.users-table-card {
+    background-color: var(--card-background);
+    border-radius: 1.5rem;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    color: var(--primary-dark);
+    font-weight: 700;
+    border-bottom: 2px solid var(--neutral-gray);
+    padding: 1.2rem 1rem;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+/* Avatar */
+.user-avatar-cell {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-avatar-img {
+    width: 45px;
+    height: 45px;
+    background-color: var(--secondary-purple);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.user-avatar-img.bg-orange { background-color: var(--highlight-orange); color: var(--primary-dark); }
+.user-avatar-img.bg-gray { background-color: #6c757d; }
+
+.user-info-text h6 { margin: 0; font-weight: 600; color: var(--text-dark); }
+.user-info-text small { color: var(--soft-text-gray); font-size: 0.85rem; }
+
+/* Switch */
+.form-switch .form-check-input { cursor: pointer; width: 2.5em; height: 1.3em; }
+
+.form-switch .form-check-input:checked { background-color: #28a745; border-color: #28a745; }
+        .unidad-avatar-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9rem;
+            margin-right: 12px;
+        }
+        
+        .bg-bus-primary { background-color: var(--secondary-purple); }
+        .bg-bus-success { background-color: #28a745; }
+        .bg-bus-warning { background-color: #ffc107; }
+        .bg-bus-danger { background-color: #dc3545; }
+        
+        .badge-estado {
+            padding: 0.35em 0.65em;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+        
+        .estado-activo { background-color: #d4edda; color: #155724; }
+        .estado-mantenimiento { background-color: #fff3cd; color: #856404; }
+        .estado-inactivo { background-color: #f8d7da; color: #721c24; }
+        
+        .capacidad-badge {
+            background-color: #e7f3ff;
+            color: #0066cc;
+            padding: 0.25em 0.5em;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+/* Estilos para badges de usuario */
+.user-type-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-admin {
+    background-color: #dc3545;
+    color: white;
+}
+
+.badge-chofer {
+    background-color: #198754;
+    color: white;
+}
+
+.badge-usuario {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Estilos para offcanvas */
+.offcanvas-profile-header {
+    text-align: center;
+    padding: 1rem 0;
+    border-bottom: .5px solid #dee2e6;
+    margin-bottom: .3rem;
+}
+
+.profile-icon {
+    font-size: 4rem;
+    color: var(--secondary-purple);
+    margin-bottom: .5rem;
+}
+
+.offcanvas-body .nav-link {
+    padding: 0.75rem 1rem;
+    color: #333;
+    border-radius: 0.375rem;
+    margin-bottom: 0.25rem;
+}
+
+.offcanvas-body .nav-link:hover,
+.offcanvas-body .nav-link.active {
+    background-color: var(--secondary-purple) !important;
+    color: white;
+}
+
+.offcanvas-body .logout-btn {
+    color: #dc3545;
+}
+
+.offcanvas-body .logout-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Estilos para unidades */
+.unidad-avatar-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    font-size: 0.9rem;
+    margin-right: 12px;
+}
+
+.bg-bus-primary { background-color: var(--secondary-purple); }
+.bg-bus-success { background-color: #28a745; }
+.bg-bus-warning { background-color: #ffc107; }
+.bg-bus-danger { background-color: #dc3545; }
+
+.badge-estado {
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 600;
+}
+
+.estado-activo { background-color: #d4edda; color: #155724; }
+.estado-mantenimiento { background-color: #fff3cd; color: #856404; }
+.estado-inactivo { background-color: #f8d7da; color: #721c24; }
+.estado-En { background-color: #f8d7da; color: var(--secondary-purple); }
+
+.capacidad-badge {
+    background-color: #e7f3ff;
+    color: #0066cc;
+    padding: 0.25em 0.5em;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+/* Estilo para el botón de Cerrar Sesión (con fondo blanco para resaltar) */
+.offcanvas-body .nav-link.logout-btn {
+    background-color: var(--card-background); /* Fondo blanco */
+    color: var(--danger-red); /* Texto y borde rojo */
+    font-weight: 700;
+    margin-top: 1rem; /* Espacio superior para separarlo del resto */
+    border: 2px solid var(--danger-red);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.offcanvas-body .nav-link.logout-btn i {
+    color: var(--danger-red); /* Icono rojo */
+}
+
+.offcanvas-body .nav-link.logout-btn:hover {
+    background-color: var(--danger-red); /* Invertir colores al pasar el ratón */
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5); /* Sombra roja al hacer hover */
+}
+
+.offcanvas-body .nav-link.logout-btn:hover i {
+    color: white;
+}

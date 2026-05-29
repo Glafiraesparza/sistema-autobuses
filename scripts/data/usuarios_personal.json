@@ -1,0 +1,10 @@
+{
+    "id_personal": 1,
+    "nombre": "Admin Principal",
+    "email": "admin@tucsa.com",
+    "password_hash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "rol": "administrador",
+    "activo": true,
+    "turno":"vespertino",
+    "fecha_creacion":{"$date": "2024-01-01T00:00:00"}
+}

@@ -1,0 +1,568 @@
+/* Mantener las variables y estilos base existentes */
+:root {
+    --primary-dark: #3D365C;
+    --secondary-purple: #7C4585;
+    --accent-pink: #C95792;
+    --highlight-orange: #F8B55F;
+    --body-background: #EBEAEF;
+    --card-background: #FFFFFF;
+    --text-light: #e0e0e0;
+    --text-dark: #2c2c2c;
+    --neutral-gray: #ccc;
+    --soft-text-gray: #6c757d;
+    --danger-red: #dc3545;
+    --success-green: #198754;
+    --warning-orange: #ffc107;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--body-background);
+    color: var(--text-dark);
+}
+
+/* Reutilizar estilos del navbar existente */
+.app-navbar {
+    background-color: var(--primary-dark);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    color: white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.navbar-brand i {
+    color: var(--highlight-orange);
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.app-navbar .nav-link {
+    color: var(--text-light);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link.active {
+    color: white;
+}
+
+/* Tarjetas */
+.info-card {
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    height: auto;
+}
+
+.info-card-primary {
+    background: linear-gradient(135deg, var(--accent-pink), var(--secondary-purple));
+    color: white;
+    position: relative;
+    overflow: hidden;
+    padding: 1.5rem;
+}
+
+.info-card-primary h1, .info-card-primary p {
+    color: white;
+}
+
+.info-card-primary h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.info-card-secondary {
+    background-color: var(--card-background);
+    border: 1px solid var(--neutral-gray);
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 1.5rem;
+}
+
+.info-card-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-card-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+}
+
+.info-card-warning .text-small {
+    font-size: 0.85rem;
+}
+
+/* Icono de Campana Sólida y Naranja */
+.notification-icon-solid {
+    color: var(--highlight-orange);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+/* Iconos de Perfil en Navbar */
+.profile-icon-small {
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* Estilo para el botón de Cerrar Sesión (con fondo blanco para resaltar) */
+.offcanvas-body .nav-link.logout-btn {
+    background-color: var(--card-background); /* Fondo blanco */
+    color: var(--danger-red); /* Texto y borde rojo */
+    font-weight: 700;
+    margin-top: 1rem; /* Espacio superior para separarlo del resto */
+    border: 2px solid var(--danger-red);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.offcanvas-body .nav-link.logout-btn i {
+    color: var(--danger-red); /* Icono rojo */
+}
+
+.offcanvas-body .nav-link.logout-btn:hover {
+    background-color: var(--danger-red); /* Invertir colores al pasar el ratón */
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5); /* Sombra roja al hacer hover */
+}
+
+.offcanvas-body .nav-link.logout-btn:hover i {
+    color: white;
+}
+
+/* Offcanvas (reutilizar estilos existentes) */
+.offcanvas {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.offcanvas-profile-header {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-icon {
+    font-size: 4rem;
+    color: var(--secondary-purple);
+    margin-bottom: 0.5rem;
+}
+
+.offcanvas-body .nav-link {
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.offcanvas-body .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.offcanvas-body .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.form-section {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-left: 5px solid #667eea;
+}
+
+.section-title {
+    color: #667eea;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.discapacidad-options .form-check {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.discapacidad-options .form-check:hover {
+    background-color: #f8f9fa;
+}
+
+.file-upload-area {
+    border: 2px dashed #dee2e6;
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.file-upload-area:hover {
+    border-color: #667eea;
+    background-color: #f8f9ff;
+}
+
+.file-upload-area.dragover {
+    border-color: #667eea;
+    background-color: #e8f4fd;
+}
+
+.preview-image {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.requerido::after {
+    content: " *";
+    color: #dc3545;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+}
+
+/* Estilos mejorados para inputs, selects y checkboxes */
+.form-control {
+    border: 2px solid var(--neutral-gray);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-purple);
+    box-shadow: 0 0 0 0.25rem rgba(124, 69, 133, 0.25);
+    background-color: #fff;
+}
+
+.form-select {
+    border: 2px solid var(--neutral-gray);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: white;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%233D365C' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.form-select:focus {
+    border-color: var(--secondary-purple);
+    box-shadow: 0 0 0 0.25rem rgba(124, 69, 133, 0.25);
+}
+
+/* Checkboxes y radios personalizados */
+.form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.15em;
+    border: 2px solid var(--neutral-gray);
+    transition: all 0.3s ease;
+}
+
+.form-check-input:checked {
+    background-color: var(--secondary-purple);
+    border-color: var(--secondary-purple);
+    box-shadow: 0 0 0 0.25rem rgba(124, 69, 133, 0.25);
+}
+
+.form-check-input:focus {
+    border-color: var(--secondary-purple);
+    box-shadow: 0 0 0 0.25rem rgba(124, 69, 133, 0.25);
+}
+
+/* Estilo especial para checkboxes de condición especial */
+#es_adulto_mayor,
+#tiene_discapacidad {
+    width: 1.3em;
+    height: 1.3em;
+    border: 2px solid var(--highlight-orange);
+}
+
+#es_adulto_mayor:checked,
+#tiene_discapacidad:checked {
+    background-color: var(--highlight-orange);
+    border-color: var(--highlight-orange);
+    box-shadow: 0 0 0 0.25rem rgba(248, 181, 95, 0.25);
+}
+
+/* Opciones de discapacidad con colores diferentes */
+.discapacidad-options .form-check-input {
+    border: 2px solid var(--accent-pink);
+}
+
+.discapacidad-options .form-check-input:checked {
+    background-color: var(--accent-pink);
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 0.25rem rgba(201, 87, 146, 0.25);
+}
+
+/* Labels con mejor contraste */
+.form-label {
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+}
+
+.form-label.requerido::after {
+    content: " *";
+    color: var(--accent-pink);
+}
+
+/* Área de upload mejorada */
+.file-upload-area {
+    border: 3px dashed var(--secondary-purple);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    background-color: rgba(124, 69, 133, 0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.file-upload-area:hover {
+    background-color: rgba(124, 69, 133, 0.1);
+    border-color: var(--accent-pink);
+}
+
+.file-upload-area.dragover {
+    background-color: rgba(124, 69, 133, 0.15);
+    border-color: var(--highlight-orange);
+    transform: scale(1.02);
+}
+
+/* Estilos para secciones del formulario */
+.form-section {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--secondary-purple);
+}
+
+.section-title {
+    color: var(--primary-dark);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.section-title i {
+    color: var(--secondary-purple);
+    margin-right: 0.5rem;
+}
+
+/* Botón de enviar mejorado */
+.btn-primary {
+    background: linear-gradient(135deg, var(--secondary-purple), var(--accent-pink));
+    border: none;
+    border-radius: 0.75rem;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(124, 69, 133, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(124, 69, 133, 0.4);
+    background: linear-gradient(135deg, var(--accent-pink), var(--secondary-purple));
+}
+
+/* Alertas mejoradas */
+.alert-info {
+    border: 2px solid var(--secondary-purple);
+    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(124, 69, 133, 0.1), rgba(61, 54, 92, 0.1));
+}
+
+.alert-info h6 {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.alert-info h6 i {
+    color: var(--secondary-purple);
+}
+
+/* Mejoras para el texto de ayuda */
+.form-text {
+    color: var(--secondary-purple);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Estados de validación */
+.form-control:valid {
+    border-color: #28a745;
+}
+
+.form-control:invalid:not(:focus):not(:placeholder-shown) {
+    border-color: var(--accent-pink);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-control,
+    .form-select {
+        font-size: 16px; /* Previene zoom en iOS */
+    }
+    
+    .file-upload-area {
+        padding: 1.5rem;
+    }
+}
+
+.avion{
+    color: #F8B55F !important;
+}
+
+/* Estilos para el mensaje de error en el área de upload */
+.file-error {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+.file-upload-area.error {
+    border-color: var(--accent-pink) !important;
+    background-color: rgba(220, 53, 69, 0.05) !important;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Estilos para la tarjeta de estado de tarifa preferencial */
+.info-card-success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: white;
+}
+
+.estado-tarjeta {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.estado-icono {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.estado-info h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.tarifa-actual {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+/* Estilos para formulario deshabilitado */
+.formulario-bloqueado {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.formulario-bloqueado .form-control,
+.formulario-bloqueado .form-select,
+.formulario-bloqueado .form-check-input {
+    background-color: #e9ecef;
+    border-color: #6c757d;
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.info-card-success {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Punto de Notificación (Saldo Bajo) */
+#low-balance-dot {
+    top: 5px;
+    right: 1px;
+    height: 10px;
+    width: 10px;
+    background-color: var(--accent-pink); /* Usamos el rosa para la alerta */
+    border: 2px solid var(--primary-dark);
+    z-index: 1000;
+}
+
+#low-balance-alert-item a {
+    color: var(--accent-pink);
+}
+#low-balance-alert-item a i {
+    color: var(--accent-pink);
+}
+.fa-route{
+color: #7C4585;
+}

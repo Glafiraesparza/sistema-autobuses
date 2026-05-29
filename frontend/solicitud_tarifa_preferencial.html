@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Tarifa Preferencial - TUCSA</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn-icons-png.freepik.com/512/10867/10867366.png">
+    <link rel="stylesheet" href="css/solicitud_tarifa_preferencial.css">
+    <link rel="stylesheet" href="css/pasajero_inicio.css">
+    <script src="js/config_global.js"></script>
+</head>
+<body>
+
+    <!-- Navbar desde pasajero_inicio.html -->
+    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+        <div class="container-fluid">
+            
+            <a class="navbar-brand me-0" href="#">
+                <i class="fa-solid fa-bus-simple"></i>
+                TUCSA
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pasajero_inicio.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pasajero_qr.html">QR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="historial_viaje.html">Historial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="solicitud_tarifa_preferencial.html">Tarifa Preferencial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quejas_usuario.html">Quejas y Reportes</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <div class="dropdown me-3 position-relative">
+                    <i class="fa-solid fa-bell notification-icon-solid" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <span id="low-balance-dot" class="position-absolute translate-middle rounded-circle"></span>
+
+                    <ul class="dropdown-menu dropdown-menu-end notification-menu">
+                        <h6 class="dropdown-header">Notificaciones (2)</h6>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-route me-2"></i>
+                                Ruta 18 con retraso de 5 min.
+                            </a>
+                        </li>
+                        <li id="low-balance-alert-item">
+                            <a class="dropdown-item fw-bold" href="#">
+                                <i class="fa-solid fa-circle-exclamation me-2"></i>
+                                ¡Tu saldo es bajo! Recarga.
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-center text-muted" href="#">Ver todas</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <i class="fa-solid fa-user profile-icon-small" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" role="button"></i>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Menú desplegable desde pasajero_inicio.html -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menú de Opciones</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="offcanvas-profile-header">
+                <i class="fa-solid fa-circle-user profile-icon"></i>
+                <h4>Usuario Ejemplo</h4>
+                <p>usuario@tucsa.com</p>
+            </div>
+            <div class="nav flex-column">
+                <a class="nav-link" href="pasajero_inicio.html"><i class="fa-solid fa-house me-3"></i> Inicio</a>
+                <a class="nav-link" href="pasajero_qr.html"><i class="fa-solid fa-qrcode qr-icon me-3"></i> Generar QR</a>
+                <a class="nav-link" href="historial_viaje.html"><i class="fa-solid fa-clock-rotate-left me-3"></i> Historial de Viajes</a>
+                <a class="nav-link active" href="solicitud_tarifa_preferencial.html"><i class="fa-solid fa-heart me-3"></i> Tarifa Preferencial</a>
+                <a class="nav-link" href="configuracion_cuenta.html"><i class="fa-solid fa-gear me-3"></i> Configuración de cuenta</a>
+                <a class="nav-link" href="quejas_usuario.html"><i class="fa-solid fa-bullhorn me-3"></i> Quejas y Reportes</a>
+                <hr>
+                <a class="nav-link logout-btn" href="inicio_sesion.html"><i class="fa-solid fa-right-from-bracket me-3"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido principal de la solicitud de tarifa preferencial -->
+    <main class="main-content">
+        <div class="container p-4 p-md-5">
+            
+            <!-- Tarjeta de información principal -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="info-card info-card-primary">
+                        <p class="mb-0">Solicitud Especial</p>
+                        <h1>Solicitud de Tarifa Preferencial</h1>
+                        <p class="mt-3" style="font-size: 1rem; color: rgba(255, 255, 255, 0.9);">
+                            Completa el formulario para solicitar tu tarifa preferencial de adulto mayor o persona con discapacidad.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de solicitud -->
+            <div class="row justify-content-center" id="formulario_contenedor">
+                <div class="col-12 col-lg-10">
+                    <div class="info-card info-card-secondary">
+                        <div class="card-body">
+                            <form id="solicitudForm" enctype="multipart/form-data">
+                                <!-- Sección 1: Datos Personales -->
+                                <div class="form-section mb-4">
+                                    <h4 class="section-title mb-3">
+                                        <i class="fa-solid fa-id-card me-2"></i>
+                                        Datos Personales
+                                    </h4>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="nombre_completo" class="form-label requerido">Nombre Completo</label>
+                                            <input type="text" class="form-control" id="nombre_completo" required>
+                                        </div>
+                                        
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label requerido">Correo Electrónico</label>
+                                            <input type="email" class="form-control" id="email" required>
+                                        </div>
+                                        
+                                        <div class="col-md-6 mb-3">
+                                            <label for="fecha_nacimiento" class="form-label requerido">Fecha de Nacimiento</label>
+                                            <input type="date" class="form-control" id="fecha_nacimiento" required>
+                                            <div class="form-text" id="edadCalculada"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección 2: Condición Especial -->
+                                <div class="form-section mb-4">
+                                    <h4 class="section-title mb-3">
+                                        <i class="fa-solid fa-heart-pulse me-2"></i>
+                                        Condición Especial
+                                    </h4>
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="es_adulto_mayor">
+                                                <label class="form-check-label" for="es_adulto_mayor">
+                                                    <strong>¿Eres adulto mayor? (60+ años)</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="tiene_discapacidad">
+                                                <label class="form-check-label" for="tiene_discapacidad">
+                                                    <strong>¿Tienes alguna discapacidad?</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sección de Discapacidad (se muestra solo si tiene_discapacidad es true) -->
+                                    <div id="seccionDiscapacidad" style="display: none;">
+                                        <div class="mb-3">
+                                            <label class="form-label requerido">Tipo de Discapacidad</label>
+                                            <div class="discapacidad-options">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="tipo_discapacidad" value="visual" id="disc_visual">
+                                                    <label class="form-check-label" for="disc_visual">
+                                                        Visual
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="tipo_discapacidad" value="auditiva" id="disc_auditiva">
+                                                    <label class="form-check-label" for="disc_auditiva">
+                                                        Auditiva
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="tipo_discapacidad" value="motriz" id="disc_motriz">
+                                                    <label class="form-check-label" for="disc_motriz">
+                                                        Motriz
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="tipo_discapacidad" value="intelectual" id="disc_intelectual">
+                                                    <label class="form-check-label" for="disc_intelectual">
+                                                        Intelectual
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="tipo_discapacidad" value="multiple" id="disc_multiple">
+                                                    <label class="form-check-label" for="disc_multiple">
+                                                        Múltiple
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="requiere_silla_ruedas">
+                                            <label class="form-check-label" for="requiere_silla_ruedas">
+                                                ¿Requieres silla de ruedas para movilizarte?
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sección 3: Documentación -->
+                                <div class="form-section mb-4">
+                                    <h4 class="section-title mb-3">
+                                        <i class="fa-solid fa-file-medical me-2"></i>
+                                        Documentación
+                                    </h4>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label requerido">Tipo de Documento</label>
+                                        <select class="form-select" id="tipo_documento" required>
+                                            <option value="">Selecciona un documento</option>
+                                            <option value="inapam">Credencial INAPAM</option>
+                                            <option value="dif">Credencial DIF</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label requerido">Foto del Documento</label>
+                                        <div class="file-upload-area" id="fileUploadArea">
+                                            <i class="fa-solid fa-cloud-arrow-up fs-1 text-muted"></i>
+                                            <p class="mt-2">Haz clic o arrastra tu documento aquí</p>
+                                            <small class="text-muted">Formatos: JPG, PNG, PDF (Máx. 5MB)</small>
+                                            <!-- Cambia el input file para quitar el required del HTML -->
+                                            <input type="file" id="documento" accept="image/*,.pdf" style="display: none;">
+                                            <div id="previewContainer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Información de Tarifas -->
+                                <div class="alert alert-info">
+                                    <h6><i class="fa-solid fa-circle-info me-2"></i> Información de Tarifas</h6>
+                                    <ul class="mb-0">
+                                        <li><strong>Adulto Mayor:</strong> $5.50 MXN</li>
+                                        <li><strong>Persona con Discapacidad:</strong> $5.50 MXN</li>
+                                        <li><strong>Tarifa Regular:</strong> $11.00 MXN</li>
+                                    </ul>
+                                </div>
+
+                                <div class="d-grid gap-2 mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg"> 
+                                        <i class="fa-solid fa-paper-plane me-2 avion"></i>
+                                        Enviar Solicitud
+                                    </button>
+                                </div>
+                                
+                                <div class="text-center mt-3">
+                                    <a href="pasajero_inicio.html" class="text-decoration-none">
+                                        <i class="fa-solid fa-arrow-left me-2"></i>
+                                        Volver al Panel Principal
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Overlay de Carga -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner-border text-primary mb-3" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <h5>Validando Documentación</h5>
+            <p class="text-muted">Estamos verificando tu documentación. Esto tomará unos segundos...</p>
+            <div class="progress mb-3">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+            </div>
+            <small class="text-muted" id="contadorSegundos">5 segundos restantes</small>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/PassengerNotificationManager.js"></script>
+    <script src="js/solicitud_tarifa_preferencial.js"></script>
+</body>
+</html>

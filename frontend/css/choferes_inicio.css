@@ -1,0 +1,349 @@
+/* Variables para los colores */
+:root {
+    --primary-dark: #3D365C; /* Púrpura Oscuro (Fondo de encabezado y texto principal) */
+    --secondary-purple: #7C4585; /* Púrpura Intermedio (Acentos, iconos) */
+    --accent-pink: #C95792; /* Rosa de Acento (Encabezados de card) */
+    --highlight-orange: #F8B55F; /* Naranja de Resalte (Botones de acción, flechas) */
+    
+    /* Colores neutrales permitidos */
+    --body-background: #EBEAEF; /* Fondo general suave, menos blanco */
+    --card-background: #ffffff; /* Fondo BLANCO PURO para el card de Progreso de la Ruta */
+    --text-light: #e0e0e0; /* Gris claro (para texto secundario en fondo oscuro) */
+    --text-dark: #2c2c2c; /* Gris oscuro (para texto principal en fondo claro) */
+    --neutral-gray: #ccc; /* Gris medio (para bordes y fondos secundarios) */
+}
+
+/* Estilos generales */
+body {
+    font-family: 'Poppins', sans-serif; 
+    background-color: var(--body-background); /* Fondo más suave */
+    min-height: 100vh;
+    padding-top: 60px; /* Espacio para el encabezado fijo */
+    color: var(--text-dark);
+}
+
+/* --- ENCABEZADO PRINCIPAL --- */
+.main-header {
+    background-color: var(--primary-dark);
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.app-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.app-title .bi-bus-front-fill {
+    color: var(--highlight-orange);
+}
+
+/* AJUSTE: El nombre de la compañía es blanco */
+.company-name {
+    color: white; 
+    font-weight: 700;
+}
+
+/* Botón de Perfil/Menú (Dropdown) */
+.btn-profile {
+    background-color: var(--secondary-purple);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.btn-profile:hover {
+    background-color: var(--accent-pink);
+    color: white;
+}
+
+/* --- BOTÓN DE ESTADO (ACTIVO / INACTIVO) --- */
+.btn-status-active {
+    background-color: var(--highlight-orange); 
+    border-color: var(--highlight-orange);
+    color: var(--primary-dark);
+}
+.btn-status-active:hover {
+    background-color: #e09a3c;
+    border-color: #e09a3c;
+    color: var(--primary-dark);
+}
+
+.btn-status-inactive {
+    background-color: var(--secondary-purple);
+    border-color: var(--secondary-purple);
+    color: white;
+}
+.btn-status-inactive:hover {
+    background-color: #6a3a70;
+    border-color: #6a3a70;
+    color: white;
+}
+.btn-status {
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+
+/* --- BOTONES DE ACCIÓN RÁPIDA --- */
+.btn-panic {
+    background-color: var(--accent-pink);
+    color: white;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    border: none;
+}
+.btn-panic:hover {
+    background-color: #b74f83;
+    color: white;
+}
+
+.btn-report {
+    background-color: var(--highlight-orange);
+    color: var(--primary-dark);
+    font-weight: 700;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    border: none;
+}
+.btn-report:hover {
+    background-color: #e09a3c;
+    color: var(--primary-dark);
+}
+
+
+/* --- CONTENIDO PRINCIPAL --- */
+.main-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* AJUSTE: Tarjeta de Tarea Actual (Panel de Progreso - Fondo Blanco y más pequeña) */
+.current-task-card {
+    border: none;
+    border-radius: 15px;
+    background: var(--card-background); /* Fondo blanco puro */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 0; /* Eliminar padding exterior para controlarlo internamente */
+}
+
+.current-task-card .card-header {
+    background-color: var(--accent-pink);
+    color: white;
+    border-radius: 15px 15px 0 0;
+    font-weight: 600;
+    padding: 1rem 1.25rem; /* Padding reducido */
+}
+
+.current-task-card .card-body {
+    padding: 1rem 1.25rem 1.25rem; /* Padding reducido */
+}
+
+
+/* Indicador de Paradas (Tamaño reducido) */
+.route-stop-name {
+    font-weight: 600;
+    margin: 3px 0;
+}
+
+.prev-stop {
+    font-size: 1.2rem; 
+    color: var(--secondary-purple);
+}
+
+.next-stop {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+}
+
+.arrow-icon {
+    font-size: 1.6rem;
+    color: var(--highlight-orange);
+}
+
+.current-task-card hr {
+    margin: 1rem 0;
+}
+
+
+/* Cajas de Información (Tamaño reducido) */
+.info-box {
+    background-color: var(--card-background);
+    border-left: 5px solid; 
+    border-radius: 10px;
+    padding: 10px 8px; /* Padding reducido */
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.info-box i {
+    color: var(--secondary-purple);
+    font-size: 1.3rem; 
+    margin-bottom: 3px;
+}
+
+.info-box span {
+    color: var(--text-dark); 
+    font-size: 0.8rem; 
+}
+
+.info-box strong {
+    font-size: 1.1rem;
+}
+
+/* Colores de Borde Específicos para info boxes */
+.border-arrival { border-color: var(--highlight-orange) !important; } 
+.border-passengers { border-color: var(--secondary-purple) !important; } 
+.border-collected { border-color: var(--accent-pink) !important; } 
+
+/* Botón de Tarea Completada */
+.btn-finish-task {
+    background-color: var(--highlight-orange);
+    border: none;
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.65rem 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-finish-task:hover {
+    background-color: #e09a3c;
+    color: var(--primary-dark);
+}
+
+/* Mensaje de Ruta Completada */
+#route-end-message {
+    background-color: var(--secondary-purple);
+    color: white;
+    border: 1px solid var(--primary-dark);
+    font-weight: 600;
+}
+
+
+/* Tarjeta de Próximos Eventos */
+.upcoming-task-card {
+    border-radius: 15px;
+    border: 1px solid var(--neutral-gray);
+    background: var(--card-background);
+}
+
+.upcoming-task-card .card-header {
+    background-color: #f0f0f0; 
+    font-weight: 600;
+    color: var(--secondary-purple);
+    border-radius: 15px 15px 0 0;
+}
+
+.list-group-item {
+    border-color: #eee;
+    background-color: var(--card-background);
+}
+
+/* Icono de descanso */
+.bi-cup-hot-fill {
+    color: var(--secondary-purple); 
+}
+
+/* Estilo para modales */
+.modal-header.bg-panic {
+    background-color: var(--accent-pink) !important;
+    color: white;
+}
+
+.modal-header.bg-report {
+    background-color: var(--highlight-orange) !important;
+    color: var(--primary-dark) !important;
+}
+
+.btn-close-dark {
+    color: var(--primary-dark);
+    filter: invert(1);
+}
+
+.text-panic {
+    color: var(--accent-pink) !important;
+}
+
+.btn-modal-panic {
+    background-color: var(--accent-pink);
+    color: white;
+}
+.btn-modal-report {
+    background-color: var(--highlight-orange);
+    color: var(--primary-dark);
+}
+
+.alert-info-custom {
+    background-color: #f0f0f8; 
+    color: var(--primary-dark);
+    border-color: var(--secondary-purple);
+}
+
+/* Media Queries para Responsividad (móvil) */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 10px;
+    }
+    .app-title {
+        font-size: 1.2rem;
+    }
+    .user-info .d-sm-inline {
+        display: none !important; 
+    }
+    .main-header {
+        padding: 5px 15px;
+    }
+    .next-stop {
+        font-size: 1.6rem;
+    }
+    .info-box {
+        padding: 8px 3px;
+    }
+    .info-box strong {
+        font-size: 1rem;
+    }
+}
+
+/* NUEVO: Estilos para el modal de confirmación */
+.modal-header.bg-success {
+    background: linear-gradient(135deg, #28a745, #20c997) !important;
+}
+
+.confirmation-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: pulse-check 0.6s ease-in-out;
+}
+
+/* Animación de check */
+.bi-check-circle-fill {
+    animation: pulse-check 0.6s ease-in-out;
+}
+
+@keyframes pulse-check {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Estilos para modal de error */
+.modal-header.bg-danger {
+    background: linear-gradient(135deg, #dc3545, #e83e8c) !important;
+}

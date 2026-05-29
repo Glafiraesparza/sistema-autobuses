@@ -1,0 +1,146 @@
+/* css/reportes.css */
+
+/* 1. BARRA DE FILTROS */
+.filters-wrapper {
+    background-color: var(--card-background);
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid var(--neutral-gray);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.filter-group { display: flex; align-items: center; gap: 10px; }
+.filter-label { font-weight: 600; color: var(--primary-dark); margin: 0; }
+
+.date-input {
+    border: 1px solid var(--neutral-gray);
+    border-radius: 10px;
+    padding: 0.4rem 0.8rem;
+    color: var(--text-dark);
+    background-color: #f8f9fa;
+    outline: none;
+    transition: border-color 0.3s;
+}
+.date-input:focus { border-color: var(--secondary-purple); background-color: white; }
+
+.btn-export {
+    background-color: white;
+    color: var(--secondary-purple);
+    border: 2px solid var(--secondary-purple);
+    border-radius: 10px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+.btn-export:hover {
+    background-color: var(--secondary-purple);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(124, 69, 133, 0.2);
+}
+
+/* 2. TARJETAS KPI */
+.stat-card {
+    background-color: var(--card-background);
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.icon-box-purple { background-color: rgba(124, 69, 133, 0.15); color: var(--secondary-purple); }
+.icon-box-orange { background-color: rgba(248, 181, 95, 0.15); color: #d68016; }
+.icon-box-pink { background-color: rgba(201, 87, 146, 0.15); color: var(--accent-pink); }
+.icon-box-green { background-color: rgba(40, 167, 69, 0.15); color: #28a745; }
+
+.stat-content h3 { font-size: 1.8rem; font-weight: 800; margin: 0; color: var(--primary-dark); line-height: 1.2; }
+.stat-content p { margin: 0; font-size: 0.9rem; color: var(--soft-text-gray); font-weight: 500; }
+
+/* 3. GRÁFICOS */
+.chart-section-card {
+    background-color: var(--card-background);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.chart-title h5 { font-weight: 700; color: var(--text-dark); margin-bottom: 0.2rem; font-size: 1.1rem; }
+.chart-title span { font-size: 0.85rem; color: var(--soft-text-gray); }
+
+.chart-canvas-area {
+    flex-grow: 1;
+    background-color: #fdfdfd;
+    border-radius: 1rem;
+    border: 2px dashed #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    color: #aaa;
+    text-align: center;
+    padding: 20px;
+}
+
+.chart-placeholder-content i { font-size: 3rem; margin-bottom: 10px; display: block; opacity: 0.5; }
+
+@media (max-width: 768px) {
+    .filters-wrapper { flex-direction: column; align-items: stretch; }
+    .btn-export { justify-content: center; }
+}
+
+/* Colores adicionales para indicadores de estado */
+.icon-box-red {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+.icon-box-orange {
+    background-color: #fff3cd;
+    color: #ffc107;
+}
+
+.icon-box-green {
+    background-color: #d1e7dd;
+    color: #198754;
+}
