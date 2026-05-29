@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
 
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/usuarios/verificar-codigo`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/usuarios/verificar-codigo`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         reenviarLink.innerHTML = '<i class="bi bi-arrow-repeat spinner"></i> Enviando...';
         
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/usuarios/reenviar-codigo-verificacion`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/usuarios/reenviar-codigo-verificacion`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
