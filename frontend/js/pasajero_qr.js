@@ -1,5 +1,5 @@
 // Configuración
-const API_BASE_URL = `https://${IP_API}:8000/api`;
+const API_BASE_URL = `https://sistema-autobuses.onrender.com/api`;
 let currentUser = null;
 let qrTimer = null;
 let currentQRCode = null;

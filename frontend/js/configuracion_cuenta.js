@@ -1,4 +1,4 @@
-const API_BASE = `https://${IP_API}:8000/api`; 
+const API_BASE = `https://sistema-autobuses.onrender.com/api`; 
 let usuarioActual = null;
 
 // Función para obtener el token de autenticación

@@ -1,7 +1,7 @@
 // Módulo para gestión de autenticación y permisos de personal TUCSA
 const UserAuthPersonal = (function() {
     // Constantes
-    const API_BASE_URL = `https://${IP_API}:8000/api`;
+    const API_BASE_URL = `https://sistema-autobuses.onrender.com/api`;
     let currentUser = null;
 
     // Métodos públicos

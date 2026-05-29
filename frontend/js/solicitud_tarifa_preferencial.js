@@ -386,7 +386,7 @@ function actualizarInterfazUsuario(usuario) {
             simularProgresoValidacion();
 
             // Enviar solicitud
-            const response = await fetch(`https://${IP_API}:8000/api/tarifa-preferencial/solicitar`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/tarifa-preferencial/solicitar`, {
                 method: 'POST',
                 body: formData
             });

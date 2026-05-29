@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
 
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/usuarios/login`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/usuarios/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

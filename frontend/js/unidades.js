@@ -1,7 +1,7 @@
 // Ya no necesitamos estas variables globales porque las maneja UserAuthPersonal
-// const API_BASE_URL = `https://${IP_API}:8000/api`;
+// const API_BASE_URL = `https://sistema-autobuses.onrender.com/api`;
 // let currentUser = null;
-const API_BASE_URL = `https://${IP_API}:8000/api`;
+const API_BASE_URL = `https://sistema-autobuses.onrender.com/api`;
 let unidades = [];
 
 document.addEventListener('DOMContentLoaded', function() {

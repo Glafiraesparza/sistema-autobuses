@@ -81,7 +81,7 @@ class PanelAdministrativo {
 
     async loadMetricUsuarios() {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/metricas/usuarios-registrados`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/metricas/usuarios-registrados`, {
                 headers: UserAuthPersonal.getAuthHeaders()
             });
             
@@ -98,7 +98,7 @@ class PanelAdministrativo {
 
     async loadMetricUnidades() {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/metricas/unidades-transito`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/metricas/unidades-transito`, {
                 headers: UserAuthPersonal.getAuthHeaders()
             });
             
@@ -115,7 +115,7 @@ class PanelAdministrativo {
 
     async loadMetricRecaudacion() {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/metricas/recaudacion-hoy`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/metricas/recaudacion-hoy`, {
                 headers: UserAuthPersonal.getAuthHeaders()
             });
             
@@ -132,7 +132,7 @@ class PanelAdministrativo {
 
     async loadMetricViajes() {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/metricas/viajes-hoy`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/metricas/viajes-hoy`, {
                 headers: UserAuthPersonal.getAuthHeaders()
             });
             
@@ -149,7 +149,7 @@ class PanelAdministrativo {
 
     async loadMetricSoporte() {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/metricas/soporte`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/metricas/soporte`, {
                 headers: UserAuthPersonal.getAuthHeaders()
             });
             
@@ -179,7 +179,7 @@ class PanelAdministrativo {
     // ✅ MODIFICADO: Mantener tu lógica original para cargar incidentes
     async loadIncidentes() {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/notificaciones/admin`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/admin`, {
                 headers: UserAuthPersonal.getAuthHeaders()
             });
             
@@ -205,7 +205,7 @@ class PanelAdministrativo {
     // ✅ MODIFICADO: Mantener tu lógica original para cargar inconvenientes
     async loadInconvenientes() {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/notificaciones/admin`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/admin`, {
                 headers: UserAuthPersonal.getAuthHeaders()
             });
             
@@ -230,7 +230,7 @@ class PanelAdministrativo {
 
     async loadSoporteDetalle() {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/metricas/soporte/detalle`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/metricas/soporte/detalle`, {
                 headers: UserAuthPersonal.getAuthHeaders()
             });
             

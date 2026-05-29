@@ -1,4 +1,4 @@
-const API_BASE = `https://${IP_API}:8000/api`;
+const API_BASE = `https://sistema-autobuses.onrender.com/api`;
 let map;
 let rutasCargadas = [];
 let capaRutaActual = null;
@@ -703,7 +703,7 @@ async function procesarRecargaAutomatica(clabe) {
     try {
         console.log('🔄 Procesando recarga automática...');
         
-        const response = await fetch(`https://${IP_API}:8000/api/recargas/procesar-recarga-automatica`, {
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/recargas/procesar-recarga-automatica`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -147,7 +147,7 @@ class GestorUsuarios {
             if (filtros.rol) params.append('rol', filtros.rol);
             if (filtros.activo !== undefined) params.append('activo', filtros.activo);
 
-            const response = await fetch(`https://${IP_API}:8000/api/usuarios_personal/buscar/?${params}`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/usuarios_personal/buscar/?${params}`, {
                 headers: this.getAuthHeaders()
             });
             
@@ -255,7 +255,7 @@ class GestorUsuarios {
         }
 
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/usuarios_personal/${usuarioId}`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/usuarios_personal/${usuarioId}`, {
                 method: 'DELETE',
                 headers: this.getAuthHeaders()
             });
@@ -439,7 +439,7 @@ class GestorUsuarios {
 
             console.log('Enviando datos:', usuarioData);
 
-            const response = await fetch(`https://${IP_API}:8000/api/usuarios_personal/`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/usuarios_personal/`, {
                 method: 'POST',
                 headers: this.getAuthHeaders(),
                 body: JSON.stringify(usuarioData)
@@ -473,7 +473,7 @@ class GestorUsuarios {
         if (!UserAuthPersonal.checkAdminPermissions()) return;
 
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/usuarios_personal/${usuarioId}`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/usuarios_personal/${usuarioId}`, {
                 headers: this.getAuthHeaders()
             });
             const data = await response.json();
@@ -573,7 +573,7 @@ class GestorUsuarios {
                 updateData.password = password;
             }
 
-            const response = await fetch(`https://${IP_API}:8000/api/usuarios_personal/${usuarioId}/editar`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/usuarios_personal/${usuarioId}/editar`, {
                 method: 'PUT',
                 headers: this.getAuthHeaders(),
                 body: JSON.stringify(updateData)
@@ -607,7 +607,7 @@ class GestorUsuarios {
         }
 
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/usuarios_personal/${usuarioId}/estado`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/usuarios_personal/${usuarioId}/estado`, {
                 method: 'PUT',
                 headers: this.getAuthHeaders(),
                 body: JSON.stringify({ activo: nuevoEstado })

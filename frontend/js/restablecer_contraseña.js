@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
 
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/password/verificar-codigo`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/password/verificar-codigo`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
 
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/password/solicitar-recuperacion`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/password/solicitar-recuperacion`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

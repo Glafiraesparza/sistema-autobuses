@@ -148,7 +148,7 @@ function mostrarConfirmacion(titulo, mensaje, tipo = 'success') {
 async function enviarNotificacionEstado(estado) {
     try {
         const chofer = obtenerChoferLogueado();
-        const response = await fetch(`https://${IP_API}:8000/api/notificaciones/`, {
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 console.log('📤 Enviando notificación de retraso...');
 
-                const response = await fetch(`https://${IP_API}:8000/api/notificaciones/retraso`, {
+                const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/retraso`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 console.log('🚨 Enviando notificación de emergencia...');
 
-                const response = await fetch(`https://${IP_API}:8000/api/notificaciones/emergencia`, {
+                const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/emergencia`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -401,7 +401,7 @@ window.testNotificacionRetraso = async function() {
     
     try {
         const chofer = obtenerChoferLogueado();
-        const response = await fetch(`https://${IP_API}:8000/api/notificaciones/retraso`, {
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/retraso`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -431,7 +431,7 @@ window.testNotificacionEmergencia = async function() {
     
     try {
         const chofer = obtenerChoferLogueado();
-        const response = await fetch(`https://${IP_API}:8000/api/notificaciones/emergencia`, {
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/emergencia`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -461,7 +461,7 @@ window.testNotificacionGeneral = async function() {
     
     try {
         const chofer = obtenerChoferLogueado();
-        const response = await fetch(`https://${IP_API}:8000/api/notificaciones/`, {
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function actualizarEstadoServidor(estado) {
     try {
         const chofer = obtenerChoferLogueado();
-        const response = await fetch(`https://${IP_API}:8000/api/chofer/estado`, {
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/chofer/estado`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -542,7 +542,7 @@ async function actualizarEstadoServidor(estado) {
 async function confirmarLlegadaServidor() {
     try {
         const chofer = obtenerChoferLogueado();
-        const response = await fetch(`https://${IP_API}:8000/api/chofer/confirmar-llegada`, {
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/chofer/confirmar-llegada`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -559,7 +559,7 @@ async function confirmarLlegadaServidor() {
             console.log('✅ Llegada confirmada en servidor');
             
             // Enviar notificación al administrador
-            await fetch(`https://${IP_API}:8000/api/notificaciones/`, {
+            await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

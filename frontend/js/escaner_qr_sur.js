@@ -13,7 +13,7 @@ class QRScanner {
         };
         
         // ✅ URL completa del backend
-        this.API_BASE_URL = `https://${IP_API}:8000`;
+        this.API_BASE_URL = `https://sistema-autobuses.onrender.com`;
         
         this.initializeEventListeners();
         this.loadOperatorInfo();

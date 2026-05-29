@@ -174,7 +174,7 @@ class ReportesManager {
 
     async cargarEstadisticasCompletas(fechaInicio, fechaFin) {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/reportes/estadisticas/completas?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/reportes/estadisticas/completas?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
                 headers: this.getAuthHeaders()
             });
             
@@ -199,16 +199,16 @@ class ReportesManager {
         try {
             // Cargar estadísticas básicas en paralelo
             const [countResponse, sumaResponse, incidentesResponse, eficienciaResponse] = await Promise.all([
-                fetch(`https://${IP_API}:8000/api/reportes/transacciones/count?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
+                fetch(`https://sistema-autobuses.onrender.com/api/reportes/transacciones/count?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
                     headers: this.getAuthHeaders()
                 }),
-                fetch(`https://${IP_API}:8000/api/reportes/transacciones/suma-total?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
+                fetch(`https://sistema-autobuses.onrender.com/api/reportes/transacciones/suma-total?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
                     headers: this.getAuthHeaders()
                 }),
-                fetch(`https://${IP_API}:8000/api/reportes/incidentes/count?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
+                fetch(`https://sistema-autobuses.onrender.com/api/reportes/incidentes/count?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
                     headers: this.getAuthHeaders()
                 }),
-                fetch(`https://${IP_API}:8000/api/reportes/eficiencia/promedio?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
+                fetch(`https://sistema-autobuses.onrender.com/api/reportes/eficiencia/promedio?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
                     headers: this.getAuthHeaders()
                 })
             ]);
@@ -257,10 +257,10 @@ class ReportesManager {
     async cargarDatosGraficas(fechaInicio, fechaFin) {
         try {
             const [porDiaResponse, rutasResponse] = await Promise.all([
-                fetch(`https://${IP_API}:8000/api/reportes/transacciones/suma-por-dia?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
+                fetch(`https://sistema-autobuses.onrender.com/api/reportes/transacciones/suma-por-dia?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
                     headers: this.getAuthHeaders()
                 }),
-                fetch(`https://${IP_API}:8000/api/reportes/rutas/popularidad?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
+                fetch(`https://sistema-autobuses.onrender.com/api/reportes/rutas/popularidad?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
                     headers: this.getAuthHeaders()
                 })
             ]);
@@ -531,7 +531,7 @@ class ReportesManager {
     // Método adicional para obtener detalles de incidentes (opcional)
     async obtenerDetalleIncidentes(fechaInicio, fechaFin) {
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/reportes/incidentes/detalle?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/reportes/incidentes/detalle?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
                 headers: this.getAuthHeaders()
             });
             
@@ -569,7 +569,7 @@ class ReportesManager {
         try {
             this.mostrarNotificacion('Generando archivo Excel... Esto puede tomar unos segundos', 'info');
             
-            const response = await fetch(`https://${IP_API}:8000/api/reportes/exportar/excel?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/reportes/exportar/excel?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
                 headers: this.getAuthHeaders()
             });
             

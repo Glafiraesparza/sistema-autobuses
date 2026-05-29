@@ -24,7 +24,7 @@ const NotificationManager = (function() {
         },
 
         // Cargar notificaciones desde la API
-        async loadNotifications(apiUrl = `https://${IP_API}:8000/api/notificaciones/admin`) {
+        async loadNotifications(apiUrl = `https://sistema-autobuses.onrender.com/api/notificaciones/admin`) {
             try {
                 const userId = this.getCurrentUserId();
                 console.log('🔄 Cargando notificaciones para admin ID:', userId);
@@ -85,7 +85,7 @@ const NotificationManager = (function() {
                     'Content-Type': 'application/json'
                 };
 
-                const response = await fetch(`https://${IP_API}:8000/api/notificaciones/${idNotificacion}/leida`, {
+                const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/${idNotificacion}/leida`, {
                     method: 'PUT',
                     headers
                 });
@@ -116,7 +116,7 @@ const NotificationManager = (function() {
 
         console.log('🔄 Eliminando notificación', idNotificacion, 'para admin', userId);
 
-        const response = await fetch(`https://${IP_API}:8000/api/notificaciones/personal/${idNotificacion}?id_personal=${userId}`, {
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/personal/${idNotificacion}?id_personal=${userId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

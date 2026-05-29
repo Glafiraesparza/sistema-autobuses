@@ -64,7 +64,7 @@ class LoginPersonal {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 segundos timeout
 
-            const response = await fetch(`https://${IP_API}:8000/api/auth/login`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

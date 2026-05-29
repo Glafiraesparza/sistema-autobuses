@@ -42,7 +42,7 @@ class ChoferInicio {
                 console.log('🚌 Camión asignado:', this.camionAsignado);
                 
                 // Usar el nuevo endpoint de camiones
-                const response = await fetch(`https://${IP_API}:8000/api/camiones/camion/${this.camionAsignado}`);
+                const response = await fetch(`https://sistema-autobuses.onrender.com/api/camiones/camion/${this.camionAsignado}`);
                 if (response.ok) {
                     const data = await response.json();
                     this.rutaAsignada = data.nombre_ruta;

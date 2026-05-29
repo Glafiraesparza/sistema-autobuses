@@ -33,7 +33,7 @@ class ChoferProgreso {
             const usuario = JSON.parse(usuarioData);
             
             // Primero intentar con el endpoint específico
-            const response = await fetch(`https://${IP_API}:8000/api/asignacion-rutas/chofer/${usuario.id_personal}/activa`);
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/asignacion-rutas/chofer/${usuario.id_personal}/activa`);
             
             if (response.ok) {
                 this.asignacionActiva = await response.json();
@@ -43,7 +43,7 @@ class ChoferProgreso {
             }
             
             // Si falla, buscar en todas las asignaciones activas
-            const responseActivas = await fetch(`https://${IP_API}:8000/api/asignacion-rutas/activas`);
+            const responseActivas = await fetch(`https://sistema-autobuses.onrender.com/api/asignacion-rutas/activas`);
             if (responseActivas.ok) {
                 const todasActivas = await responseActivas.json();
                 const miAsignacion = todasActivas.find(a => a.id_personal == usuario.id_personal);
@@ -235,7 +235,7 @@ class ChoferProgreso {
             this.mostrarToastNotificacion('Enviando Reporte', 'Notificando a los usuarios del retraso...', 'info');
 
             // Aquí iría la llamada al endpoint de retraso
-            // await fetch(`https://${IP_API}:8000/api/notificaciones/retraso`, {...});
+            // await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/retraso`, {...});
 
             // Simular éxito después de un delay
             setTimeout(() => {
@@ -429,7 +429,7 @@ class ChoferProgreso {
             this.mostrarToastNotificacion('Procesando Vuelta', 'Registrando vuelta completa...', 'info');
 
             // Registrar vuelta en el backend
-            const response = await fetch(`https://${IP_API}:8000/api/chofer-progreso/registrar-vuelta`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/chofer-progreso/registrar-vuelta`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -599,7 +599,7 @@ class ChoferProgreso {
         }
 
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/chofer-progreso/reportar-incidente`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/chofer-progreso/reportar-incidente`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -643,7 +643,7 @@ class ChoferProgreso {
             const usuarioData = localStorage.getItem('tucsa_chofer');
             const usuario = JSON.parse(usuarioData);
             
-            await fetch(`https://${IP_API}:8000/api/notificaciones/`, {
+            await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

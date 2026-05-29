@@ -196,19 +196,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const turno = hora >= 15 ? 'vespertino' : 'matutino';
 
             // Cargar choferes del turno actual
-            const responseChoferes = await fetch(`https://${IP_API}:8000/api/choferes/turno/${turno}`, {
+            const responseChoferes = await fetch(`https://sistema-autobuses.onrender.com/api/choferes/turno/${turno}`, {
                 headers: getAuthHeaders()
             });
             const dataChoferes = await responseChoferes.json();
 
             // Cargar todas las unidades (sin filtrar por estado, ya que el estado no indica asignación)
-            const responseUnidades = await fetch(`https://${IP_API}:8000/api/unidades/activas`, {
+            const responseUnidades = await fetch(`https://sistema-autobuses.onrender.com/api/unidades/activas`, {
                 headers: getAuthHeaders()
             });
             const dataUnidades = await responseUnidades.json();
 
             // Cargar asignaciones activas para filtrar (solo las que tienen jornada_completada: null)
-            const responseAsignaciones = await fetch(`https://${IP_API}:8000/api/asignacion-rutas/activas`, {
+            const responseAsignaciones = await fetch(`https://sistema-autobuses.onrender.com/api/asignacion-rutas/activas`, {
                 headers: getAuthHeaders()
             });
             let asignacionesActivas = [];
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const resultados = [];
             for (const asignacion of asignacionesCompletas) {
                 try {
-                    const response = await fetch(`https://${IP_API}:8000/api/asignacion-rutas/`, {
+                    const response = await fetch(`https://sistema-autobuses.onrender.com/api/asignacion-rutas/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const response = await fetch(`https://${IP_API}:8000/api/asignacion-rutas/${idAsignacion}`, {
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/asignacion-rutas/${idAsignacion}`, {
                 method: 'DELETE',
                 headers: getAuthHeaders()
             });

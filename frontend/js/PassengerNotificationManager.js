@@ -39,7 +39,7 @@ const PassengerNotificationManager = (function() {
         
         console.log('🔄 Cargando notificaciones para usuario ID:', userId);
         
-        const url = `https://${IP_API}:8000/api/notificaciones/usuario/${userId}`;
+        const url = `https://sistema-autobuses.onrender.com/api/notificaciones/usuario/${userId}`;
 
         const response = await fetch(url, { 
             headers: {
@@ -110,7 +110,7 @@ const PassengerNotificationManager = (function() {
         // Marcar notificación como leída
         async markAsRead(idNotificacion) {
             try {
-                const response = await fetch(`https://${IP_API}:8000/api/notificaciones/${idNotificacion}/leida`, {
+                const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/${idNotificacion}/leida`, {
                     method: 'PUT',
                     headers: authHeaders
                 });
@@ -260,7 +260,7 @@ updateNotificationsDropdown(dropdownSelector = '.dropdown-menu.notification-menu
 
                 console.log('🔄 Eliminando notificación', idNotificacion, 'para usuario', userId);
 
-                const response = await fetch(`https://${IP_API}:8000/api/notificaciones/usuario/${idNotificacion}?id_usuario=${userId}`, {
+                const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/usuario/${idNotificacion}?id_usuario=${userId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
