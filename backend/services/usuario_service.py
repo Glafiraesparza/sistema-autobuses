@@ -144,8 +144,9 @@ class UsuarioService:
         print(f"📧 Código de verificación generado: {codigo_verificacion}")
 
         # ✅ ENVIAR CORREO DE BIENVENIDA CON CÓDIGO DE VERIFICACIÓN
-        asyncio.create_task(
-            self._enviar_correo_bienvenida(
+        # ✅ ENVIAR CORREO DE BIENVENIDA CON CÓDIGO DE VERIFICACIÓN
+        try:
+            resultado_correo = await self._enviar_correo_bienvenida(
                 usuario_data.email,
                 usuario_data.nombre,
                 tipo_usuario,
@@ -153,18 +154,57 @@ class UsuarioService:
                 clabe_recarga,
                 codigo_verificacion
             )
-        )
+
+            print(f"📧 Resultado envío correo: {resultado_correo}")
+
+        except Exception as e:
+            print(f"❌ Error enviando correo: {e}")
 
         # Retornar respuesta (sin datos sensibles)
         return UsuarioResponse(**{k: v for k, v in usuario_dict.items() if k not in ['password_hash', 'codigo_verificacion', 'codigo_verificacion_expiracion']})
 #Agregue 19/11/2025 Fin
 #Modifique 19/11/2025 Inicio
-    async def _enviar_correo_bienvenida(self, email: str, nombre: str, tipo: str, tarifa: float, clabe: str, codigo_verificacion: str):
+    async def _enviar_correo_bienvenida(
+        self,
+        email: str,
+        nombre: str,
+        tipo: str,
+        tarifa: float,
+        clabe: str,
+        codigo_verificacion: str
+    ):
         """Enviar correo de bienvenida con código de verificación"""
+
         try:
-            await email_service.enviar_correo_registro(email, nombre, tipo, tarifa, clabe, codigo_verificacion)
+            print("===================================")
+            print("INICIANDO ENVÍO DE CORREO")
+            print(f"DESTINATARIO: {email}")
+            print(f"CÓDIGO: {codigo_verificacion}")
+            print("===================================")
+
+            resultado = await email_service.enviar_correo_registro(
+                email,
+                nombre,
+                tipo,
+                tarifa,
+                clabe,
+                codigo_verificacion
+            )
+
+            print(f"RESULTADO EMAIL SERVICE: {resultado}")
+
+            if resultado:
+                print(f"✅ Correo enviado correctamente a {email}")
+            else:
+                print(f"❌ EmailService devolvió False para {email}")
+
+            return resultado
+
         except Exception as e:
-            print(f"⚠️ Error enviando correo de bienvenida: {e}")
+            print(f"❌ EXCEPCIÓN enviando correo de bienvenida: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
 
 #Modifique 19/11/2025 Inicio
     async def obtener_usuario_por_email(self, email: str) -> UsuarioInDB:

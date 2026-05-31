@@ -121,33 +121,59 @@ class EmailService:
             logging.error(f"Error al enviar correo de registro: {str(e)}")
             return False
 
-    async def _enviar_correo(self, destinatario: str, asunto: str, cuerpo_html: str, cuerpo_texto: str) -> bool:
-        """
-        Enviar correo electrónico
-        """
-        try:
-            mensaje = MIMEMultipart("alternative")
-            mensaje["Subject"] = asunto
-            mensaje["From"] = self.sender_email
-            mensaje["To"] = destinatario
+    async def _enviar_correo(
+    self,
+    destinatario: str,
+    asunto: str,
+    cuerpo_html: str,
+    cuerpo_texto: str
+) -> bool:
 
-            parte_texto = MIMEText(cuerpo_texto, "plain")
-            parte_html = MIMEText(cuerpo_html, "html")
+    try:
+        print("===================================")
+        print("INICIANDO SMTP")
+        print(f"SMTP_SERVER: {self.smtp_server}")
+        print(f"SMTP_PORT: {self.smtp_port}")
+        print(f"SENDER_EMAIL: {self.sender_email}")
+        print(f"PASSWORD_CONFIGURADA: {bool(self.sender_password)}")
+        print("===================================")
 
-            mensaje.attach(parte_texto)
-            mensaje.attach(parte_html)
+        mensaje = MIMEMultipart("alternative")
+        mensaje["Subject"] = asunto
+        mensaje["From"] = self.sender_email
+        mensaje["To"] = destinatario
 
-            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
-                server.starttls()
-                server.login(self.sender_email, self.sender_password)
-                server.send_message(mensaje)
+        parte_texto = MIMEText(cuerpo_texto, "plain")
+        parte_html = MIMEText(cuerpo_html, "html")
 
-            logging.info(f"Correo enviado exitosamente a: {destinatario}")
-            return True
+        mensaje.attach(parte_texto)
+        mensaje.attach(parte_html)
 
-        except Exception as e:
-            logging.error(f"Error enviando correo a {destinatario}: {str(e)}")
-            return False
+        with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+            print("🔹 Conectando SMTP...")
+
+            server.starttls()
+            print("🔹 TLS OK")
+
+            server.login(
+                self.sender_email,
+                self.sender_password
+            )
+            print("🔹 LOGIN OK")
+
+            server.send_message(mensaje)
+            print("🔹 SEND OK")
+
+        print(f"✅ Correo enviado a {destinatario}")
+        return True
+
+    except Exception as e:
+        print(f"❌ ERROR SMTP: {e}")
+
+        import traceback
+        traceback.print_exc()
+
+        return False
         
         # Agregue 19/11/2025 Tomás Inicio - Método para recuperación de contraseña
     async def enviar_correo_recuperacion(self, destinatario: str, nombre: str, codigo_recuperacion: str) -> bool:
