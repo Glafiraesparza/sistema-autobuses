@@ -121,61 +121,51 @@ class EmailService:
             logging.error(f"Error al enviar correo de registro: {str(e)}")
             return False
 
-    async def _enviar_correo(
-    self,
-    destinatario: str,
-    asunto: str,
-    cuerpo_html: str,
-    cuerpo_texto: str
-) -> bool:
+    async def _enviar_correo(self, destinatario: str, asunto: str, cuerpo_html: str, cuerpo_texto: str) -> bool:
+        try:
+            print("===================================")
+            print("INICIANDO SMTP")
+            print(f"SMTP_SERVER: {self.smtp_server}")
+            print(f"SMTP_PORT: {self.smtp_port}")
+            print(f"SENDER_EMAIL: {self.sender_email}")
+            print(f"PASSWORD_CONFIGURADA: {bool(self.sender_password)}")
+            print("===================================")
 
-    try:
-        print("===================================")
-        print("INICIANDO SMTP")
-        print(f"SMTP_SERVER: {self.smtp_server}")
-        print(f"SMTP_PORT: {self.smtp_port}")
-        print(f"SENDER_EMAIL: {self.sender_email}")
-        print(f"PASSWORD_CONFIGURADA: {bool(self.sender_password)}")
-        print("===================================")
+            mensaje = MIMEMultipart("alternative")
+            mensaje["Subject"] = asunto
+            mensaje["From"] = self.sender_email
+            mensaje["To"] = destinatario
 
-        mensaje = MIMEMultipart("alternative")
-        mensaje["Subject"] = asunto
-        mensaje["From"] = self.sender_email
-        mensaje["To"] = destinatario
+            parte_texto = MIMEText(cuerpo_texto, "plain")
+            parte_html = MIMEText(cuerpo_html, "html")
 
-        parte_texto = MIMEText(cuerpo_texto, "plain")
-        parte_html = MIMEText(cuerpo_html, "html")
+            mensaje.attach(parte_texto)
+            mensaje.attach(parte_html)
 
-        mensaje.attach(parte_texto)
-        mensaje.attach(parte_html)
+            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+                print("🔹 Conectando SMTP...")
 
-        with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
-            print("🔹 Conectando SMTP...")
+                server.starttls()
+                print("🔹 TLS OK")
 
-            server.starttls()
-            print("🔹 TLS OK")
+                server.login(self.sender_email, self.sender_password)
+                print("🔹 LOGIN OK")
 
-            server.login(
-                self.sender_email,
-                self.sender_password
-            )
-            print("🔹 LOGIN OK")
+                server.send_message(mensaje)
+                print("🔹 SEND OK")
 
-            server.send_message(mensaje)
-            print("🔹 SEND OK")
+            print(f"✅ Correo enviado a {destinatario}")
+            return True
 
-        print(f"✅ Correo enviado a {destinatario}")
-        return True
+        except Exception as e:
+            print(f"❌ ERROR SMTP: {e}")
 
-    except Exception as e:
-        print(f"❌ ERROR SMTP: {e}")
+            import traceback
+            traceback.print_exc()
 
-        import traceback
-        traceback.print_exc()
-
-        return False
+            return False
         
-        # Agregue 19/11/2025 Tomás Inicio - Método para recuperación de contraseña
+    # Agregue 19/11/2025 Tomás Inicio - Método para recuperación de contraseña
     async def enviar_correo_recuperacion(self, destinatario: str, nombre: str, codigo_recuperacion: str) -> bool:
         """
         Enviar correo de recuperación de contraseña
@@ -276,7 +266,7 @@ class EmailService:
             logging.error(f"Error al enviar correo de recuperación: {str(e)}")
             return False
         
-        # Agregue 19/11/2025 Tomás Inicio - Método para correo de recarga
+    # Agregue 19/11/2025 Tomás Inicio - Método para correo de recarga
     async def enviar_correo_recarga(self, destinatario: str, nombre: str, monto: float, nuevo_saldo: float) -> bool:
         """
         Enviar correo de confirmación de recarga
@@ -371,7 +361,7 @@ class EmailService:
             logging.error(f"Error al enviar correo de recarga: {str(e)}")
             return False
         
-        # Agregue 19/11/2025 Tomás Inicio - Método para reenvío de código de verificación
+    # Agregue 19/11/2025 Tomás Inicio - Método para reenvío de código de verificación
     async def enviar_correo_reenvio_verificacion(self, destinatario: str, nombre: str, codigo_verificacion: str) -> bool:
         """
         Enviar correo de reenvío de código de verificación
@@ -457,8 +447,6 @@ class EmailService:
         except Exception as e:
             logging.error(f"Error al enviar correo de reenvío de verificación: {str(e)}")
             return False
-# Agregue 19/11/2025 Tomás Fin - Método para reenvío de código de verificación
-# Agregue 19/11/2025 Tomás Fin - Método para correo de recarga
-# Agregue 19/11/2025 Tomás Fin - Método para recuperación de contraseña
+
 # Instancia global del servicio
 email_service = EmailService()
