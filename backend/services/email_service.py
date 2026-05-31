@@ -142,6 +142,8 @@ class EmailService:
             mensaje.attach(parte_texto)
             mensaje.attach(parte_html)
 
+            print("SMTP_SERVER:", self.smtp_server)
+            print("SMTP_PORT:", self.smtp_port)
             with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
                 print("🔹 Conectando SMTP...")
 
