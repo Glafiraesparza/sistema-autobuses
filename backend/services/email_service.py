@@ -1,27 +1,23 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 import os
 from dotenv import load_dotenv
 import logging
 from datetime import datetime
+import requests
 
 load_dotenv()
 
 class EmailService:
     def __init__(self):
-        self.smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-        self.smtp_port = int(os.getenv("SMTP_PORT", "587"))
+        self.api_key = os.getenv("BREVO_API_KEY")
         self.sender_email = os.getenv("SENDER_EMAIL")
-        self.sender_password = os.getenv("SENDER_PASSWORD")
-        self.enabled = bool(self.sender_email and self.sender_password)
+        self.enabled = bool(self.api_key and self.sender_email)
 
     async def enviar_correo_registro(self, destinatario: str, nombre: str, tipo_usuario: str, tarifa: float, clabe: str, codigo_verificacion: str) -> bool:
         """
         Enviar correo de confirmación de registro con código de verificación
         """
         if not self.enabled:
-            logging.warning("Servicio de email no configurado. Configura SENDER_EMAIL y SENDER_PASSWORD")
+            logging.warning("Servicio de email no configurado. Configura BREVO_API_KEY y SENDER_EMAIL")
             return False
 
         try:
@@ -122,58 +118,55 @@ class EmailService:
             return False
 
     async def _enviar_correo(self, destinatario: str, asunto: str, cuerpo_html: str, cuerpo_texto: str) -> bool:
+        if not self.enabled:
+            print("❌ BREVO no configurado")
+            return False
+
         try:
-            print("===================================")
-            print("INICIANDO SMTP")
-            print(f"SMTP_SERVER: {self.smtp_server}")
-            print(f"SMTP_PORT: {self.smtp_port}")
-            print(f"SENDER_EMAIL: {self.sender_email}")
-            print(f"PASSWORD_CONFIGURADA: {bool(self.sender_password)}")
-            print("===================================")
+            headers = {
+                "accept": "application/json",
+                "api-key": self.api_key,
+                "content-type": "application/json"
+            }
 
-            mensaje = MIMEMultipart("alternative")
-            mensaje["Subject"] = asunto
-            mensaje["From"] = self.sender_email
-            mensaje["To"] = destinatario
+            payload = {
+                "sender": {
+                    "name": "Sistema de Autobuses",
+                    "email": self.sender_email
+                },
+                "to": [
+                    {
+                        "email": destinatario
+                    }
+                ],
+                "subject": asunto,
+                "htmlContent": cuerpo_html,
+                "textContent": cuerpo_texto
+            }
 
-            parte_texto = MIMEText(cuerpo_texto, "plain")
-            parte_html = MIMEText(cuerpo_html, "html")
+            response = requests.post(
+                "https://api.brevo.com/v3/smtp/email",
+                json=payload,
+                headers=headers,
+                timeout=30
+            )
 
-            mensaje.attach(parte_texto)
-            mensaje.attach(parte_html)
+            print("BREVO STATUS:", response.status_code)
+            print("BREVO RESPONSE:", response.text)
 
-            print("SMTP_SERVER:", self.smtp_server)
-            print("SMTP_PORT:", self.smtp_port)
-            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
-                print("🔹 Conectando SMTP...")
-
-                server.starttls()
-                print("🔹 TLS OK")
-
-                server.login(self.sender_email, self.sender_password)
-                print("🔹 LOGIN OK")
-
-                server.send_message(mensaje)
-                print("🔹 SEND OK")
-
-            print(f"✅ Correo enviado a {destinatario}")
-            return True
+            return response.status_code in [200, 201]
 
         except Exception as e:
-            print(f"❌ ERROR SMTP: {e}")
-
-            import traceback
-            traceback.print_exc()
-
+            print(f"❌ ERROR BREVO: {e}")
             return False
         
-    # Agregue 19/11/2025 Tomás Inicio - Método para recuperación de contraseña
+    # Método para recuperación de contraseña
     async def enviar_correo_recuperacion(self, destinatario: str, nombre: str, codigo_recuperacion: str) -> bool:
         """
         Enviar correo de recuperación de contraseña
         """
         if not self.enabled:
-            logging.warning("Servicio de email no configurado. Configura SENDER_EMAIL y SENDER_PASSWORD")
+            logging.warning("Servicio de email no configurado. Configura BREVO_API_KEY y SENDER_EMAIL")
             return False
 
         try:
@@ -268,13 +261,13 @@ class EmailService:
             logging.error(f"Error al enviar correo de recuperación: {str(e)}")
             return False
         
-    # Agregue 19/11/2025 Tomás Inicio - Método para correo de recarga
+    # Método para correo de recarga
     async def enviar_correo_recarga(self, destinatario: str, nombre: str, monto: float, nuevo_saldo: float) -> bool:
         """
         Enviar correo de confirmación de recarga
         """
         if not self.enabled:
-            logging.warning("Servicio de email no configurado. Configura SENDER_EMAIL y SENDER_PASSWORD")
+            logging.warning("Servicio de email no configurado. Configura BREVO_API_KEY y SENDER_EMAIL")
             return False
 
         try:
@@ -363,13 +356,13 @@ class EmailService:
             logging.error(f"Error al enviar correo de recarga: {str(e)}")
             return False
         
-    # Agregue 19/11/2025 Tomás Inicio - Método para reenvío de código de verificación
+    # Método para reenvío de código de verificación
     async def enviar_correo_reenvio_verificacion(self, destinatario: str, nombre: str, codigo_verificacion: str) -> bool:
         """
         Enviar correo de reenvío de código de verificación
         """
         if not self.enabled:
-            logging.warning("Servicio de email no configurado. Configura SENDER_EMAIL y SENDER_PASSWORD")
+            logging.warning("Servicio de email no configurado. Configura BREVO_API_KEY y SENDER_EMAIL")
             return False
 
         try:

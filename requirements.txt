@@ -10,3 +10,4 @@ pandas
 openpyxl
 email-validator
 dnspython
+requests
