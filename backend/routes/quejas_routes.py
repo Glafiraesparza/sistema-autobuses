@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Body, HTTPException, Query, Request
-from backend.database.mongodb import mongodb
+from backend.database.mongodb import mongodb, get_notificaciones_collection
 from backend.models.queja import QuejaCrear, QuejaUpdate
 from backend.services.queja_service import (
     crear_reporte_queja, 
@@ -75,4 +75,106 @@ async def get_estadisticas():
         return response
     except Exception as e:
         print(f"Error al obtener estadísticas: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/incidentes-notificaciones", response_description="Obtener incidentes de notificaciones (emergencias)")
+async def obtener_incidentes_notificaciones(
+    estado: Optional[str] = Query(None, description="Filtrar por estado"),
+    limit: int = Query(100, ge=1, le=500),
+    skip: int = Query(0, ge=0)
+):
+    """
+    Obtener incidentes reportados por choferes desde la colección de notificaciones
+    """
+    try:
+        collection = get_notificaciones_collection()
+        
+        # Construir filtro
+        filtro = {"tipo": "emergencia"}
+        
+        if estado:
+            filtro["estado_seguimiento"] = estado
+        
+        total = await collection.count_documents(filtro)
+        
+        cursor = collection.find(filtro).sort("timestamp", -1).skip(skip).limit(limit)
+        incidentes = await cursor.to_list(length=limit)
+        
+        # Formatear incidentes
+        incidentes_formateados = []
+        for inc in incidentes:
+            incidentes_formateados.append({
+                "_id": str(inc["_id"]),
+                "id_usuario": inc.get("id_chofer", inc.get("id_usuario", "desconocido")),
+                "nombre_usuario": f"Chofer ID: {inc.get('id_chofer', 'desconocido')}",
+                "tipo_reporte": "incidente_trabajador",
+                "origen": "notificacion",
+                "ruta": inc.get("ruta_afectada", "N/A"),
+                "numero_unidad": inc.get("id_camion", "N/A"),
+                "descripcion": inc.get("mensaje", "Sin descripción"),
+                "estado": inc.get("estado_seguimiento", "Pendiente"),
+                "notas_admin": inc.get("notas_admin", ""),
+                "fecha_reporte": inc.get("timestamp"),
+                "historial_estados": inc.get("historial_estados", [])
+            })
+        
+        return {
+            "success": True,
+            "total": total,
+            "quejas": incidentes_formateados
+        }
+        
+    except Exception as e:
+        print(f"Error al obtener incidentes de notificaciones: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.put("/incidentes-notificaciones/{id_incidente}/seguimiento")
+async def actualizar_seguimiento_incidente_notificacion(
+    id_incidente: str,
+    estado: str = Body(...),
+    notas_admin: str = Body(...),
+    admin_id: str = Body(...)
+):
+    """
+    Actualizar seguimiento de incidente de notificación (emergencia)
+    """
+    try:
+        collection = get_notificaciones_collection()
+        
+        # Buscar incidente
+        incidente = await collection.find_one({"_id": ObjectId(id_incidente)})
+        if not incidente:
+            raise HTTPException(status_code=404, detail="Incidente no encontrado")
+        
+        # Preparar historial
+        historial_actual = incidente.get("historial_estados", [])
+        historial_actual.append({
+            "estado": estado,
+            "fecha": datetime.now(),
+            "notas": notas_admin,
+            "realizado_por": admin_id
+        })
+        
+        # Actualizar
+        result = await collection.update_one(
+            {"_id": ObjectId(id_incidente)},
+            {
+                "$set": {
+                    "estado_seguimiento": estado,
+                    "notas_admin": notas_admin,
+                    "ultima_actualizacion": datetime.now(),
+                    "historial_estados": historial_actual
+                }
+            }
+        )
+        
+        if result.modified_count == 0:
+            raise HTTPException(status_code=500, detail="No se pudo actualizar")
+        
+        return {"success": True, "mensaje": "Seguimiento actualizado"}
+        
+    except Exception as e:
+        print(f"Error actualizando incidente: {e}")
         raise HTTPException(status_code=500, detail=str(e))

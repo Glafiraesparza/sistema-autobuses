@@ -71,32 +71,48 @@ class SeguimientoManager {
     }
 
     async cargarQuejas() {
-        try {
-            let url = `https://sistema-autobuses.onrender.com/api/quejas/todas?limit=500`;
-            
-            if (this.filtroActual !== 'todos') {
-                url += `&estado=${this.filtroActual}`;
-            }
-
-            const response = await fetch(url, {
-                headers: UserAuthPersonal.getAuthHeaders()
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success) {
-                    this.quejas = data.quejas;
-                    this.renderizarTablas();
-                }
-            } else {
-                console.error('Error al cargar quejas:', response.status);
-                this.mostrarTablaVacia();
-            }
-        } catch (error) {
-            console.error('Error cargando quejas:', error);
-            this.mostrarTablaVacia();
+    try {
+        // Cargar quejas de usuarios (de colección quejas)
+        let urlQuejas = `https://sistema-autobuses.onrender.com/api/quejas/todas?limit=500`;
+        
+        // Cargar incidentes de trabajadores (de colección notificaciones)
+        let urlIncidentes = `https://sistema-autobuses.onrender.com/api/quejas/incidentes-notificaciones?limit=500`;
+        
+        if (this.filtroActual !== 'todos') {
+            urlQuejas += `&estado=${this.filtroActual}`;
+            urlIncidentes += `&estado=${this.filtroActual}`;
         }
+
+        // Hacer ambas peticiones en paralelo
+        const [responseQuejas, responseIncidentes] = await Promise.all([
+            fetch(urlQuejas, { headers: UserAuthPersonal.getAuthHeaders() }),
+            fetch(urlIncidentes, { headers: UserAuthPersonal.getAuthHeaders() })
+        ]);
+        
+        let todasLasQuejas = [];
+        
+        if (responseQuejas.ok) {
+            const dataQuejas = await responseQuejas.json();
+            if (dataQuejas.success) {
+                todasLasQuejas = [...todasLasQuejas, ...dataQuejas.quejas];
+            }
+        }
+        
+        if (responseIncidentes.ok) {
+            const dataIncidentes = await responseIncidentes.json();
+            if (dataIncidentes.success) {
+                todasLasQuejas = [...todasLasQuejas, ...dataIncidentes.quejas];
+            }
+        }
+        
+        this.quejas = todasLasQuejas;
+        this.renderizarTablas();
+        
+    } catch (error) {
+        console.error('Error cargando quejas e incidentes:', error);
+        this.mostrarTablaVacia();
     }
+}
 
     renderizarTablas() {
         const quejasUsuario = this.quejas.filter(q => q.tipo_reporte !== 'incidente_trabajador');
@@ -178,10 +194,17 @@ class SeguimientoManager {
 
     async abrirModalSeguimiento(idQueja) {
         const queja = this.quejas.find(q => q._id === idQueja);
-        if (!queja) {
-            UserAuthPersonal.showNotification('No se encontró el reporte', 'error');
-            return;
-        }
+    if (!queja) {
+        UserAuthPersonal.showNotification('No se encontró el reporte', 'error');
+        return;
+    }
+
+    // Guardar tipo de reporte para saber qué endpoint usar al guardar
+    if (queja.origen === 'notificacion' || queja.tipo_reporte === 'incidente_trabajador') {
+        document.getElementById('tipo-reporte')?.setAttribute('value', 'incidente_notificacion');
+    } else {
+        document.getElementById('tipo-reporte')?.setAttribute('value', 'queja');
+    }
 
         // Llenar datos en el modal
         document.getElementById('seguimiento-id').value = idQueja;
@@ -230,6 +253,7 @@ class SeguimientoManager {
     const idQueja = document.getElementById('seguimiento-id').value;
     const nuevoEstado = document.getElementById('nuevo-estado').value;
     const notas = document.getElementById('notas-seguimiento').value;
+    const tipo = document.getElementById('tipo-reporte')?.value || 'queja';
     
     if (!nuevoEstado) {
         UserAuthPersonal.showNotification('Debes seleccionar un estado', 'error');
@@ -242,29 +266,41 @@ class SeguimientoManager {
     btnGuardar.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Guardando...';
 
     try {
-        console.log('📤 Enviando a:', `https://sistema-autobuses.onrender.com/api/quejas/${idQueja}/seguimiento`);
-        console.log('📦 Datos:', {
-            estado: nuevoEstado,
-            notas_admin: notas,
-            admin_id: this.usuario.id_personal
-        });
-
-        const response = await fetch(`https://sistema-autobuses.onrender.com/api/quejas/${idQueja}/seguimiento`, {
+        let url;
+        let body;
+        
+        // Determinar qué endpoint usar según el tipo
+        const queja = this.quejas.find(q => q._id === idQueja);
+        
+        if (queja && queja.tipo_reporte === 'incidente_trabajador' && queja.origen === 'notificacion') {
+            // Incidente de notificación
+            url = `https://sistema-autobuses.onrender.com/api/quejas/incidentes-notificaciones/${idQueja}/seguimiento`;
+            body = {
+                estado: nuevoEstado,
+                notas_admin: notas,
+                admin_id: this.usuario.id_personal
+            };
+        } else {
+            // Queja normal
+            url = `https://sistema-autobuses.onrender.com/api/quejas/${idQueja}/seguimiento`;
+            body = {
+                estado: nuevoEstado,
+                notas_admin: notas,
+                admin_id: this.usuario.id_personal
+            };
+        }
+        
+        console.log('📤 Enviando a:', url);
+        
+        const response = await fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 ...UserAuthPersonal.getAuthHeaders()
             },
-            body: JSON.stringify({
-                estado: nuevoEstado,
-                notas_admin: notas,
-                admin_id: this.usuario.id_personal
-            })
+            body: JSON.stringify(body)
         });
 
-        console.log('📡 Status:', response.status);
-        
-        // Intentar leer la respuesta
         const responseText = await response.text();
         console.log('📄 Respuesta raw:', responseText);
         

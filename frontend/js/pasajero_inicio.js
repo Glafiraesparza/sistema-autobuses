@@ -38,9 +38,12 @@ async function cargarDatosUsuario() {
         // Cargar rutas favoritas después de cargar los datos del usuario
         await cargarRutasFavoritas();
         
+        return usuarioActual; // Retornar para poder esperar
+        
     } catch (error) {
         console.error('Error cargando datos del usuario:', error);
         window.location.href = 'inicio_sesion.html';
+        return null;
     }
 }
 /*Modifique 16/11/2025 Tomás Fin*/
@@ -160,16 +163,32 @@ function inicializarMapa() {
 /*Modifique 16/11/2025 Tomás Fin*/
 // Cargar listado de rutas para los botones
 async function cargarListadoRutas() {
-try {
-    const response = await fetch(`${API_BASE}/rutas`);
-    rutasCargadas = await response.json();
-    mostrarBotonesRutas(rutasCargadas);
+    // Esperar a que usuarioActual esté disponible
+    let intentos = 0;
+    while (!usuarioActual && intentos < 10) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        intentos++;
+    }
     
-} catch (error) {
-    console.error("Error cargando rutas:", error);
-    document.getElementById('lista-rutas').innerHTML = 
-        '<p style="color: red;">Error cargando rutas</p>';
-}
+    if (!usuarioActual) {
+        console.error('No se pudo cargar el usuario');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE}/rutas`);
+        if (!response.ok) throw new Error('Error cargando rutas');
+        
+        rutasCargadas = await response.json();
+        mostrarBotonesRutas(rutasCargadas);
+        
+    } catch (error) {
+        console.error("Error cargando rutas:", error);
+        const lista = document.getElementById('lista-rutas');
+        if (lista) {
+            lista.innerHTML = '<p style="color: red;">Error cargando rutas</p>';
+        }
+    }
 }
 
 /*Modifique 16/11/2025 Tomás Inicio*/
@@ -177,6 +196,8 @@ try {
 // Mostrar botones de rutas en el sidebar
 function mostrarBotonesRutas(rutas) {
     const lista = document.getElementById('lista-rutas');
+    if (!lista) return;
+    
     lista.innerHTML = '';
     
     // Crear el botón dropdown principal
@@ -191,7 +212,7 @@ function mostrarBotonesRutas(rutas) {
     const dropdownMenu = document.createElement('ul');
     dropdownMenu.className = 'dropdown-menu w-100';
     
-    // Obtener rutas favoritas del usuario actual
+    // Obtener rutas favoritas del usuario actual (con validación)
     const rutasFavoritas = usuarioActual?.rutas_favoritas?.map(ruta => ruta.nombre) || [];
     
     // Separar rutas en favoritas y no favoritas
@@ -208,7 +229,6 @@ function mostrarBotonesRutas(rutas) {
     
     // Agregar sección de rutas favoritas (si hay alguna)
     if (rutasFavoritasList.length > 0) {
-        // Agregar separador para favoritas
         const favoritasHeader = document.createElement('li');
         favoritasHeader.innerHTML = `
             <h6 class="dropdown-header text-warning">
@@ -217,13 +237,11 @@ function mostrarBotonesRutas(rutas) {
         `;
         dropdownMenu.appendChild(favoritasHeader);
         
-        // Agregar rutas favoritas
         rutasFavoritasList.forEach(ruta => {
             const dropdownItem = crearItemRuta(ruta, true);
             dropdownMenu.appendChild(dropdownItem);
         });
         
-        // Agregar separador
         const divider = document.createElement('li');
         divider.innerHTML = '<hr class="dropdown-divider">';
         dropdownMenu.appendChild(divider);
@@ -234,13 +252,11 @@ function mostrarBotonesRutas(rutas) {
     todasHeader.innerHTML = '<h6 class="dropdown-header">Todas las Rutas</h6>';
     dropdownMenu.appendChild(todasHeader);
     
-    // Agregar rutas no favoritas
     rutasNoFavoritasList.forEach(ruta => {
         const dropdownItem = crearItemRuta(ruta, false);
         dropdownMenu.appendChild(dropdownItem);
     });
     
-    // Agregar elementos al contenedor
     lista.appendChild(dropdownButton);
     lista.appendChild(dropdownMenu);
 }
@@ -909,10 +925,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     loadInitialNotifications();
 });
-document.addEventListener('DOMContentLoaded', () => {
-    cargarDatosUsuario();
+document.addEventListener('DOMContentLoaded', async () => {
+    // Primero cargar datos del usuario
+    await cargarDatosUsuario();
+    
+    // Luego inicializar mapa
     inicializarMapa();
-    cargarListadoRutas();
+    
+    // Finalmente cargar rutas
+    await cargarListadoRutas();
+    
+    // Inicializar notificaciones
+    loadInitialNotifications();
 });
 
 /*Agregue 16/11/2025 Tomás Inicio*/
