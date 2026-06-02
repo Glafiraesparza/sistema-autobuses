@@ -24,7 +24,8 @@ from backend.routes import (
     metricas_admin,
     reportes,
     quejas_routes,
-    chofer_progreso
+    chofer_progreso,
+    configuracion_tarifa_routes
 )
 
 import os
@@ -155,6 +156,7 @@ app.include_router(metricas_admin.router)
 app.include_router(reportes.router)
 app.include_router(quejas_routes.router, prefix="/api")
 app.include_router(chofer_progreso.router)
+app.include_router(configuracion_tarifa_routes.router)
 
 # =========================
 # ROOT API

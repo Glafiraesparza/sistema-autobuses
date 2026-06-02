@@ -1,0 +1,192 @@
+/* Estilos para la página de gestión de tarifas */
+
+.tarjeta-tarifa {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.tarjeta-tarifa:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.tarjeta-header {
+    padding: 1.5rem;
+    text-align: center;
+    color: white;
+}
+
+.tarjeta-header.normal {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.tarjeta-header.estudiante {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.tarjeta-header.adulto-mayor {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.tarjeta-header.discapacitado {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.tarjeta-header i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.tarjeta-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.tarjeta-body {
+    padding: 1.5rem;
+    text-align: center;
+    background: white;
+}
+
+.precio {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.precio::before {
+    content: '$';
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin-right: 2px;
+}
+
+/* Inputs */
+.input-group-text {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Botones */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b3a8a 100%);
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    border: none;
+    color: #1a1a2e;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #3ad46f 0%, #2ee0c4 100%);
+    transform: translateY(-1px);
+}
+
+/* Tarjeta de descuento */
+.descuento-card {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
+    border-left: 4px solid #dc3545;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.descuento-card .porcentaje {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.descuento-card .razon {
+    color: #495057;
+    font-size: 0.85rem;
+}
+
+.descuento-card .vigencia {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+/* Alertas personalizadas */
+.alert-info {
+    background-color: #e8f4fd;
+    border-left: 4px solid #0dcaf0;
+    color: #055160;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    color: #856404;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tarjeta-tarifa {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.card {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tarjeta-header {
+        padding: 1rem;
+    }
+    
+    .tarjeta-header i {
+        font-size: 1.5rem;
+    }
+    
+    .tarjeta-header h3 {
+        font-size: 1rem;
+    }
+    
+    .precio {
+        font-size: 1.5rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .d-flex.gap-2 {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
