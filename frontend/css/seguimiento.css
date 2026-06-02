@@ -1,0 +1,130 @@
+/* Estilos específicos para la página de seguimiento */
+.stat-card {
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.stat-card p {
+    margin-bottom: 0;
+    color: #6c757d;
+}
+
+/* Estados en la tabla */
+.estado-pendiente {
+    background-color: #ffc107;
+    color: #000;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.estado-proceso {
+    background-color: #0dcaf0;
+    color: #000;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.estado-resuelto {
+    background-color: #198754;
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Botones de acción */
+.btn-seguimiento {
+    background-color: #7C4585;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+}
+
+.btn-seguimiento:hover {
+    background-color: #3D365C;
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Navegación de tabs */
+.nav-tabs .nav-link {
+    color: #2c2c2c;
+    font-weight: 500;
+    border: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.nav-tabs .nav-link:hover {
+    border-bottom-color: #7C4585;
+    color: #7C4585;
+}
+
+.nav-tabs .nav-link.active {
+    color: #7C4585;
+    border-bottom-color: #7C4585;
+    background: transparent;
+}
+
+/* Historial de cambios */
+.historial-entry {
+    padding: 0.75rem;
+    border-left: 3px solid #7C4585;
+    margin-bottom: 0.75rem;
+    background-color: white;
+    border-radius: 0.5rem;
+}
+
+.historial-entry .fecha {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.historial-entry .estado {
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+}
