@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Body, HTTPException, Query
+from fastapi import APIRouter, Body, HTTPException, Query, Request
+from backend.database.mongodb import mongodb
 from backend.models.queja import QuejaCrear, QuejaUpdate
 from backend.services.queja_service import (
     crear_reporte_queja, 
@@ -7,6 +8,8 @@ from backend.services.queja_service import (
     obtener_estadisticas_quejas
 )
 from typing import Optional
+from bson import ObjectId
+from datetime import datetime
 
 router = APIRouter()
 
@@ -36,15 +39,33 @@ async def get_todas_quejas(
 @router.put("/quejas/{id_queja}/seguimiento", response_description="Actualizar seguimiento de queja")
 async def actualizar_seguimiento(
     id_queja: str,
-    estado: str = Body(...),
-    notas_admin: str = Body(...),
-    admin_id: str = Body(...)
+    request: Request
 ):
     try:
+        # Leer el body como JSON
+        body = await request.json()
+        print(f"📥 Body recibido: {body}")
+        
+        estado = body.get("estado")
+        notas_admin = body.get("notas_admin", "")
+        admin_id = body.get("admin_id", "admin_desconocido")
+        
+        # Validar que el estado no esté vacío
+        if not estado:
+            raise HTTPException(status_code=422, detail="El campo 'estado' es requerido")
+        
+        # Validar que el estado sea válido
+        if estado not in ["Pendiente", "En Proceso", "Resuelto"]:
+            raise HTTPException(status_code=422, detail=f"Estado inválido: {estado}. Debe ser Pendiente, En Proceso o Resuelto")
+        
+        print(f"✅ Procesando: id={id_queja}, estado={estado}, notas={notas_admin}, admin={admin_id}")
+        
         response = await actualizar_seguimiento_queja(id_queja, estado, notas_admin, admin_id)
         return response
+    except HTTPException:
+        raise
     except Exception as e:
-        print(f"Error al actualizar seguimiento: {e}")
+        print(f"❌ Error al actualizar seguimiento: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/quejas/estadisticas", response_description="Obtener estadísticas de quejas")

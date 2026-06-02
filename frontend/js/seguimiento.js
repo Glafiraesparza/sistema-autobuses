@@ -227,60 +227,75 @@ class SeguimientoManager {
     }
 
     async guardarSeguimiento() {
-        const idQueja = document.getElementById('seguimiento-id').value;
-        const nuevoEstado = document.getElementById('nuevo-estado').value;
-        const notas = document.getElementById('notas-seguimiento').value;
-        
-        if (!nuevoEstado) {
-            UserAuthPersonal.showNotification('Debes seleccionar un estado', 'error');
-            return;
-        }
-
-        // Mostrar loading
-        const btnGuardar = document.getElementById('btn-guardar-seguimiento');
-        const textoOriginal = btnGuardar.innerHTML;
-        btnGuardar.disabled = true;
-        btnGuardar.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Guardando...';
-
-        try {
-            const response = await fetch(`https://sistema-autobuses.onrender.com/api/quejas/${idQueja}/seguimiento`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...UserAuthPersonal.getAuthHeaders()
-                },
-                body: JSON.stringify({
-                    estado: nuevoEstado,
-                    notas_admin: notas,
-                    admin_id: this.usuario.id_personal
-                })
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                UserAuthPersonal.showNotification('Seguimiento actualizado correctamente', 'success');
-                
-                // Enviar notificación al usuario
-                await this.enviarNotificacionUsuario(idQueja, nuevoEstado, notas);
-                
-                // Recargar datos
-                await this.cargarEstadisticas();
-                await this.cargarQuejas();
-                
-                // Cerrar modal
-                this.modalInstance.hide();
-            } else {
-                throw new Error(data.detail || 'Error al actualizar');
-            }
-        } catch (error) {
-            console.error('Error guardando seguimiento:', error);
-            UserAuthPersonal.showNotification('Error al guardar los cambios', 'error');
-        } finally {
-            btnGuardar.disabled = false;
-            btnGuardar.innerHTML = textoOriginal;
-        }
+    const idQueja = document.getElementById('seguimiento-id').value;
+    const nuevoEstado = document.getElementById('nuevo-estado').value;
+    const notas = document.getElementById('notas-seguimiento').value;
+    
+    if (!nuevoEstado) {
+        UserAuthPersonal.showNotification('Debes seleccionar un estado', 'error');
+        return;
     }
+
+    const btnGuardar = document.getElementById('btn-guardar-seguimiento');
+    const textoOriginal = btnGuardar.innerHTML;
+    btnGuardar.disabled = true;
+    btnGuardar.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Guardando...';
+
+    try {
+        console.log('📤 Enviando a:', `https://sistema-autobuses.onrender.com/api/quejas/${idQueja}/seguimiento`);
+        console.log('📦 Datos:', {
+            estado: nuevoEstado,
+            notas_admin: notas,
+            admin_id: this.usuario.id_personal
+        });
+
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/quejas/${idQueja}/seguimiento`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                ...UserAuthPersonal.getAuthHeaders()
+            },
+            body: JSON.stringify({
+                estado: nuevoEstado,
+                notas_admin: notas,
+                admin_id: this.usuario.id_personal
+            })
+        });
+
+        console.log('📡 Status:', response.status);
+        
+        // Intentar leer la respuesta
+        const responseText = await response.text();
+        console.log('📄 Respuesta raw:', responseText);
+        
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch(e) {
+            console.error('Error parseando JSON:', e);
+            throw new Error(`Respuesta inválida: ${responseText.substring(0, 100)}`);
+        }
+
+        if (response.ok && data.success) {
+            UserAuthPersonal.showNotification('Seguimiento actualizado correctamente', 'success');
+            
+            await this.cargarEstadisticas();
+            await this.cargarQuejas();
+            
+            if (this.modalInstance) {
+                this.modalInstance.hide();
+            }
+        } else {
+            throw new Error(data.detail || data.message || 'Error al actualizar');
+        }
+    } catch (error) {
+        console.error('❌ Error:', error);
+        UserAuthPersonal.showNotification('Error: ' + error.message, 'error');
+    } finally {
+        btnGuardar.disabled = false;
+        btnGuardar.innerHTML = textoOriginal;
+    }
+}
 
     async enviarNotificacionUsuario(idQueja, nuevoEstado, notas) {
         const queja = this.quejas.find(q => q._id === idQueja);
