@@ -24,10 +24,6 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.tarjeta-header.estudiante {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
 .tarjeta-header.adulto-mayor {
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
@@ -61,6 +57,7 @@
 }
 
 .precio::before {
+    content: '$';
     font-size: 1.5rem;
     font-weight: normal;
     margin-right: 2px;
@@ -157,7 +154,21 @@
     animation: fadeIn 0.4s ease-out;
 }
 
-/* Responsive */
+/* Responsive - 3 columnas en desktop, 2 en tablet, 1 en móvil */
+@media (max-width: 992px) {
+    .tarjeta-header {
+        padding: 1.25rem;
+    }
+    
+    .tarjeta-header i {
+        font-size: 1.75rem;
+    }
+    
+    .precio {
+        font-size: 1.75rem;
+    }
+}
+
 @media (max-width: 768px) {
     .tarjeta-header {
         padding: 1rem;
@@ -187,5 +198,9 @@
     
     .btn {
         width: 100%;
+    }
+    
+    .precio::before {
+        font-size: 1.2rem;
     }
 }

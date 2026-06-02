@@ -75,13 +75,16 @@ class SeguimientoManager {
         // Cargar quejas de usuarios (de colección quejas)
         let urlQuejas = `https://sistema-autobuses.onrender.com/api/quejas/todas?limit=500`;
         
-        // Cargar incidentes de trabajadores (de colección notificaciones)
-        let urlIncidentes = `https://sistema-autobuses.onrender.com/api/quejas/incidentes-notificaciones?limit=500`;
+        // ✅ CORREGIDO: Quitar "/quejas" duplicado
+        let urlIncidentes = `https://sistema-autobuses.onrender.com/api/incidentes-notificaciones?limit=500`;
         
         if (this.filtroActual !== 'todos') {
             urlQuejas += `&estado=${this.filtroActual}`;
             urlIncidentes += `&estado=${this.filtroActual}`;
         }
+
+        console.log('📡 Cargando quejas desde:', urlQuejas);
+        console.log('📡 Cargando incidentes desde:', urlIncidentes);
 
         // Hacer ambas peticiones en paralelo
         const [responseQuejas, responseIncidentes] = await Promise.all([
@@ -96,6 +99,8 @@ class SeguimientoManager {
             if (dataQuejas.success) {
                 todasLasQuejas = [...todasLasQuejas, ...dataQuejas.quejas];
             }
+        } else {
+            console.error('Error cargando quejas:', responseQuejas.status);
         }
         
         if (responseIncidentes.ok) {
@@ -103,6 +108,8 @@ class SeguimientoManager {
             if (dataIncidentes.success) {
                 todasLasQuejas = [...todasLasQuejas, ...dataIncidentes.quejas];
             }
+        } else {
+            console.error('Error cargando incidentes:', responseIncidentes.status);
         }
         
         this.quejas = todasLasQuejas;
@@ -113,7 +120,6 @@ class SeguimientoManager {
         this.mostrarTablaVacia();
     }
 }
-
     renderizarTablas() {
         const quejasUsuario = this.quejas.filter(q => q.tipo_reporte !== 'incidente_trabajador');
         const incidentes = this.quejas.filter(q => q.tipo_reporte === 'incidente_trabajador');
@@ -253,7 +259,6 @@ class SeguimientoManager {
     const idQueja = document.getElementById('seguimiento-id').value;
     const nuevoEstado = document.getElementById('nuevo-estado').value;
     const notas = document.getElementById('notas-seguimiento').value;
-    const tipo = document.getElementById('tipo-reporte')?.value || 'queja';
     
     if (!nuevoEstado) {
         UserAuthPersonal.showNotification('Debes seleccionar un estado', 'error');
@@ -272,16 +277,15 @@ class SeguimientoManager {
         // Determinar qué endpoint usar según el tipo
         const queja = this.quejas.find(q => q._id === idQueja);
         
-        if (queja && queja.tipo_reporte === 'incidente_trabajador' && queja.origen === 'notificacion') {
-            // Incidente de notificación
-            url = `https://sistema-autobuses.onrender.com/api/quejas/incidentes-notificaciones/${idQueja}/seguimiento`;
+        if (queja && queja.origen === 'notificacion') {
+            // ✅ CORREGIDO: Quitar "/quejas" duplicado
+            url = `https://sistema-autobuses.onrender.com/api/incidentes-notificaciones/${idQueja}/seguimiento`;
             body = {
                 estado: nuevoEstado,
                 notas_admin: notas,
                 admin_id: this.usuario.id_personal
             };
         } else {
-            // Queja normal
             url = `https://sistema-autobuses.onrender.com/api/quejas/${idQueja}/seguimiento`;
             body = {
                 estado: nuevoEstado,
