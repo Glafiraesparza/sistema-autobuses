@@ -61,7 +61,6 @@
 }
 
 .precio::before {
-    content: '$';
     font-size: 1.5rem;
     font-weight: normal;
     margin-right: 2px;
