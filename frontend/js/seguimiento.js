@@ -277,24 +277,27 @@ class SeguimientoManager {
         // Determinar qué endpoint usar según el tipo
         const queja = this.quejas.find(q => q._id === idQueja);
         
+        // ✅ FORZAR admin_id como STRING
+        const adminIdString = String(this.usuario.id_personal);
+        
         if (queja && queja.origen === 'notificacion') {
-            // ✅ CORREGIDO: Quitar "/quejas" duplicado
             url = `https://sistema-autobuses.onrender.com/api/incidentes-notificaciones/${idQueja}/seguimiento`;
             body = {
                 estado: nuevoEstado,
                 notas_admin: notas,
-                admin_id: this.usuario.id_personal
+                admin_id: adminIdString  // ✅ Ahora es string
             };
         } else {
             url = `https://sistema-autobuses.onrender.com/api/quejas/${idQueja}/seguimiento`;
             body = {
                 estado: nuevoEstado,
                 notas_admin: notas,
-                admin_id: this.usuario.id_personal
+                admin_id: adminIdString  // ✅ Ahora es string
             };
         }
         
         console.log('📤 Enviando a:', url);
+        console.log('📦 Body:', body);
         
         const response = await fetch(url, {
             method: 'PUT',

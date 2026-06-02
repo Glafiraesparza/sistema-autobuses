@@ -89,6 +89,7 @@ async def obtener_incidentes_notificaciones(
     """
     try:
         collection = get_notificaciones_collection()
+        usuarios_personal_collection = mongodb.database.usuarios_personal
         
         # Construir filtro
         filtro = {"tipo": "emergencia"}
@@ -101,17 +102,41 @@ async def obtener_incidentes_notificaciones(
         cursor = collection.find(filtro).sort("timestamp", -1).skip(skip).limit(limit)
         incidentes = await cursor.to_list(length=limit)
         
-        # Formatear incidentes
+        # Formatear incidentes con datos del chofer
         incidentes_formateados = []
         for inc in incidentes:
+            # Obtener ID del chofer (puede estar en diferentes campos)
+            id_chofer = inc.get("id_chofer") or inc.get("id_personal") or inc.get("usuario_id") or "desconocido"
+            
+            # Buscar datos del chofer en la colección de personal
+            nombre_chofer = f"Chofer ID: {id_chofer}"
+            email_chofer = ""
+            
+            if id_chofer != "desconocido":
+                try:
+                    # Buscar por id_personal
+                    query = None
+                    if str(id_chofer).isdigit():
+                        query = {"id_personal": int(id_chofer)}
+                    else:
+                        query = {"id_personal": id_chofer}
+                    
+                    chofer = await usuarios_personal_collection.find_one(query)
+                    if chofer:
+                        nombre_chofer = chofer.get("nombre", f"Chofer ID: {id_chofer}")
+                        email_chofer = chofer.get("email", "")
+                except Exception as e:
+                    print(f"Error buscando chofer: {e}")
+            
             incidentes_formateados.append({
                 "_id": str(inc["_id"]),
-                "id_usuario": inc.get("id_chofer", inc.get("id_usuario", "desconocido")),
-                "nombre_usuario": f"Chofer ID: {inc.get('id_chofer', 'desconocido')}",
+                "id_usuario": str(id_chofer),
+                "nombre_usuario": nombre_chofer,
+                "email_usuario": email_chofer,
                 "tipo_reporte": "incidente_trabajador",
                 "origen": "notificacion",
                 "ruta": inc.get("ruta_afectada", "N/A"),
-                "numero_unidad": inc.get("id_camion", "N/A"),
+                "numero_unidad": str(inc.get("id_camion", "N/A")),
                 "descripcion": inc.get("mensaje", "Sin descripción"),
                 "estado": inc.get("estado_seguimiento", "Pendiente"),
                 "notas_admin": inc.get("notas_admin", ""),
@@ -133,14 +158,29 @@ async def obtener_incidentes_notificaciones(
 @router.put("/incidentes-notificaciones/{id_incidente}/seguimiento")
 async def actualizar_seguimiento_incidente_notificacion(
     id_incidente: str,
-    estado: str = Body(...),
-    notas_admin: str = Body(...),
-    admin_id: str = Body(...)
+    request: Request
 ):
     """
     Actualizar seguimiento de incidente de notificación (emergencia)
     """
     try:
+        # Leer body como JSON
+        body = await request.json()
+        
+        estado = body.get("estado")
+        notas_admin = body.get("notas_admin", "")
+        admin_id = body.get("admin_id", "admin_desconocido")
+        
+        # Convertir admin_id a string si es número
+        admin_id = str(admin_id)
+        
+        # Validaciones
+        if not estado:
+            raise HTTPException(status_code=422, detail="El campo 'estado' es requerido")
+        
+        if estado not in ["Pendiente", "En Proceso", "Resuelto"]:
+            raise HTTPException(status_code=422, detail=f"Estado inválido: {estado}")
+        
         collection = get_notificaciones_collection()
         
         # Buscar incidente
@@ -175,6 +215,8 @@ async def actualizar_seguimiento_incidente_notificacion(
         
         return {"success": True, "mensaje": "Seguimiento actualizado"}
         
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Error actualizando incidente: {e}")
         raise HTTPException(status_code=500, detail=str(e))
