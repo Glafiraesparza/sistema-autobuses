@@ -73,32 +73,46 @@ class GestionTarifas {
         }
     }
 
-    actualizarInterfaz() {
+   actualizarInterfaz() {
         if (!this.tarifasActuales) return;
         
-        // Actualizar tarjetas
-        document.getElementById('precio-normal').textContent = `$${this.tarifasActuales.normal.toFixed(2)}`;
-        document.getElementById('precio-estudiante').textContent = `$${this.tarifasActuales.estudiante.toFixed(2)}`;
-        document.getElementById('precio-adulto_mayor').textContent = `$${this.tarifasActuales.adulto_mayor.toFixed(2)}`;
-        document.getElementById('precio-discapacitado').textContent = `$${this.tarifasActuales.discapacitado.toFixed(2)}`;
+        // Actualizar tarjetas (sin el $)
+        const precioNormal = document.getElementById('precio-normal');
+        const precioAdultoMayor = document.getElementById('precio-adulto_mayor');
+        const precioDiscapacitado = document.getElementById('precio-discapacitado');
+        
+        if (precioNormal) {
+            precioNormal.textContent = `${this.tarifasActuales.normal.toFixed(2)}`;
+        }
+        if (precioAdultoMayor) {
+            precioAdultoMayor.textContent = `${this.tarifasActuales.adulto_mayor.toFixed(2)}`;
+        }
+        if (precioDiscapacitado) {
+            precioDiscapacitado.textContent = `${this.tarifasActuales.discapacitado.toFixed(2)}`;
+        }
         
         // Actualizar inputs
-        document.getElementById('input-normal').value = this.tarifasActuales.normal;
-        document.getElementById('input-estudiante').value = this.tarifasActuales.estudiante;
-        document.getElementById('input-adulto_mayor').value = this.tarifasActuales.adulto_mayor;
-        document.getElementById('input-discapacitado').value = this.tarifasActuales.discapacitado;
+        const inputNormal = document.getElementById('input-normal');
+        const inputAdultoMayor = document.getElementById('input-adulto_mayor');
+        const inputDiscapacitado = document.getElementById('input-discapacitado');
+        
+        if (inputNormal) inputNormal.value = this.tarifasActuales.normal;
+        if (inputAdultoMayor) inputAdultoMayor.value = this.tarifasActuales.adulto_mayor;
+        if (inputDiscapacitado) inputDiscapacitado.value = this.tarifasActuales.discapacitado;
     }
 
     async guardarTarifas() {
         const nuevasTarifas = {
             normal: parseFloat(document.getElementById('input-normal').value),
-            estudiante: parseFloat(document.getElementById('input-estudiante').value),
+            estudiante: 0,  // Valor por defecto
             adulto_mayor: parseFloat(document.getElementById('input-adulto_mayor').value),
             discapacitado: parseFloat(document.getElementById('input-discapacitado').value)
         };
 
         // Validaciones
-        for (const [tipo, tarifa] of Object.entries(nuevasTarifas)) {
+        const tipos = ['normal', 'adulto_mayor', 'discapacitado'];
+        for (const tipo of tipos) {
+            const tarifa = nuevasTarifas[tipo];
             if (isNaN(tarifa)) {
                 UserAuthPersonal.showNotification(`Tarifa inválida para ${tipo}`, 'error');
                 return;
