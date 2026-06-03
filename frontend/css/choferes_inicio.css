@@ -347,3 +347,66 @@ body {
 .modal-header.bg-danger {
     background: linear-gradient(135deg, #dc3545, #e83e8c) !important;
 }
+
+/* Botón de Mis Reportes */
+.btn-reportes {
+    background-color: var(--secondary-purple);
+    color: white;
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s, border-color 0.3s;
+    border: none;
+}
+
+.btn-reportes:hover {
+    background-color: var(--accent-pink);
+    color: white;
+}
+
+/* Modal de seguimiento de reportes */
+.modal-reportes .modal-header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-purple));
+    color: white;
+}
+
+.modal-reportes .modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+.reporte-card {
+    border-left: 4px solid var(--secondary-purple);
+    transition: transform 0.2s;
+}
+
+.reporte-card:hover {
+    transform: translateX(5px);
+}
+
+.estado-pendiente {
+    background-color: #ffc107;
+    color: #000;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.estado-proceso {
+    background-color: #0dcaf0;
+    color: #000;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.estado-resuelto {
+    background-color: #198754;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
