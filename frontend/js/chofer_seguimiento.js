@@ -15,6 +15,15 @@ class ChoferSeguimiento {
         if (!this.usuario) return;
         
         this.setupEventListeners();
+        
+        // Cargar incidentes automáticamente al abrir el modal
+        const modal = document.getElementById('seguimientoReportesModal');
+        if (modal) {
+            modal.addEventListener('shown.bs.modal', () => {
+                this.cargarIncidentes();
+                this.cargarQuejas();
+            });
+        }
     }
 
     getChoferData() {
@@ -25,15 +34,9 @@ class ChoferSeguimiento {
 
     setupEventListeners() {
         // Botón de refrescar
-        document.getElementById('refrescar-reportes')?.addEventListener('click', () => {
-            this.cargarIncidentes();
-            this.cargarQuejas();
-        });
-        
-        // Cuando se abre el modal, cargar datos
-        const modal = document.getElementById('seguimientoReportesModal');
-        if (modal) {
-            modal.addEventListener('shown.bs.modal', () => {
+        const refreshBtn = document.getElementById('refrescar-reportes');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
                 this.cargarIncidentes();
                 this.cargarQuejas();
             });
@@ -42,16 +45,25 @@ class ChoferSeguimiento {
 
     async cargarIncidentes() {
         try {
-            const idChofer = this.usuario.id_personal;
+            if (!this.usuario) {
+                console.error('No hay datos de usuario');
+                this.renderizarIncidentesVacio();
+                return;
+            }
             
-            // Cargar incidentes (emergencias reportadas por este chofer)
-            const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/chofer/${idChofer}`, {
-                headers: UserAuthPersonal.getAuthHeaders()
-            });
+            const idChofer = this.usuario.id_personal;
+            console.log('Cargando incidentes para chofer:', idChofer);
+            
+            // Cargar incidentes (emergencias) usando fetch normal sin autenticación compleja
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/notificaciones/admin`);
             
             if (response.ok) {
                 const data = await response.json();
-                const incidentes = data.notificaciones?.filter(n => n.tipo === 'emergencia') || [];
+                // Filtrar incidentes de emergencia para este chofer
+                const incidentes = data.notificaciones?.filter(n => 
+                    n.tipo === 'emergencia' && 
+                    (n.id_chofer == idChofer || n.id_chofer === idChofer.toString())
+                ) || [];
                 this.incidentes = incidentes;
                 this.renderizarIncidentes();
             } else {
@@ -59,27 +71,36 @@ class ChoferSeguimiento {
                 this.renderizarIncidentesVacio();
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error en cargarIncidentes:', error);
             this.renderizarIncidentesVacio();
         }
     }
 
     async cargarQuejas() {
         try {
-            const idChofer = this.usuario.id_personal;
+            if (!this.usuario) {
+                console.error('No hay datos de usuario');
+                this.renderizarQuejasVacio();
+                return;
+            }
             
-            // Cargar quejas donde el chofer fue mencionado
-            const response = await fetch(`https://sistema-autobuses.onrender.com/api/quejas/todas?limit=100`, {
-                headers: UserAuthPersonal.getAuthHeaders()
-            });
+            console.log('Cargando quejas para chofer ID:', this.usuario.id_personal);
+            console.log('Cargando quejas para unidad:', this.usuario.id_camion_asignado);
+            
+            // Cargar quejas
+            const response = await fetch(`https://sistema-autobuses.onrender.com/api/quejas/todas?limit=100`);
             
             if (response.ok) {
                 const data = await response.json();
                 // Filtrar quejas que mencionan a este chofer (por número de unidad)
-                const quejasChofer = data.quejas.filter(q => 
-                    q.numero_unidad === this.usuario.id_camion_asignado?.toString() ||
-                    q.descripcion?.toLowerCase().includes(this.usuario.nombre?.toLowerCase())
-                );
+                const quejasChofer = data.quejas.filter(q => {
+                    // Comparar número de unidad
+                    const mismaUnidad = q.numero_unidad === this.usuario.id_camion_asignado?.toString();
+                    // Buscar en descripción (fallback)
+                    const mencionaChofer = q.descripcion?.toLowerCase().includes(this.usuario.nombre?.toLowerCase());
+                    
+                    return mismaUnidad || mencionaChofer;
+                });
                 this.quejas = quejasChofer;
                 this.renderizarQuejas();
             } else {
@@ -87,7 +108,7 @@ class ChoferSeguimiento {
                 this.renderizarQuejasVacio();
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error en cargarQuejas:', error);
             this.renderizarQuejasVacio();
         }
     }
@@ -114,7 +135,7 @@ class ChoferSeguimiento {
         container.innerHTML = this.incidentes.map(inc => `
             <div class="list-group-item reporte-card mb-2 rounded">
                 <div class="d-flex justify-content-between align-items-start">
-                    <div>
+                    <div class="flex-grow-1">
                         <h6 class="mb-1">
                             <i class="bi bi-exclamation-triangle-fill text-danger me-1"></i>
                             ${inc.titulo || 'Incidente reportado'}
@@ -124,8 +145,9 @@ class ChoferSeguimiento {
                             <i class="bi bi-calendar me-1"></i>
                             ${this.formatearFecha(inc.timestamp)}
                         </small>
+                        ${inc.ruta_afectada ? `<br><small class="text-muted"><i class="bi bi-route me-1"></i>Ruta: ${inc.ruta_afectada}</small>` : ''}
                     </div>
-                    <div>
+                    <div class="ms-2">
                         ${this.getEstadoBadge(inc.estado_seguimiento || 'Pendiente')}
                     </div>
                 </div>
@@ -163,7 +185,7 @@ class ChoferSeguimiento {
         container.innerHTML = this.quejas.map(queja => `
             <div class="list-group-item reporte-card mb-2 rounded">
                 <div class="d-flex justify-content-between align-items-start">
-                    <div>
+                    <div class="flex-grow-1">
                         <h6 class="mb-1">
                             <i class="bi bi-person-circle text-warning me-1"></i>
                             Queja de usuario
@@ -174,8 +196,9 @@ class ChoferSeguimiento {
                             ${this.formatearFecha(queja.fecha_reporte)}
                         </small>
                         ${queja.ruta ? `<br><small class="text-muted"><i class="bi bi-route me-1"></i>Ruta: ${queja.ruta}</small>` : ''}
+                        ${queja.numero_unidad ? `<br><small class="text-muted"><i class="bi bi-bus-front me-1"></i>Unidad: ${queja.numero_unidad}</small>` : ''}
                     </div>
-                    <div>
+                    <div class="ms-2">
                         ${this.getEstadoBadge(queja.estado)}
                     </div>
                 </div>
@@ -198,6 +221,9 @@ class ChoferSeguimiento {
                 <div class="text-center text-muted py-4">
                     <i class="bi bi-exclamation-circle fs-1"></i>
                     <p class="mt-2">Error al cargar incidentes</p>
+                    <button class="btn btn-sm btn-outline-primary mt-2" onclick="window.choferSeguimiento?.cargarIncidentes()">
+                        <i class="bi bi-arrow-repeat me-1"></i>Reintentar
+                    </button>
                 </div>
             `;
         }
@@ -210,6 +236,9 @@ class ChoferSeguimiento {
                 <div class="text-center text-muted py-4">
                     <i class="bi bi-exclamation-circle fs-1"></i>
                     <p class="mt-2">Error al cargar quejas</p>
+                    <button class="btn btn-sm btn-outline-primary mt-2" onclick="window.choferSeguimiento?.cargarQuejas()">
+                        <i class="bi bi-arrow-repeat me-1"></i>Reintentar
+                    </button>
                 </div>
             `;
         }
