@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from backend.models.asignacion_ruta import VueltaRequest, IncidenteRequest
-from backend.database.mongodb import get_ruta_asignada_collection
+from backend.database.mongodb import get_ruta_asignada_collection, get_notificaciones_collection
 from backend.services.unidades_service import unidad_service
 from datetime import datetime
 import random
@@ -81,6 +81,7 @@ async def registrar_vuelta(vuelta: VueltaRequest):
 @router.post("/reportar-incidente")
 async def reportar_incidente(incidente: IncidenteRequest):
     collection = get_ruta_asignada_collection()
+    notificaciones_collection = get_notificaciones_collection()
     
     # Buscar la asignación activa
     asignacion = await collection.find_one({
@@ -90,6 +91,38 @@ async def reportar_incidente(incidente: IncidenteRequest):
     
     if not asignacion:
         raise HTTPException(status_code=404, detail="Asignación activa no encontrada")
+    
+    # Obtener información de la asignación
+    nombre_ruta = "40 Norte" if asignacion.get("ruta") == "40_Norte" else "40 Sur"
+    id_camion = asignacion.get("id_unidad", incidente.id_camion or "Desconocido")
+    id_chofer = asignacion.get("id_personal", "Desconocido")
+    
+    # Usar la ruta del incidente si viene, si no la de la asignación
+    ruta_mostrar = incidente.ruta_afectada or nombre_ruta
+    
+    # Crear notificación de emergencia
+    notificacion_data = {
+        "tipo": "emergencia",
+        "titulo": f"🚨 EMERGENCIA - Ruta {ruta_mostrar}",
+        "mensaje": f"El chofer reportó: {incidente.tipo_incidente}. {incidente.descripcion or 'Sin detalles adicionales'}",
+        "ruta_afectada": ruta_mostrar,
+        "id_camion": str(id_camion),
+        "id_chofer": str(id_chofer),
+        "timestamp": datetime.now(),
+        "estado_seguimiento": "Pendiente",
+        "notas_admin": "",
+        "historial_estados": [{
+            "estado": "Pendiente",
+            "fecha": datetime.now(),
+            "notas": f"Incidente reportado por el chofer: {incidente.tipo_incidente}",
+            "realizado_por": str(id_chofer)
+        }]
+    }
+    
+    # Guardar notificación
+    result_notificacion = await notificaciones_collection.insert_one(notificacion_data)
+    print(f"✅ Notificación de emergencia guardada con ID: {result_notificacion.inserted_id}")
+    print(f"   Ruta: {ruta_mostrar}, Chofer: {id_chofer}, Camión: {id_camion}")
     
     # Terminar la jornada por incidente
     result = await collection.update_one(
@@ -110,7 +143,8 @@ async def reportar_incidente(incidente: IncidenteRequest):
     if result.modified_count > 0:
         return {
             "success": True,
-            "mensaje": "Incidente reportado y jornada terminada"
+            "mensaje": "Incidente reportado y jornada terminada",
+            "id_notificacion": str(result_notificacion.inserted_id)
         }
     else:
         raise HTTPException(status_code=500, detail="Error al reportar incidente")

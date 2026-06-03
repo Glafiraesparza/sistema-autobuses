@@ -22,11 +22,14 @@ class AsignacionRuta(BaseModel):
 class AsignacionRutaResponse(AsignacionRuta):
     id_asignacion: str
 
-# Agregar al final del archivo
+# Clase para registrar vuelta
 class VueltaRequest(BaseModel):
     id_asignacion: str
 
+# ✅ CLASE CORREGIDA - IncidenteRequest con campos adicionales
 class IncidenteRequest(BaseModel):
     id_asignacion: str
     tipo_incidente: str
     descripcion: Optional[str] = None
+    ruta_afectada: Optional[str] = None  # ✅ Agregado
+    id_camion: Optional[Union[str, int]] = None  # ✅ Agregado

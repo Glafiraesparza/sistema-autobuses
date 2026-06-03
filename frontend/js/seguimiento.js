@@ -49,26 +49,34 @@ class SeguimientoManager {
     }
 
     async cargarEstadisticas() {
-        try {
-            const response = await fetch(`https://sistema-autobuses.onrender.com/api/quejas/estadisticas`, {
-                headers: UserAuthPersonal.getAuthHeaders()
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success) {
-                    document.getElementById('total-quejas').textContent = data.estadisticas.total || 0;
-                    document.getElementById('pendientes-count').textContent = data.estadisticas.pendientes || 0;
-                    document.getElementById('proceso-count').textContent = data.estadisticas.en_proceso || 0;
-                    document.getElementById('resueltos-count').textContent = data.estadisticas.resueltos || 0;
-                    document.getElementById('quejas-badge').textContent = data.estadisticas.quejas_usuario || 0;
-                    document.getElementById('incidentes-badge').textContent = data.estadisticas.incidentes || 0;
-                }
+    try {
+        const response = await fetch(`https://sistema-autobuses.onrender.com/api/quejas/estadisticas`, {
+            headers: UserAuthPersonal.getAuthHeaders()
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success) {
+                // Solo actualizar elementos que existen en el HTML
+                const totalQuejas = document.getElementById('total-quejas');
+                const pendientesCount = document.getElementById('pendientes-count');
+                const procesoCount = document.getElementById('proceso-count');
+                const resueltosCount = document.getElementById('resueltos-count');
+                
+                if (totalQuejas) totalQuejas.textContent = data.estadisticas.total || 0;
+                if (pendientesCount) pendientesCount.textContent = data.estadisticas.pendientes || 0;
+                if (procesoCount) procesoCount.textContent = data.estadisticas.en_proceso || 0;
+                if (resueltosCount) resueltosCount.textContent = data.estadisticas.resueltos || 0;
+                
+                // Los badges ya no existen en el HTML, omitir
+                // document.getElementById('quejas-badge') - NO EXISTE
+                // document.getElementById('incidentes-badge') - NO EXISTE
             }
-        } catch (error) {
-            console.error('Error cargando estadísticas:', error);
         }
+    } catch (error) {
+        console.error('Error cargando estadísticas:', error);
     }
+}
 
     async cargarQuejas() {
     try {
